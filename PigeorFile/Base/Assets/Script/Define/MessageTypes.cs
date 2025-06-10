@@ -1,11 +1,15 @@
 public enum MessageTypes
 {
     GameModeChange,
+    PlayMusic,
     PlaySound,
-    AddCard,
-    ConsumeCard,
-    ActivationEvent,
-    EventFinish,
-    UnlockLocation,
-    EnterDialog
+    SettingDataUpdate,
+    SaveDataUpdate,
+    AddNotification,
+}
+
+public enum MessageTemporaryType
+{
+    Default,
+    Temporary,
 }

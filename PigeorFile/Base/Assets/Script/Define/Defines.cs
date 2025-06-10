@@ -1,62 +1,26 @@
 public enum GameModeType
 {
-    UNACTIVE,
     GAMEINIT,
     MAINMENU,
-    START,
-    JOUNARY,
-    REST,
+    LOAD,
+    RELOAD,
+    DEFAULT,
+    PAUSE,
     EXIT
 }
 
-public enum SoundType
+public enum ResolutionType
 {
-    BTNCLICK,
+    Res1920x1080,
+    Res1600x900,
 }
 
-public enum Location
+public enum MusicClip
 {
-    MONASTERY,
-    TOWN,
-    FIELD,
-    CITY,
-    FOREST,
-    CASTLE,
-    TREASURE
+    BGM1,
 }
 
-public enum EventType
+public enum SoundClip
 {
-    PLAYER,
-    LOCATION,
-    SEND,
-    RECEIVE,
-    SHOP,
-    FINISH,
-}
-
-public enum EventState
-{
-    UNACTIVE,
-    ACTIVE,
-    FINISH
-}
-
-public enum NPCType
-{
-    NONE,
-    ABBOT,
-    OFFICER,
-    FARMER,
-    DOCTOR,
-    BUSSINESSMAN1,
-    BUSSINESSMAN2,
-    WIFE,
-    APPRENTICE,
-    SB,
-    APPRENTICEPARENT,
-    HUNTER,
-    FRIEND,
-    THEOLOGISTS,
-    PRIEST,
+    BTN_CLICK,
 }

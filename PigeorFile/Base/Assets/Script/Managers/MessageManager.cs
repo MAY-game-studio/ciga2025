@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -18,8 +19,9 @@ public class Message
     public MessageTypes type { get; private set; }
 }
 
+
 /// <summary>
-/// 游戏模式切换时使用,应该只在GameManager接受再调用各manager接口
+/// 游戏模式切换时使用,应只在GameManager接受再调用各manager接口
 /// </summary>
 
 public class GameModeChange : Message
@@ -28,73 +30,141 @@ public class GameModeChange : Message
     {
         GameModeType = gameModeType;
     }
-
     public GameModeType GameModeType;
 }
+
+public class PlayMusic : Message
+{
+    public PlayMusic(MusicClip musicClip) : base(MessageTypes.PlayMusic)
+    {
+        MusicClip = musicClip;
+    }
+    public MusicClip MusicClip;
+}
+
 public class PlaySound : Message
 {
-    public PlaySound(SoundType soundType) : base(MessageTypes.PlaySound)
+    public PlaySound(SoundClip soundClip) : base(MessageTypes.PlaySound)
     {
-        SoundType = soundType;
+        SoundClip = soundClip;
     }
-
-    public SoundType SoundType;
+    public SoundClip SoundClip;
 }
 
-public class AddCard : Message
+/// <summary>
+/// 设置更新
+/// </summary>
+ 
+public class SettingDataUpdate : Message
 {
-    public AddCard(int id) : base(MessageTypes.AddCard)
+    public SettingDataUpdate() : base(MessageTypes.SettingDataUpdate)
     {
-        ID = id;
     }
-    public int ID;
 }
 
-public class ConsumeCard : Message
+/// <summary>
+/// 存档更新
+/// </summary>
+ 
+public class SaveDataUpdate : Message
 {
-    public ConsumeCard(int id) : base(MessageTypes.ConsumeCard)
+    public SaveDataUpdate() : base(MessageTypes.SaveDataUpdate)
     {
-        ID = id;
     }
-    public int ID;
 }
 
-public class UnlockLocation : Message
+/// <summary>
+/// 新建通知
+/// </summary>
+public class AddNotification : Message
 {
-    public UnlockLocation(Location location) : base(MessageTypes.UnlockLocation)
+    public AddNotification(string text,float duration=-1f) : base(MessageTypes.AddNotification)
     {
-        Location = location;
+        Text = text;
     }
-    public Location Location;
+    public string Text;
+    public float Duration;
 }
 
-public class ActivationEvent : Message
+public class MessageListener //消息监听器
 {
-    public ActivationEvent(string unlockID) : base(MessageTypes.ActivationEvent)
+    public UnityAction<Message> Action;
+    public int Priority;
+    public MessageTemporaryType TemporaryType;
+    public MessageListener(UnityAction<Message> action, int priority, MessageTemporaryType tempType)
     {
-        UnlockId = unlockID;
+        Action = action;
+        Priority = priority;
+        TemporaryType = tempType;
     }
-    public string UnlockId;
-}
-public class EventFinish : Message
-{
-    public EventFinish(int id) : base(MessageTypes.EventFinish)
-    {
-        ID = id;
-    }
-    public int ID;
-}
-public class EnterDialog : Message
-{
-    public EnterDialog(int id,NPCType type) : base(MessageTypes.EnterDialog)
-    {
-        ID = id;
-        Type = type;
-    }
-    public int ID;
-    public NPCType Type;
 }
 
+public class MessageManager : SingletonDontDestory<MessageManager>
+{
+    private Dictionary<MessageTypes, List<MessageListener>> listeners;
+
+    private void OnEnable()
+    {
+        listeners = new Dictionary<MessageTypes, List<MessageListener>>();
+    }
+
+    /// <summary>
+    /// 注册消息
+    /// </summary>
+    public void Register(MessageTypes messageType, UnityAction<Message> action, int priority = 0,
+        MessageTemporaryType tempType = MessageTemporaryType.Default)
+    {
+        if (!listeners.ContainsKey(messageType))
+            listeners[messageType] = new List<MessageListener>();
+        listeners[messageType].Add(new MessageListener(action, priority, tempType));
+        listeners[messageType].Sort((a, b) => b.Priority.CompareTo(a.Priority)); // 按优先级降序排列
+    }
+
+
+    /// <summary>
+    /// 移除消息
+    /// </summary>
+    public void Remove(MessageTypes messageType, UnityAction<Message> action)
+    {
+        if (!listeners.ContainsKey(messageType)) return;
+        listeners[messageType].RemoveAll(listener => listener.Action == action);
+    }
+
+    /// <summary>
+    /// 发送消息,且在控制台输出一句log
+    /// </summary>
+    public void Send(MessageTypes messageType, Message message)
+    {
+#if UNITY_EDITOR
+        Debug.Log(messageType);
+#endif
+
+        if (!listeners.TryGetValue(messageType, out var listenerList)) return;
+        foreach (var listener in listenerList)
+            listener.Action?.Invoke(message);
+    }
+
+    public void Clear(MessageTemporaryType tempType = MessageTemporaryType.Default)
+    {
+        if (tempType == MessageTemporaryType.Default)
+        {
+            // 默认情况：清除所有监听器
+            listeners.Clear();
+            return;
+        }
+        // 遍历所有消息类型
+        var messageTypes = listeners.Keys.ToArray(); // 先复制key集合
+        foreach (var type in messageTypes)
+        {
+            // 移除指定临时类型的监听器
+            listeners[type].RemoveAll(l => l.TemporaryType == tempType);
+            // 如果该类型下已无监听器，移除整个条目
+            if (listeners[type].Count == 0) listeners.Remove(type);
+        }
+    }
+}
+
+/*
 public class MessageManager : SingletonDontDestory<MessageManager>
 {
     private Dictionary<MessageTypes, UnityAction<Message>> listeners;
@@ -109,9 +179,7 @@ public class MessageManager : SingletonDontDestory<MessageManager>
     /// </summary>
     public void Register(MessageTypes messageType, UnityAction<Message> action)
     {
-        if (!listeners.ContainsKey(messageType))
-            listeners.Add(messageType, action);
-        else
+        if (!listeners.TryAdd(messageType, action))
             listeners[messageType] += action;
     }
 
@@ -129,9 +197,10 @@ public class MessageManager : SingletonDontDestory<MessageManager>
     /// </summary>
     public void Send(MessageTypes messageType, Message Message)
     {
-        Debug.Log(messageType);
-        UnityAction<Message> action = null;
-        if (listeners.TryGetValue(messageType, out action))
+        #if UNITY_EDITOR
+            Debug.Log(messageType);
+        #endif
+        if (listeners.TryGetValue(messageType, out var action))
             action(Message);
     }
 
@@ -140,3 +209,4 @@ public class MessageManager : SingletonDontDestory<MessageManager>
         listeners.Clear();
     }
 }
+*/
