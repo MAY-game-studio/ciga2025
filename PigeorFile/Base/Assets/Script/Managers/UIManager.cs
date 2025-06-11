@@ -29,6 +29,8 @@ public class UIManager : SingletonDontDestory<UIManager>
 
     #region Videos
     
+    [Tooltip("视频时长")]
+    [SerializeField] private float[] VideoDuration;
     [SerializeField] private GameObject AwakeVideo_Prefab;
 
     #endregion
@@ -44,7 +46,7 @@ public class UIManager : SingletonDontDestory<UIManager>
     public void AwakeVideoInit()
     {
         AwakeVideo = Instantiate(AwakeVideo_Prefab, Canvas.transform).GetComponent<AwakeVideo>();
-        AwakeVideo.Init(10f,AudioManager.GetInstance().MainVolume);
+        AwakeVideo.Init(VideoDuration[0],AudioManager.GetInstance().MainVolume);
     }
 
     public void AwakeVideoDestroy()
@@ -55,6 +57,23 @@ public class UIManager : SingletonDontDestory<UIManager>
     
     #endregion
     
+    #endregion
+    
+    
+    #region MainMenu
+
+    [HideInInspector] public MainMenu MainMenu;
+    
+    public void MainMenuInit()
+    {
+        MainMenu = Instantiate(MainMenu_Prefab,Canvas.transform).GetComponent<MainMenu>();
+    }
+
+    public void MainMenuDestroy()
+    {
+        if (MainMenu!=null) Destroy(MainMenu.gameObject);
+    }
+
     #endregion
     
     #region GameUI
@@ -73,11 +92,7 @@ public class UIManager : SingletonDontDestory<UIManager>
     
     #endregion
     
-    
     #region Notification
-    /// <summary>
-    /// 初始化通知系统
-    /// </summary>
     
     public Notification NotificationInit(string text,float duration)
     {

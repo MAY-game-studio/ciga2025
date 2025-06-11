@@ -197,7 +197,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 6426197982279486695}
         m_TargetAssemblyTypeName: MainMenu, Assembly-CSharp
-        m_MethodName: ONBtnRightClicked
+        m_MethodName: OnBtnRightClicked
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -6280,7 +6280,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 6426197982279486695}
         m_TargetAssemblyTypeName: MainMenu, Assembly-CSharp
-        m_MethodName: ONBtnLeftClicked
+        m_MethodName: OnBtnLeftClicked
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -7927,7 +7927,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 6426197982279486695}
         m_TargetAssemblyTypeName: MainMenu, Assembly-CSharp
-        m_MethodName: ONBtnHelpReturnClicked
+        m_MethodName: OnBtnHelpReturnClicked
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

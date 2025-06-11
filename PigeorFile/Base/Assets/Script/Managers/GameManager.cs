@@ -71,6 +71,16 @@ public class GameManager : SingletonDontDestory<GameManager>
         //不使用开场动画时取消此注释
     }
 
+    /// <summary>
+    /// 游戏开始或返回时显示主菜单
+    /// </summary>
+    public void MainMenuInit()
+    {
+        //回到主菜单时的清理游戏组件
+        UIManager.GetInstance().GameUIDestroy();
+        UIManager.GetInstance().MainMenuInit();
+    }
+    
     public void SaveDataLoad()
     {
         /*if (GameSaveData == null) //新游戏,创建存档
@@ -79,6 +89,7 @@ public class GameManager : SingletonDontDestory<GameManager>
         }*/
         MessageManager.GetInstance().Send(MessageTypes.SaveDataUpdate, new SaveDataUpdate());
 
+        UIManager.GetInstance().MainMenuDestroy();
         UIManager.GetInstance().GameUIInit();
         
         MessageManager.GetInstance().Send(MessageTypes.GameModeChange,new GameModeChange(GameModeType.DEFAULT));
@@ -116,7 +127,7 @@ public class GameManager : SingletonDontDestory<GameManager>
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space))
-            MessageManager.GetInstance().Send(MessageTypes.AddNotification,new AddNotification("Ciallo～(∠・ω< )⌒☆"));
+            MessageManager.GetInstance().Send(MessageTypes.AddNotification,new AddNotification("Ciallo～"));
     }
     
     #region Message
@@ -137,7 +148,7 @@ public class GameManager : SingletonDontDestory<GameManager>
                     GameInit();
                     break;
                 case GameModeType.MAINMENU:
-//                   UIManager.GetInstance().MainMenuInit();
+                    MainMenuInit();
                     break;
                 case GameModeType.LOAD:
                     SaveDataLoad();
