@@ -6,12 +6,15 @@ public class AudioManager : SingletonDontDestory<AudioManager>
 {
     #region SerializeField
     
-    [SerializeField]
-    public AudioSource Audio;
-    [SerializeField]
-    public AudioClip[] MusicClip;
-    [SerializeField]
-    public AudioClip[] SoundClip;
+    [Header("媒体组件")]
+    [Tooltip("主媒体组件")]
+    [SerializeField] public AudioSource Audio;
+    
+    [Header("媒体素材片段")]
+    [Tooltip("背景音乐")]
+    [SerializeField] public AudioClip[] MusicClip;
+    [Tooltip("音效")]
+    [SerializeField] public AudioClip[] SoundClip;
 
     #endregion
     

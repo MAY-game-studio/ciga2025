@@ -6,32 +6,48 @@ using UnityEngine;
 public class UIManager : SingletonDontDestory<UIManager>
 {
     #region SerializeField
-
+    
+    [Header("UI组件")]
+    
     #region Canvas
 
+    [Tooltip("画布")]
     [SerializeField] public Canvas Canvas;
 
     #endregion
 
+    [Header("UI预制体")]
+
     #region Prefab
 
+    [Tooltip("主菜单预制体")]
     [SerializeField] private GameObject MainMenu_Prefab;
+    [Tooltip("游戏UI预制体")]
     [SerializeField] private GameObject GameUI_Prefab;
+    [Tooltip("消息预制体")]
     [SerializeField] private GameObject Notification_Prefab;
+
+    [Tooltip("启动视频预制体")]
+    [SerializeField] private GameObject AwakeVideo_Prefab;
 
     #endregion
 
+    [Header("精灵素材")]
+    
     #region Sprite
 
+    [Tooltip("精灵")]
     [SerializeField] public Sprite[] Sprite;
 
     #endregion
 
     #region Videos
     
+    
+    [Header("视频参数")]
+
     [Tooltip("视频时长")]
     [SerializeField] private float[] VideoDuration;
-    [SerializeField] private GameObject AwakeVideo_Prefab;
 
     #endregion
 
@@ -58,7 +74,6 @@ public class UIManager : SingletonDontDestory<UIManager>
     #endregion
     
     #endregion
-    
     
     #region MainMenu
 

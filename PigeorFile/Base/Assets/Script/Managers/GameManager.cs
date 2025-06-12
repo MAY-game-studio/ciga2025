@@ -6,6 +6,7 @@ public class GameManager : SingletonDontDestory<GameManager>
 {
     #region SerializeField
     
+    [Header("Debug调试选项")]
     [Tooltip("开发者模式")]
     [SerializeField] public bool FlagDebugMod;
 

@@ -511,7 +511,7 @@ Transform:
   m_GameObject: {fileID: 1704456152}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.22941674, y: 0.7700603, z: 0.028137596}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -533,9 +533,12 @@ MonoBehaviour:
   MainMenu_Prefab: {fileID: 6461233536577842388, guid: 7c88cd4c254ce2a4183de5d7ca6b13b5, type: 3}
   GameUI_Prefab: {fileID: 5462553671689381132, guid: 652b7727245ed994aa127db2fc705f19, type: 3}
   Notification_Prefab: {fileID: 5928558710895739206, guid: 674a07196baa20648abd6a6505f3ea8c, type: 3}
-  Sprite: []
   AwakeVideo_Prefab: {fileID: 5690284448087429624, guid: 2868789b3fcc77b458f28555cab1ee98, type: 3}
+  Sprite: []
+  VideoDuration:
+  - 3
   AwakeVideo: {fileID: 0}
+  MainMenu: {fileID: 0}
   GameUI: {fileID: 0}
 --- !u!114 &1704456155
 MonoBehaviour:
@@ -550,7 +553,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DefultDuration: 3
-  MaxNotifications: 3
+  MaxNotifications: 8
 --- !u!114 &1704456156
 MonoBehaviour:
   m_ObjectHideFlags: 0

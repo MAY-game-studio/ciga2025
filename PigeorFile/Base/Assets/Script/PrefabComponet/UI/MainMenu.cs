@@ -10,6 +10,10 @@ public class MainMenu : MonoBehaviour
     
     #region SerializeField
     
+    [Header("UI组件")]
+
+    [Header("主菜单")]
+    
     [SerializeField] private Image MainMenu_BG;
     [SerializeField] private Image MainMenu_Title;
     [SerializeField] private Button MainMenu_BtnStart;
@@ -19,6 +23,8 @@ public class MainMenu : MonoBehaviour
 
     #region SaveMenu
 
+    [Header("存档菜单")]
+    
     [SerializeField] private GameObject SaveGroup;
     [SerializeField] private Sprite SpriteSave,SpriteEmpty;
     [SerializeField] private Image ImgSlot1;
@@ -36,6 +42,8 @@ public class MainMenu : MonoBehaviour
     
     #region HelpMenu
 
+    [Header("帮助菜单")]
+    
     [SerializeField] private GameObject HelpGroup;
     [SerializeField] private Sprite[] Help_Sprite;
     [SerializeField] private Image Help_Image;
@@ -47,6 +55,8 @@ public class MainMenu : MonoBehaviour
     
     #region SettingMenu
 
+    [Header("设置菜单")]
+    
     [SerializeField] private GameObject SettingGroup;
     [SerializeField] private TMP_Dropdown DropdownScreenMode;
     [SerializeField] private Vector2[] ResolutionRatio;

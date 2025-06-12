@@ -7,8 +7,12 @@ public class GameUI : MonoBehaviour
 {
     #region SerializeField
 
+    [Header("UI组件")]
+    
     #region PauseMenu
 
+    [Header("暂停菜单")]
+    
     [SerializeField] private Button BtnPause;
     [SerializeField] private GameObject PauseGroup;
     [SerializeField] private Button BtnSave;
@@ -16,6 +20,8 @@ public class GameUI : MonoBehaviour
 
     #region SettingMenu
 
+    [Header("设置菜单")]
+    
     [SerializeField] private Button BtnSetting;
     [SerializeField] private GameObject SettingGroup;
     [SerializeField] private Slider MainVolumeSlider; 

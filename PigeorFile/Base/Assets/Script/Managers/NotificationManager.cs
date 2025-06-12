@@ -6,11 +6,14 @@ using UnityEngine;
 public class NotificationManager : SingletonDontDestory<NotificationManager>
 {
     #region SerializeField
-
-    [Tooltip("默认消息显示时间")]
+    
+    [Header("消息参数设置")]
+    
+    [Tooltip("消息显示时间")]
     [SerializeField] private float DefultDuration;
     
     [Tooltip("最大显示的消息数")]
+    [Range(2,8)]
     [SerializeField] private int MaxNotifications;
 
     #endregion

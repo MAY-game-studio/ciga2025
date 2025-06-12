@@ -5,9 +5,16 @@ using UnityEngine;
 public class AwakeVideo : MonoBehaviour
 {
     #region SerializeField
+
+    [Header("媒体组件")]
     
+    [Tooltip("视频媒体组件")]
     [SerializeField] public AudioSource AudioSource;
-    [SerializeField] public bool FlagSkip; //可跳过标记
+    
+    [Header("视频参数")]
+    
+    [Tooltip("可跳过标记")]
+    [SerializeField] public bool FlagSkip;
     
     #endregion
     
