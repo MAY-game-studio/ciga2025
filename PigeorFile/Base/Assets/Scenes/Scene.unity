@@ -561,8 +561,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 26f8df65a4cce0f45ba44d23a531a8a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DefultDuration: 3
-  MaxNotifications: 8
+  DefultDuration: 2
+  MaxNotifications: 5
 --- !u!114 &1704456156
 MonoBehaviour:
   m_ObjectHideFlags: 0

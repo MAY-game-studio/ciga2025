@@ -257,16 +257,16 @@ public class MainMenu : MonoBehaviour
         switch (DropdownScreenMode.value)
         {
             case 0:
-                GameManager.GetInstance().GameSettingData.ScreenMode = FullScreenMode.Windowed;
+                GameManager.GetInstance().GameSettingData.ScreenMode = FullScreenMode.ExclusiveFullScreen;
                 break;
             case 1:
                 GameManager.GetInstance().GameSettingData.ScreenMode = FullScreenMode.FullScreenWindow;
                 break;
             case 2:
-                GameManager.GetInstance().GameSettingData.ScreenMode = FullScreenMode.ExclusiveFullScreen;
+                GameManager.GetInstance().GameSettingData.ScreenMode = FullScreenMode.MaximizedWindow;
                 break;
             case 3:
-                GameManager.GetInstance().GameSettingData.ScreenMode = FullScreenMode.MaximizedWindow;
+                GameManager.GetInstance().GameSettingData.ScreenMode = FullScreenMode.Windowed;
                 break;
         }
         MessageManager.GetInstance().Send(MessageTypes.AddNotification,new AddNotification("重启后生效"));

@@ -1419,9 +1419,9 @@ MonoBehaviour:
       m_Image: {fileID: 0}
     - m_Text: FullScreenWindow
       m_Image: {fileID: 0}
-    - m_Text: Windowed
+    - m_Text: MaximizedWindow
       m_Image: {fileID: 0}
-    - m_Text: FullScreenWindow
+    - m_Text: Windowed
       m_Image: {fileID: 0}
   m_OnValueChanged:
     m_PersistentCalls:
