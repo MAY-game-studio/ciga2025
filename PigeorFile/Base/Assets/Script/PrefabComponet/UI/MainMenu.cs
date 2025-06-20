@@ -104,16 +104,16 @@ public class MainMenu : MonoBehaviour
     
     #region SaveMenu
 
-    private GameSaveData gameSaveFileSlot1,gameSaveFileSlot2,gameSaveFileSlot3;
-    
-    public void ShowSaveMenu()
+    private GameSaveData _gameSaveFileSlot1,_gameSaveFileSlot2,_gameSaveFileSlot3;
+
+    private void ShowSaveMenu()
     {
         Focus = "SaveMenu";
         SaveGroup.gameObject.SetActive(true);
-        gameSaveFileSlot1 = SaveManager.GetInstance().GameSaveDataLoad(1);
-        gameSaveFileSlot2 = SaveManager.GetInstance().GameSaveDataLoad(2);
-        gameSaveFileSlot3 = SaveManager.GetInstance().GameSaveDataLoad(3);
-        if (gameSaveFileSlot1 == null)
+        _gameSaveFileSlot1 = SaveManager.GetInstance().GameSaveDataLoad(1);
+        _gameSaveFileSlot2 = SaveManager.GetInstance().GameSaveDataLoad(2);
+        _gameSaveFileSlot3 = SaveManager.GetInstance().GameSaveDataLoad(3);
+        if (_gameSaveFileSlot1 == null)
         {
             ImgSlot1.sprite = SpriteEmpty;
             TxtSlot1.text = "新游戏";
@@ -121,9 +121,9 @@ public class MainMenu : MonoBehaviour
         else
         {
             ImgSlot1.sprite = SpriteSave;
-            TxtSlot1.text = "继续游戏" + gameSaveFileSlot1.GameSaveTime;
+            TxtSlot1.text = "继续游戏" + _gameSaveFileSlot1.GameSaveTime;
         }
-        if (gameSaveFileSlot2 == null)
+        if (_gameSaveFileSlot2 == null)
         {
             ImgSlot2.sprite = SpriteEmpty;
             TxtSlot2.text = "新游戏";
@@ -131,9 +131,9 @@ public class MainMenu : MonoBehaviour
         else
         {
             ImgSlot2.sprite = SpriteSave;
-            TxtSlot2.text = "继续游戏" + gameSaveFileSlot2.GameSaveTime;
+            TxtSlot2.text = "继续游戏" + _gameSaveFileSlot2.GameSaveTime;
         }
-        if (gameSaveFileSlot3 == null)
+        if (_gameSaveFileSlot3 == null)
         {
             ImgSlot3.sprite = SpriteEmpty;
             TxtSlot3.text = "新游戏";
@@ -141,11 +141,11 @@ public class MainMenu : MonoBehaviour
         else
         {
             ImgSlot3.sprite = SpriteSave;
-            TxtSlot3.text = "继续游戏" + gameSaveFileSlot3.GameSaveTime;
+            TxtSlot3.text = "继续游戏" + _gameSaveFileSlot3.GameSaveTime;
         }
     }
-    
-    public void HideSaveMenu()
+
+    private void HideSaveMenu()
     {
         Focus = "MainMenu";
         SaveGroup.gameObject.SetActive(false);
@@ -155,7 +155,7 @@ public class MainMenu : MonoBehaviour
     {
         MessageManager.GetInstance().Send(MessageTypes.PlaySound,new PlaySound(SoundClip.BTN_CLICK));
         GameManager.GetInstance().SaveSlot = 1;
-        GameManager.GetInstance().GameSaveData = gameSaveFileSlot1;
+        GameManager.GetInstance().GameSaveData = _gameSaveFileSlot1;
         if (GameManager.GetInstance().GameSaveData == null)
             GameManager.GetInstance().GameSaveData = SaveManager.GetInstance().CreateGameSaveData();
         MessageManager.GetInstance().Send(MessageTypes.GameModeChange,new GameModeChange(GameModeType.LOAD));
@@ -165,7 +165,7 @@ public class MainMenu : MonoBehaviour
     {
         MessageManager.GetInstance().Send(MessageTypes.PlaySound,new PlaySound(SoundClip.BTN_CLICK));
         GameManager.GetInstance().SaveSlot = 2;
-        GameManager.GetInstance().GameSaveData = gameSaveFileSlot2;
+        GameManager.GetInstance().GameSaveData = _gameSaveFileSlot2;
         if (GameManager.GetInstance().GameSaveData == null)
             GameManager.GetInstance().GameSaveData = SaveManager.GetInstance().CreateGameSaveData();
         MessageManager.GetInstance().Send(MessageTypes.GameModeChange,new GameModeChange(GameModeType.LOAD));
@@ -175,7 +175,7 @@ public class MainMenu : MonoBehaviour
     {
         MessageManager.GetInstance().Send(MessageTypes.PlaySound,new PlaySound(SoundClip.BTN_CLICK));
         GameManager.GetInstance().SaveSlot = 3;
-        GameManager.GetInstance().GameSaveData = gameSaveFileSlot3;
+        GameManager.GetInstance().GameSaveData = _gameSaveFileSlot3;
         if (GameManager.GetInstance().GameSaveData == null)
             GameManager.GetInstance().GameSaveData = SaveManager.GetInstance().CreateGameSaveData();
         MessageManager.GetInstance().Send(MessageTypes.GameModeChange,new GameModeChange(GameModeType.LOAD));
@@ -191,15 +191,17 @@ public class MainMenu : MonoBehaviour
     
     #region HelpMenu
     
-    private int Page;
-    public void ShowHelpMenu()
+    private int _page;
+
+    private void ShowHelpMenu()
     {
         Focus = "HelpMenu";
         HelpGroup.gameObject.SetActive(true);
-        Page = 0;
-        Help_Image.sprite = Help_Sprite[Page];
+        _page = 0;
+        Help_Image.sprite = Help_Sprite[_page];
     }
-    public void HideHelpMenu()
+
+    private void HideHelpMenu()
     {
         Focus = "MainMenu";
         HelpGroup.gameObject.SetActive(false);
@@ -207,14 +209,14 @@ public class MainMenu : MonoBehaviour
     public void OnBtnLeftClicked()
     {
         MessageManager.GetInstance().Send(MessageTypes.PlaySound,new PlaySound(SoundClip.BTN_CLICK));
-        Page = Page - 1 < 0 ? Help_Sprite.Length - 1 : Page - 1;
-        Help_Image.sprite = Help_Sprite[Page];
+        _page = _page - 1 < 0 ? Help_Sprite.Length - 1 : _page - 1;
+        Help_Image.sprite = Help_Sprite[_page];
     }
     public void OnBtnRightClicked()
     {
         MessageManager.GetInstance().Send(MessageTypes.PlaySound,new PlaySound(SoundClip.BTN_CLICK));
-        Page = Page + 1 > Help_Sprite.Length - 1 ? 0 : Page + 1;
-        Help_Image.sprite = Help_Sprite[Page];
+        _page = _page + 1 > Help_Sprite.Length - 1 ? 0 : _page + 1;
+        Help_Image.sprite = Help_Sprite[_page];
     }
     
     public void OnBtnHelpReturnClicked()
@@ -226,18 +228,23 @@ public class MainMenu : MonoBehaviour
     #endregion
     
     #region SettingMenu
+
+    private bool _flagInitializing;
     
-    public void ShowSettingMenu()
+    private void ShowSettingMenu()
     {
         Focus = "SettingMenu";
         SettingGroup.gameObject.SetActive(true);
         MainVolumeSlider.value = AudioManager.GetInstance().MainVolume;
         MusicVolumeSlider.value = AudioManager.GetInstance().MusicVolume;
         SoundVolumeSlider.value = AudioManager.GetInstance().SoundVolume;
-        DropdownScreenMode.value = GameManager.GetInstance().GameSettingData.ScreenMode==FullScreenMode.ExclusiveFullScreen ? 0 : 1;
-        DropdownResolutionRatio.value = Mathf.Approximately(GameManager.GetInstance().GameSettingData.ResolutionRatio.x, 1920) ? 0 : 1;
+        _flagInitializing = true;
+        DropdownScreenMode.value = (int)GameManager.GetInstance().GameSettingData.ScreenMode;
+        DropdownResolutionRatio.value = (int)GameManager.GetInstance().GameSettingData.ResolutionType;
+        _flagInitializing = false;
     }
-    public void HideSettingMenu()
+
+    private void HideSettingMenu()
     {
         Focus = "MainMenu";
         SettingGroup.gameObject.SetActive(false);
@@ -245,22 +252,35 @@ public class MainMenu : MonoBehaviour
     
     public void OnDropdownScreenModeChange()
     {
+        if (_flagInitializing) return;
         MessageManager.GetInstance().Send(MessageTypes.PlaySound,new PlaySound(SoundClip.BTN_CLICK));
-        if (DropdownScreenMode.value==0) 
-            GameManager.GetInstance().GameSettingData.ScreenMode = FullScreenMode.ExclusiveFullScreen;
-        else
-            GameManager.GetInstance().GameSettingData.ScreenMode = FullScreenMode.Windowed;
-        //todo 消息：重启生效
+        switch (DropdownScreenMode.value)
+        {
+            case 0:
+                GameManager.GetInstance().GameSettingData.ScreenMode = FullScreenMode.Windowed;
+                break;
+            case 1:
+                GameManager.GetInstance().GameSettingData.ScreenMode = FullScreenMode.FullScreenWindow;
+                break;
+            case 2:
+                GameManager.GetInstance().GameSettingData.ScreenMode = FullScreenMode.ExclusiveFullScreen;
+                break;
+            case 3:
+                GameManager.GetInstance().GameSettingData.ScreenMode = FullScreenMode.MaximizedWindow;
+                break;
+        }
+        MessageManager.GetInstance().Send(MessageTypes.AddNotification,new AddNotification("重启后生效"));
         MessageManager.GetInstance().Send(MessageTypes.SettingDataUpdate,new SettingDataUpdate());
     }
     
     public void OnDropdownResolutionRatioChange()
     {
+        if (_flagInitializing) return;
         MessageManager.GetInstance().Send(MessageTypes.PlaySound,new PlaySound(SoundClip.BTN_CLICK));
         GameManager.GetInstance().GameSettingData.ResolutionRatio = ResolutionRatio[DropdownResolutionRatio.value];
         GameManager.GetInstance().GameSettingData.ResolutionType = (ResolutionType)DropdownResolutionRatio.value;
-        
-        //todo 消息：重启生效
+
+        MessageManager.GetInstance().Send(MessageTypes.AddNotification,new AddNotification("重启后生效"));
         MessageManager.GetInstance().Send(MessageTypes.SettingDataUpdate,new SettingDataUpdate());
     }
     

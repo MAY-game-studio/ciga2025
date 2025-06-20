@@ -1415,9 +1415,13 @@ MonoBehaviour:
   m_Value: 0
   m_Options:
     m_Options:
-    - m_Text: FullScreen
+    - m_Text: ExclusiveFullScreen
+      m_Image: {fileID: 0}
+    - m_Text: FullScreenWindow
       m_Image: {fileID: 0}
     - m_Text: Windowed
+      m_Image: {fileID: 0}
+    - m_Text: FullScreenWindow
       m_Image: {fileID: 0}
   m_OnValueChanged:
     m_PersistentCalls:
@@ -5855,7 +5859,12 @@ MonoBehaviour:
   BtnHelpReturn: {fileID: 8845588454802985674}
   SettingGroup: {fileID: 1798239475026561084}
   DropdownScreenMode: {fileID: 2921419950945926025}
-  ResolutionRatio: []
+  ResolutionRatio:
+  - {x: 1280, y: 720}
+  - {x: 1600, y: 900}
+  - {x: 1920, y: 1080}
+  - {x: 2560, y: 1440}
+  - {x: 3840, y: 2160}
   DropdownResolutionRatio: {fileID: 182847668027555855}
   MainVolumeSlider: {fileID: 497413979212612325}
   MusicVolumeSlider: {fileID: 8836960977547033990}
@@ -7089,9 +7098,15 @@ MonoBehaviour:
   m_Value: 0
   m_Options:
     m_Options:
-    - m_Text: 1920:1080
+    - m_Text: 1280:720
       m_Image: {fileID: 0}
     - m_Text: 1600:900
+      m_Image: {fileID: 0}
+    - m_Text: 1920:1080
+      m_Image: {fileID: 0}
+    - m_Text: 2560:1440
+      m_Image: {fileID: 0}
+    - m_Text: 3840:2160
       m_Image: {fileID: 0}
   m_OnValueChanged:
     m_PersistentCalls:
