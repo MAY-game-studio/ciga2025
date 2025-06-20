@@ -50,6 +50,7 @@ public class MouseManager : SingletonDontDestory<MouseManager>
             {
                 Debug.Log(part);
                 //todo UI适配展示
+                //等ui
             }
         }
     }
