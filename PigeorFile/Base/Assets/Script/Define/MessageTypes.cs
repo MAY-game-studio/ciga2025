@@ -6,6 +6,8 @@ public enum MessageTypes
     SettingDataUpdate,
     SaveDataUpdate,
     AddNotification,
+    SwitchMouseMode,
+    ShowDetail,
 }
 
 public enum MessageTemporaryType

@@ -44,50 +44,46 @@ public class GameManager : SingletonDontDestory<GameManager>
     /// <summary>
     /// 主控流程开始
     /// </summary>
-    public void GameStart()
+    private void GameStart()
     {
-        MessageManager.GetInstance().Send(MessageTypes.GameModeChange,new GameModeChange(GameModeType.GAMEINIT));//主控流程，游戏初始化
-        UIManager.GetInstance().AwakeVideoInit();//播放起始动画
+        MessageManager.GetInstance().Send(MessageTypes.GameModeChange,new GameModeChange(GameModeType.GAMEINIT)); //主控流程，游戏初始化
+        UIManager.GetInstance().MouseInit();//初始化鼠标
+        MessageManager.GetInstance().Send(MessageTypes.SwitchMouseMode,new SwitchMouseMode(MouseMode.DEFAULT)); //修改鼠标样式
+        UIManager.GetInstance().AwakeVideoInit(); //播放起始动画
     }
 
     /// <summary>
     /// 初始化游戏设置
     /// </summary>
-    public void GameInit()
+    private void GameInit()
     {
         //重载设置
         GameSettingData = SaveManager.GetInstance().GameSettingDataLoad();
         //初始化分辨率（仅在此处游戏开始时重置）
-        Screen.SetResolution((int)GameSettingData.ResolutionRatio.x, (int)GameSettingData.ResolutionRatio.y,
-            GameSettingData.ScreenMode);
+        UIManager.GetInstance().SetResolution();
+        
         //初始化音量与背景音乐
         AudioManager.GetInstance().MainVolume = GameSettingData.Volumes.x;
         AudioManager.GetInstance().MusicVolume = GameSettingData.Volumes.y;
         AudioManager.GetInstance().SoundVolume = GameSettingData.Volumes.z;
-        
-        //设置canvas缩放，初始化主菜单
-//        UIManager.GetInstance().SetCanvasScale(SettingData.ResolutionRatio.x/1920);
-        
-//        MessageManager.GetInstance().Send(MessageTypes.GameModeChange,new GameModeChange(GameModeType.MAINMENU));
-        //不使用开场动画时取消此注释
     }
 
     /// <summary>
     /// 游戏开始或返回时显示主菜单
     /// </summary>
-    public void MainMenuInit()
+    private void MainMenuInit()
     {
         //回到主菜单时的清理游戏组件
         UIManager.GetInstance().GameUIDestroy();
         UIManager.GetInstance().MainMenuInit();
     }
     
-    public void SaveDataLoad()
+    /// <summary>
+    /// 读档，进入游戏内容初始化流
+    /// </summary>
+        
+    private void SaveDataLoad()
     {
-        /*if (GameSaveData == null) //新游戏,创建存档
-        {
-            GameSaveData=SaveManager.GetInstance().CreateGameSaveData();
-        }*/
         MessageManager.GetInstance().Send(MessageTypes.SaveDataUpdate, new SaveDataUpdate());
 
         UIManager.GetInstance().MainMenuDestroy();
@@ -99,7 +95,7 @@ public class GameManager : SingletonDontDestory<GameManager>
     /// <summary>
     /// 游戏中回档
     /// </summary>
-    public void SaveDataReLoad()
+    private void SaveDataReLoad()
     {
         //todo 回档
         MessageManager.GetInstance().Send(MessageTypes.GameModeChange,new GameModeChange(GameModeType.DEFAULT));
@@ -108,7 +104,7 @@ public class GameManager : SingletonDontDestory<GameManager>
     /// <summary>
     /// 退出游戏
     /// </summary>
-    public void GameExit()
+    private void GameExit()
     {
 #if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false;
@@ -120,7 +116,7 @@ public class GameManager : SingletonDontDestory<GameManager>
     
     void Start()
     {
-//        Screen.SetResolution(1920, 1080, FullScreenMode.Windowed);
+        //Screen.SetResolution(1920, 1080, FullScreenMode.Windowed);
         MessageRegister();
         Invoke(nameof(GameStart),0);
     }

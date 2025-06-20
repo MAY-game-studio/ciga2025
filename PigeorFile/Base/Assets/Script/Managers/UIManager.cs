@@ -26,6 +26,9 @@ public class UIManager : SingletonDontDestory<UIManager>
     [SerializeField] private GameObject GameUI_Prefab;
     [Tooltip("消息预制体")]
     [SerializeField] private GameObject Notification_Prefab;
+    [Tooltip("消息预制体")]
+    [SerializeField] private GameObject Mouse_Prefab;
+
 
     [Tooltip("启动视频预制体")]
     [SerializeField] private GameObject AwakeVideo_Prefab;
@@ -36,6 +39,8 @@ public class UIManager : SingletonDontDestory<UIManager>
     
     #region Sprite
 
+    [Tooltip("鼠标")]
+    [SerializeField] public Sprite[] MouseSprite;
     [Tooltip("精灵")]
     [SerializeField] public Sprite[] Sprite;
 
@@ -52,6 +57,31 @@ public class UIManager : SingletonDontDestory<UIManager>
     #endregion
 
     #endregion
+
+    public void SetResolution()
+    {
+        Screen.SetResolution((int)GameManager.GetInstance().GameSettingData.ResolutionRatio.x,
+            (int)GameManager.GetInstance().GameSettingData.ResolutionRatio.y,
+            GameManager.GetInstance().GameSettingData.ScreenMode);
+        Canvas.scaleFactor = GameManager.GetInstance().GameSettingData.ResolutionRatio.x / 1920f;//ui缩放
+    }
+
+    #region Mouse
+
+    [HideInInspector] public Mouse Mouse;
+
+    public void MouseInit()
+    {
+        if (Mouse==null) Mouse = Instantiate(Mouse_Prefab, Canvas.transform).GetComponent<Mouse>();
+        Mouse.transform.SetAsLastSibling();
+    }
+
+    public void MouseDestroy()
+    {
+        if (Mouse!=null) Destroy(Mouse.gameObject);
+    }
+
+    #endregion
     
     #region Videos
     
@@ -61,6 +91,7 @@ public class UIManager : SingletonDontDestory<UIManager>
 
     public void AwakeVideoInit()
     {
+        MessageManager.GetInstance().Send(MessageTypes.SwitchMouseMode,new SwitchMouseMode(MouseMode.HIDE));
         AwakeVideo = Instantiate(AwakeVideo_Prefab, Canvas.transform).GetComponent<AwakeVideo>();
         AwakeVideo.Init(VideoDuration[0],AudioManager.GetInstance().MainVolume);
     }
@@ -68,6 +99,7 @@ public class UIManager : SingletonDontDestory<UIManager>
     public void AwakeVideoDestroy()
     {
         if (AwakeVideo != null) Destroy(AwakeVideo.gameObject);
+        MessageManager.GetInstance().Send(MessageTypes.SwitchMouseMode,new SwitchMouseMode(MouseMode.DEFAULT));
         MessageManager.GetInstance().Send(MessageTypes.GameModeChange,new GameModeChange(GameModeType.MAINMENU));
     }
     

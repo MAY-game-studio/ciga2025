@@ -86,6 +86,31 @@ public class AddNotification : Message
     public float Duration;
 }
 
+/// <summary>
+/// 修改鼠标样式
+/// </summary>
+public class SwitchMouseMode : Message
+{
+    public SwitchMouseMode(MouseMode mouseMode) : base(MessageTypes.SwitchMouseMode)
+    {
+        MouseMode = mouseMode;
+    }
+    public MouseMode MouseMode;
+}
+
+
+/// <summary>
+/// 鼠标旁显示细节信息，多个框体的细节由*分割
+/// </summary>
+public class ShowDetail : Message
+{
+    public ShowDetail(string detail) : base(MessageTypes.ShowDetail)
+    {
+        Detail = detail;
+    }
+    public string Detail;
+}
+
 public class MessageListener //消息监听器
 {
     public UnityAction<Message> Action;
@@ -163,50 +188,3 @@ public class MessageManager : SingletonDontDestory<MessageManager>
         }
     }
 }
-
-/*
-public class MessageManager : SingletonDontDestory<MessageManager>
-{
-    private Dictionary<MessageTypes, UnityAction<Message>> listeners;
-
-    private void OnEnable()
-    {
-        listeners = new Dictionary<MessageTypes, UnityAction<Message>>();
-    }
-
-    /// <summary>
-    /// 注册消息
-    /// </summary>
-    public void Register(MessageTypes messageType, UnityAction<Message> action)
-    {
-        if (!listeners.TryAdd(messageType, action))
-            listeners[messageType] += action;
-    }
-
-    /// <summary>
-    /// 移除消息
-    /// </summary>
-    public void Remove(MessageTypes messageType, UnityAction<Message> action)
-    {
-        if (listeners.ContainsKey(messageType))
-            listeners[messageType] -= action;
-    }
-
-    /// <summary>
-    /// 发送消息,且在控制台输出一句log
-    /// </summary>
-    public void Send(MessageTypes messageType, Message Message)
-    {
-        #if UNITY_EDITOR
-            Debug.Log(messageType);
-        #endif
-        if (listeners.TryGetValue(messageType, out var action))
-            action(Message);
-    }
-
-    public void Clear()
-    {
-        listeners.Clear();
-    }
-}
-*/

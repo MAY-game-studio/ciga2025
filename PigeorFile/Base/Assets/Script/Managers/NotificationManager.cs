@@ -31,7 +31,7 @@ public class NotificationManager : SingletonDontDestory<NotificationManager>
         Notification tmp = notificationList[index];
         notificationList.RemoveAt(index);
         for (int i = index; i < notificationList.Count; i++)
-            notificationList[i].RePosition(i);
+            notificationList[i].RePosition(-1);
         UIManager.GetInstance().NotificationDestroy(tmp);
     }
 
