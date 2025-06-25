@@ -563,6 +563,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DefultDuration: 2
   MaxNotifications: 5
+  NotificationInterval: 0.5
 --- !u!114 &1704456156
 MonoBehaviour:
   m_ObjectHideFlags: 0

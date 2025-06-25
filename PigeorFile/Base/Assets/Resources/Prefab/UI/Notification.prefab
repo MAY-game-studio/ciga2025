@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 8742111822549999935}
   - component: {fileID: 936252224631553935}
   - component: {fileID: 7741430911764210867}
+  - component: {fileID: 3634481911448403808}
   m_Layer: 5
   m_Name: Notification
   m_TagString: Untagged
@@ -89,8 +90,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: abd977f152292aa419d14d6ed1d0c7ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  NotificationSpace: 75
+  AnimDuration: 0.5
   text: {fileID: 8933132331005983747}
-  NotificationUI: {fileID: 5928558710895739206}
+--- !u!114 &3634481911448403808
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5928558710895739206}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 77a6e517e564a2c469e1778f99f976c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  FlagAwakeAnim: 1
+  FlagEnableAnim: 0
+  Delay: 0
+  Duration: 0.5
+  Offset: {x: 50, y: 0}
 --- !u!1 &9055758564543844092
 GameObject:
   m_ObjectHideFlags: 0
@@ -159,7 +178,7 @@ MonoBehaviour:
   m_text: Notification
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: d9d97cdc1dd27544fbd47927313a1968, type: 2}
-  m_sharedMaterial: {fileID: 1288060747851325361, guid: d9d97cdc1dd27544fbd47927313a1968, type: 2}
+  m_sharedMaterial: {fileID: 8546923909587543140, guid: d9d97cdc1dd27544fbd47927313a1968, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []

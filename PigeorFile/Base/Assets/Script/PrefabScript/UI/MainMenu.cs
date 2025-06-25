@@ -14,6 +14,7 @@ public class MainMenu : MonoBehaviour
 
     [Header("主菜单")]
     
+    [SerializeField] private GameObject MainMenuGroup;
     [SerializeField] private Image MainMenu_BG;
     [SerializeField] private Image MainMenu_Title;
     [SerializeField] private Button MainMenu_BtnStart;
@@ -79,19 +80,32 @@ public class MainMenu : MonoBehaviour
     
     #region Main
 
+    private void ShowMainMenu()
+    {
+        MainMenuGroup.gameObject.SetActive(true);
+    }
+
+    private void HideMainMenu()
+    {
+        MainMenuGroup.gameObject.SetActive(false);
+    }
+    
     public void OnBtnStartClicked()
     {
         MessageManager.GetInstance().Send(MessageTypes.PlaySound,new PlaySound(SoundClip.BTN_CLICK));
+        HideMainMenu();
         ShowSaveMenu();
     }
     public void OnBtnHelpClicked()
     {
         MessageManager.GetInstance().Send(MessageTypes.PlaySound,new PlaySound(SoundClip.BTN_CLICK));
+        HideMainMenu();
         ShowHelpMenu();
     }
     public void OnBtnSettingClicked()
     {
         MessageManager.GetInstance().Send(MessageTypes.PlaySound,new PlaySound(SoundClip.BTN_CLICK));
+        HideMainMenu();
         ShowSettingMenu();
     }
     public void OnBtnExitClicked()
@@ -147,6 +161,7 @@ public class MainMenu : MonoBehaviour
 
     private void HideSaveMenu()
     {
+        ShowMainMenu();
         Focus = "MainMenu";
         SaveGroup.gameObject.SetActive(false);
     }
@@ -203,6 +218,7 @@ public class MainMenu : MonoBehaviour
 
     private void HideHelpMenu()
     {
+        ShowMainMenu();
         Focus = "MainMenu";
         HelpGroup.gameObject.SetActive(false);
     }
@@ -246,6 +262,7 @@ public class MainMenu : MonoBehaviour
 
     private void HideSettingMenu()
     {
+        ShowMainMenu();
         Focus = "MainMenu";
         SettingGroup.gameObject.SetActive(false);
     }

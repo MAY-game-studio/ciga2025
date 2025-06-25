@@ -1232,7 +1232,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 755, y: -202}
+  m_AnchoredPosition: {x: -755, y: -202}
   m_SizeDelta: {x: 320, y: 630}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1912146718515296216
@@ -1562,6 +1562,7 @@ GameObject:
   - component: {fileID: 3737255015167484795}
   - component: {fileID: 2889956779119670393}
   - component: {fileID: 6557366243441524987}
+  - component: {fileID: 4068388554605299211}
   m_Layer: 5
   m_Name: BtnSetting
   m_TagString: Untagged
@@ -1617,8 +1618,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: f6decf05536fc2949b8730ecf024c905, type: 3}
-  m_Type: 1
+  m_Sprite: {fileID: 21300000, guid: 0654dab4ac982ad428d61dc9884d75b7, type: 3}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -1683,6 +1684,26 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &4068388554605299211
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1393651691920624360}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a38ec18d501d174fbf241873ab5fad1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  FlagHighlightSpriteAnim: 1
+  easeType: 6
+  Duration: 0.5
+  Offset: {x: 50, y: 0}
+  Scale: {x: 1, y: 1}
+  HighLightSprite: {fileID: 21300000, guid: c8eed0d567bdfc443852f17078a0914a, type: 3}
+  HighlightFadeDuration: 0.5
+  FadeOutDuration: 0.5
 --- !u!1 &1486975530528219576
 GameObject:
   m_ObjectHideFlags: 0
@@ -2230,14 +2251,14 @@ MonoBehaviour:
   m_text: "\u5F00\u59CB\u6E38\u620F"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: d9d97cdc1dd27544fbd47927313a1968, type: 2}
-  m_sharedMaterial: {fileID: 1288060747851325361, guid: d9d97cdc1dd27544fbd47927313a1968, type: 2}
+  m_sharedMaterial: {fileID: 8546923909587543140, guid: d9d97cdc1dd27544fbd47927313a1968, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4281479730
-  m_fontColor: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -2308,6 +2329,7 @@ GameObject:
   - component: {fileID: 6664684300476423764}
   - component: {fileID: 4302378591376354493}
   - component: {fileID: 2112104638126684601}
+  - component: {fileID: 2102760154914326377}
   m_Layer: 5
   m_Name: SettingGroup
   m_TagString: Untagged
@@ -2391,6 +2413,24 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
+--- !u!114 &2102760154914326377
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1798239475026561084}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 77a6e517e564a2c469e1778f99f976c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  FlagAwakeAnim: 0
+  FlagEnableAnim: 1
+  easeType: 6
+  Delay: 0
+  Duration: 0.5
+  Offset: {x: 0, y: -50}
 --- !u!1 &1895261904542934433
 GameObject:
   m_ObjectHideFlags: 0
@@ -3290,6 +3330,7 @@ GameObject:
   - component: {fileID: 8181426233982750620}
   - component: {fileID: 7209862308212543475}
   - component: {fileID: 4849185956842521973}
+  - component: {fileID: 7604206279375834871}
   m_Layer: 5
   m_Name: BtnStart
   m_TagString: Untagged
@@ -3345,8 +3386,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: f6decf05536fc2949b8730ecf024c905, type: 3}
-  m_Type: 1
+  m_Sprite: {fileID: 21300000, guid: 0654dab4ac982ad428d61dc9884d75b7, type: 3}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -3411,6 +3452,26 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &7604206279375834871
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3003158032699609950}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a38ec18d501d174fbf241873ab5fad1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  FlagHighlightSpriteAnim: 1
+  easeType: 6
+  Duration: 0.5
+  Offset: {x: 50, y: 0}
+  Scale: {x: 1, y: 1}
+  HighLightSprite: {fileID: 21300000, guid: c8eed0d567bdfc443852f17078a0914a, type: 3}
+  HighlightFadeDuration: 0.5
+  FadeOutDuration: 0.5
 --- !u!1 &3190085041224163909
 GameObject:
   m_ObjectHideFlags: 0
@@ -3691,6 +3752,7 @@ GameObject:
   - component: {fileID: 1115202116147343860}
   - component: {fileID: 4051632103807000221}
   - component: {fileID: 6032052895083283957}
+  - component: {fileID: 2568956390099978660}
   m_Layer: 5
   m_Name: BtnExit
   m_TagString: Untagged
@@ -3746,8 +3808,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: f6decf05536fc2949b8730ecf024c905, type: 3}
-  m_Type: 1
+  m_Sprite: {fileID: 21300000, guid: 0654dab4ac982ad428d61dc9884d75b7, type: 3}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -3812,6 +3874,26 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &2568956390099978660
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3613470764563417137}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a38ec18d501d174fbf241873ab5fad1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  FlagHighlightSpriteAnim: 1
+  easeType: 6
+  Duration: 0.5
+  Offset: {x: 50, y: 0}
+  Scale: {x: 1, y: 1}
+  HighLightSprite: {fileID: 21300000, guid: c8eed0d567bdfc443852f17078a0914a, type: 3}
+  HighlightFadeDuration: 0.5
+  FadeOutDuration: 0.5
 --- !u!1 &3620336601564656193
 GameObject:
   m_ObjectHideFlags: 0
@@ -5199,6 +5281,7 @@ GameObject:
   - component: {fileID: 4415656999417739514}
   - component: {fileID: 3812759737930660932}
   - component: {fileID: 389630593759394753}
+  - component: {fileID: 656695031278458703}
   m_Layer: 5
   m_Name: MainGroup
   m_TagString: Untagged
@@ -5276,6 +5359,24 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
+--- !u!114 &656695031278458703
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5714873083063939940}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 77a6e517e564a2c469e1778f99f976c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  FlagAwakeAnim: 0
+  FlagEnableAnim: 1
+  easeType: 6
+  Delay: 0
+  Duration: 0.5
+  Offset: {x: 0, y: 0}
 --- !u!1 &5735737284558491490
 GameObject:
   m_ObjectHideFlags: 0
@@ -5380,14 +5481,14 @@ MonoBehaviour:
   m_text: "\u8BBE\u7F6E\u83DC\u5355"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: d9d97cdc1dd27544fbd47927313a1968, type: 2}
-  m_sharedMaterial: {fileID: 1288060747851325361, guid: d9d97cdc1dd27544fbd47927313a1968, type: 2}
+  m_sharedMaterial: {fileID: 8546923909587543140, guid: d9d97cdc1dd27544fbd47927313a1968, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4281479730
-  m_fontColor: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -5756,8 +5857,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: f6decf05536fc2949b8730ecf024c905, type: 3}
-  m_Type: 1
+  m_Sprite: {fileID: 21300000, guid: 5db59daf0e91fa241a71a04ed317ecbd, type: 3}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -5830,6 +5931,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a30463bf29d83647ae16de0736c2b9a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  MainMenuGroup: {fileID: 5714873083063939940}
   MainMenu_BG: {fileID: 1552912710612298232}
   MainMenu_Title: {fileID: 3548765403461959839}
   MainMenu_BtnStart: {fileID: 4849185956842521973}
@@ -6009,6 +6111,7 @@ GameObject:
   - component: {fileID: 8439015606767100195}
   - component: {fileID: 6751595032110478215}
   - component: {fileID: 1909577114701519246}
+  - component: {fileID: 7921784710317081109}
   m_Layer: 5
   m_Name: HelpGroup
   m_TagString: Untagged
@@ -6090,6 +6193,24 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
+--- !u!114 &7921784710317081109
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6826114032829936392}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 77a6e517e564a2c469e1778f99f976c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  FlagAwakeAnim: 0
+  FlagEnableAnim: 1
+  easeType: 6
+  Delay: 0
+  Duration: 0.5
+  Offset: {x: 0, y: -50}
 --- !u!1 &6832727861008557562
 GameObject:
   m_ObjectHideFlags: 0
@@ -6517,14 +6638,14 @@ MonoBehaviour:
   m_text: "\u5E2E\u52A9\u754C\u9762"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: d9d97cdc1dd27544fbd47927313a1968, type: 2}
-  m_sharedMaterial: {fileID: 1288060747851325361, guid: d9d97cdc1dd27544fbd47927313a1968, type: 2}
+  m_sharedMaterial: {fileID: 8546923909587543140, guid: d9d97cdc1dd27544fbd47927313a1968, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4281479730
-  m_fontColor: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -6670,6 +6791,7 @@ GameObject:
   - component: {fileID: 7095731254765797384}
   - component: {fileID: 724007144831737746}
   - component: {fileID: 2348127999540743779}
+  - component: {fileID: 7017105810575473133}
   m_Layer: 5
   m_Name: BtnHelp
   m_TagString: Untagged
@@ -6725,8 +6847,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: f6decf05536fc2949b8730ecf024c905, type: 3}
-  m_Type: 1
+  m_Sprite: {fileID: 21300000, guid: 0654dab4ac982ad428d61dc9884d75b7, type: 3}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -6791,6 +6913,26 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &7017105810575473133
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7720257989404319932}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a38ec18d501d174fbf241873ab5fad1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  FlagHighlightSpriteAnim: 1
+  easeType: 6
+  Duration: 0.5
+  Offset: {x: 50, y: 0}
+  Scale: {x: 1, y: 1}
+  HighLightSprite: {fileID: 21300000, guid: c8eed0d567bdfc443852f17078a0914a, type: 3}
+  HighlightFadeDuration: 0.5
+  FadeOutDuration: 0.5
 --- !u!1 &7746959698893693072
 GameObject:
   m_ObjectHideFlags: 0
@@ -7599,10 +7741,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: TITLE
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: d9d97cdc1dd27544fbd47927313a1968, type: 2}
-  m_sharedMaterial: {fileID: 1288060747851325361, guid: d9d97cdc1dd27544fbd47927313a1968, type: 2}
+  m_sharedMaterial: {fileID: 8546923909587543140, guid: d9d97cdc1dd27544fbd47927313a1968, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -7964,6 +8106,7 @@ GameObject:
   - component: {fileID: 5502932576437434563}
   - component: {fileID: 5599201031454543471}
   - component: {fileID: 5663475858420793542}
+  - component: {fileID: 6778228261024770086}
   m_Layer: 5
   m_Name: SaveGroup
   m_TagString: Untagged
@@ -8045,6 +8188,24 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
+--- !u!114 &6778228261024770086
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8569915626270488669}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 77a6e517e564a2c469e1778f99f976c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  FlagAwakeAnim: 0
+  FlagEnableAnim: 1
+  easeType: 6
+  Delay: 0
+  Duration: 0.5
+  Offset: {x: 0, y: -50}
 --- !u!1 &8597664826680601114
 GameObject:
   m_ObjectHideFlags: 0
@@ -8113,14 +8274,14 @@ MonoBehaviour:
   m_text: "\u9000\u51FA\u6E38\u620F"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: d9d97cdc1dd27544fbd47927313a1968, type: 2}
-  m_sharedMaterial: {fileID: 1288060747851325361, guid: d9d97cdc1dd27544fbd47927313a1968, type: 2}
+  m_sharedMaterial: {fileID: 8546923909587543140, guid: d9d97cdc1dd27544fbd47927313a1968, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4281479730
-  m_fontColor: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:

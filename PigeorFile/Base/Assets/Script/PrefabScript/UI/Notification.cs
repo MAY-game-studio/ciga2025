@@ -2,13 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using DG.Tweening;
 
 public class Notification : MonoBehaviour
 {
     #region SerializeField
 
+    [Header("消息参数设置")]
+    [Tooltip("间隔之间的空隙")]
+    [SerializeField] private float NotificationSpace;
+    [Tooltip("动画时长")]
+    [SerializeField] private float AnimDuration;
+
+    [Header("UI组件")]
     [SerializeField] private TextMeshProUGUI text;
-//    [SerializeField] public GameObject NotificationUI;
         
     #endregion
 
@@ -26,8 +33,8 @@ public class Notification : MonoBehaviour
 
     public void RePosition(int num)
     {
-        gameObject.transform.localPosition = new Vector3(gameObject.transform.localPosition.x,
-            gameObject.transform.localPosition.y + num * 75f, gameObject.transform.localPosition.z);
+        Vector3 targetPos = transform.localPosition + new Vector3(0, num * NotificationSpace, 0);
+        transform.DOLocalMove(targetPos, AnimDuration).SetEase(Ease.OutQuad);
     }
     
     void Update()
