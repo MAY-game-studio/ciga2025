@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using DG.Tweening;
 
 public class MainMenu : MonoBehaviour
 {
@@ -82,12 +83,18 @@ public class MainMenu : MonoBehaviour
 
     private void ShowMainMenu()
     {
+        DOTween.Complete(MainMenuGroup);
         MainMenuGroup.gameObject.SetActive(true);
     }
 
     private void HideMainMenu()
     {
-        MainMenuGroup.gameObject.SetActive(false);
+        DOTween.Complete(MainMenuGroup);
+        Transform stand = MainMenuGroup.transform.Find("StandObject");
+        if (stand != null)
+            stand.gameObject.SetActive(false);
+        else
+            MainMenuGroup.SetActive(false);
     }
     
     public void OnBtnStartClicked()
@@ -123,7 +130,9 @@ public class MainMenu : MonoBehaviour
     private void ShowSaveMenu()
     {
         Focus = "SaveMenu";
+        DOTween.Complete(SaveGroup);
         SaveGroup.gameObject.SetActive(true);
+        
         _gameSaveFileSlot1 = SaveManager.GetInstance().GameSaveDataLoad(1);
         _gameSaveFileSlot2 = SaveManager.GetInstance().GameSaveDataLoad(2);
         _gameSaveFileSlot3 = SaveManager.GetInstance().GameSaveDataLoad(3);
@@ -163,7 +172,12 @@ public class MainMenu : MonoBehaviour
     {
         ShowMainMenu();
         Focus = "MainMenu";
-        SaveGroup.gameObject.SetActive(false);
+        DOTween.Complete(SaveGroup);
+        Transform stand = SaveGroup.transform.Find("StandObject");
+        if (stand != null)
+            stand.gameObject.SetActive(false);
+        else
+            MainMenuGroup.SetActive(false);
     }
 
     public void OnBtnSlot1Clicked()
@@ -198,6 +212,7 @@ public class MainMenu : MonoBehaviour
     
     public void OnBtnSaveReturnClicked()
     {
+//        if (MainMenuGroup.activeSelf) return; // MainMenuGroup 动画进程冲突，不处理
         MessageManager.GetInstance().Send(MessageTypes.PlaySound,new PlaySound(SoundClip.BTN_CLICK));
         HideSaveMenu();
     }
@@ -211,6 +226,7 @@ public class MainMenu : MonoBehaviour
     private void ShowHelpMenu()
     {
         Focus = "HelpMenu";
+        DOTween.Complete(HelpGroup);
         HelpGroup.gameObject.SetActive(true);
         _page = 0;
         Help_Image.sprite = Help_Sprite[_page];
@@ -220,7 +236,12 @@ public class MainMenu : MonoBehaviour
     {
         ShowMainMenu();
         Focus = "MainMenu";
-        HelpGroup.gameObject.SetActive(false);
+        DOTween.Complete(HelpGroup);
+        Transform stand = HelpGroup.transform.Find("StandObject");
+        if (stand != null)
+            stand.gameObject.SetActive(false);
+        else
+            MainMenuGroup.SetActive(false);
     }
     public void OnBtnLeftClicked()
     {
@@ -237,6 +258,7 @@ public class MainMenu : MonoBehaviour
     
     public void OnBtnHelpReturnClicked()
     {
+//        if (MainMenuGroup.activeSelf) return; // MainMenuGroup 动画进程冲突，不处理
         MessageManager.GetInstance().Send(MessageTypes.PlaySound,new PlaySound(SoundClip.BTN_CLICK));
         HideHelpMenu();
     }
@@ -250,6 +272,7 @@ public class MainMenu : MonoBehaviour
     private void ShowSettingMenu()
     {
         Focus = "SettingMenu";
+        DOTween.Complete(SettingGroup);
         SettingGroup.gameObject.SetActive(true);
         MainVolumeSlider.value = AudioManager.GetInstance().MainVolume;
         MusicVolumeSlider.value = AudioManager.GetInstance().MusicVolume;
@@ -264,7 +287,12 @@ public class MainMenu : MonoBehaviour
     {
         ShowMainMenu();
         Focus = "MainMenu";
-        SettingGroup.gameObject.SetActive(false);
+        DOTween.Complete(SettingGroup);
+        Transform stand = SettingGroup.transform.Find("StandObject");
+        if (stand != null)
+            stand.gameObject.SetActive(false);
+        else
+            MainMenuGroup.SetActive(false);
     }
     
     public void OnDropdownScreenModeChange()
@@ -322,6 +350,7 @@ public class MainMenu : MonoBehaviour
 
     public void OnBtnSettingReturnClicked()
     {
+//        if (MainMenuGroup.activeSelf) return; // MainMenuGroup 动画进程冲突，不处理
         MessageManager.GetInstance().Send(MessageTypes.PlaySound,new PlaySound(SoundClip.BTN_CLICK));
         HideSettingMenu();
     }
@@ -342,12 +371,18 @@ public class MainMenu : MonoBehaviour
                 case "MainMenu":
                     break;
                 case "SaveMenu":
+                    DOTween.Complete(MainMenuGroup);
+                    DOTween.Complete(SaveGroup);
                     HideSaveMenu();
                     break;
                 case "HelpMenu":
+                    DOTween.Complete(MainMenuGroup);
+                    DOTween.Complete(HelpGroup);
                     HideHelpMenu();
                     break;
                 case "SettingMenu":
+                    DOTween.Complete(MainMenuGroup);
+                    DOTween.Complete(SettingGroup);
                     HideSettingMenu();
                     break;
             }

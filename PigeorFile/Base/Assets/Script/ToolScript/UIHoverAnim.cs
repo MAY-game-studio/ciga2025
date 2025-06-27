@@ -93,14 +93,17 @@ public class UIHoverAnim : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     {
         Debug.Log("enter");
         _sequence?.Kill();
-        _sequence = DOTween.Sequence();
-        _sequence.Join(_rectTransform.DOAnchorPos(_originalPos + Offset, Duration).SetEase(easeType));
-        _sequence.Join(_rectTransform.DOScale(new Vector3(Scale.x, Scale.y, 1f), Duration).SetEase(easeType));
+        _sequence = DOTween.Sequence()
+            .SetTarget(this)
+            .SetUpdate(true)
+            .Append(_rectTransform.DOAnchorPos(_originalPos + Offset, Duration).SetEase(easeType))
+            .Join(_rectTransform.DOScale(new Vector3(Scale.x, Scale.y, 1f), Duration).SetEase(easeType));
         if (FlagHighlightSpriteAnim)
         {
-            _image.DOFade(0f, HighlightFadeDuration).SetEase(easeType);
-            _hoverImage.DOFade(1f, HighlightFadeDuration).SetEase(easeType);
+            _sequence.Join(_image.DOFade(0f, HighlightFadeDuration).SetTarget(this));
+            _sequence.Join(_hoverImage.DOFade(1f, HighlightFadeDuration).SetTarget(this));
         }
+        _sequence.Play();
     }
 
     /// <summary>
@@ -110,14 +113,18 @@ public class UIHoverAnim : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     /// </summary>
     public void OnPointerExit(PointerEventData eventData)
     {
+        Debug.Log("exit");
         _sequence?.Kill();
-        _sequence = DOTween.Sequence();
-        _sequence.Join(_rectTransform.DOAnchorPos(_originalPos, Duration).SetEase(easeType));
-        _sequence.Join(_rectTransform.DOScale(_originalScale, Duration).SetEase(easeType));
+        _sequence = DOTween.Sequence()
+            .SetTarget(this)
+            .SetUpdate(true)
+            .Append(_rectTransform.DOAnchorPos(_originalPos, Duration).SetEase(easeType))
+            .Join(_rectTransform.DOScale(new Vector3(_originalScale.x, _originalScale.y, 1f), Duration).SetEase(easeType));
         if (FlagHighlightSpriteAnim)
         {
-            _image.DOFade(1f, HighlightFadeDuration).SetEase(easeType);
-            _hoverImage.DOFade(0f, HighlightFadeDuration).SetEase(easeType);
+            _sequence.Join(_image.DOFade(1f, HighlightFadeDuration).SetTarget(this));
+            _sequence.Join(_hoverImage.DOFade(0f, HighlightFadeDuration).SetTarget(this));
         }
+        _sequence.Play();
     }
 }

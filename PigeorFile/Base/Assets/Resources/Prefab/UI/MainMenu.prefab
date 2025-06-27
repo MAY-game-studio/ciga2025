@@ -1193,98 +1193,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!1 &984636703597323085
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 3421338532909759125}
-  - component: {fileID: 1912146718515296216}
-  - component: {fileID: 5498447388297414218}
-  - component: {fileID: 8341345687808572589}
-  m_Layer: 5
-  m_Name: BasicBtnGroup
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &3421338532909759125
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 984636703597323085}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 5411073718330248709}
-  - {fileID: 1924655110085077122}
-  - {fileID: 9083480176453900754}
-  - {fileID: 4787162299918415177}
-  m_Father: {fileID: 8512609411838748280}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -755, y: -202}
-  m_SizeDelta: {x: 320, y: 630}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!222 &1912146718515296216
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 984636703597323085}
-  m_CullTransparentMesh: 1
---- !u!114 &5498447388297414218
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 984636703597323085}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0}
-  m_RaycastTarget: 0
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
-  m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
---- !u!225 &8341345687808572589
-CanvasGroup:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 984636703597323085}
-  m_Enabled: 1
-  m_Alpha: 1
-  m_Interactable: 1
-  m_BlocksRaycasts: 1
-  m_IgnoreParentGroups: 0
 --- !u!1 &1070275882823448433
 GameObject:
   m_ObjectHideFlags: 0
@@ -1583,11 +1491,11 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5695079165168390865}
-  m_Father: {fileID: 3421338532909759125}
+  m_Father: {fileID: 8512609411838748280}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -75}
+  m_AnchoredPosition: {x: -755, y: -277}
   m_SizeDelta: {x: 300, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3737255015167484795
@@ -1698,12 +1606,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   FlagHighlightSpriteAnim: 1
   easeType: 6
-  Duration: 0.5
+  Duration: 0.2
   Offset: {x: 50, y: 0}
   Scale: {x: 1, y: 1}
   HighLightSprite: {fileID: 21300000, guid: c8eed0d567bdfc443852f17078a0914a, type: 3}
-  HighlightFadeDuration: 0.5
-  FadeOutDuration: 0.5
+  HighlightFadeDuration: 0.2
+  FadeOutDuration: 0.2
 --- !u!1 &1486975530528219576
 GameObject:
   m_ObjectHideFlags: 0
@@ -2330,6 +2238,7 @@ GameObject:
   - component: {fileID: 4302378591376354493}
   - component: {fileID: 2112104638126684601}
   - component: {fileID: 2102760154914326377}
+  - component: {fileID: 7715374225297201374}
   m_Layer: 5
   m_Name: SettingGroup
   m_TagString: Untagged
@@ -2429,7 +2338,25 @@ MonoBehaviour:
   FlagEnableAnim: 1
   easeType: 6
   Delay: 0
-  Duration: 0.5
+  Duration: 0.2
+  Offset: {x: 0, y: -50}
+--- !u!114 &7715374225297201374
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1798239475026561084}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46b3ede84cbfc204f881b65111ec4d8c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  FlagDestoryAnim: 0
+  FlagDisableAnim: 1
+  easeType: 6
+  Delay: 0
+  Duration: 0.2
   Offset: {x: 0, y: -50}
 --- !u!1 &1895261904542934433
 GameObject:
@@ -3351,11 +3278,11 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1053024436192716398}
-  m_Father: {fileID: 3421338532909759125}
+  m_Father: {fileID: 8512609411838748280}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 225}
+  m_AnchoredPosition: {x: -755, y: 23}
   m_SizeDelta: {x: 300, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8181426233982750620
@@ -3466,12 +3393,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   FlagHighlightSpriteAnim: 1
   easeType: 6
-  Duration: 0.5
+  Duration: 0.2
   Offset: {x: 50, y: 0}
   Scale: {x: 1, y: 1}
   HighLightSprite: {fileID: 21300000, guid: c8eed0d567bdfc443852f17078a0914a, type: 3}
-  HighlightFadeDuration: 0.5
-  FadeOutDuration: 0.5
+  HighlightFadeDuration: 0.2
+  FadeOutDuration: 0.2
 --- !u!1 &3190085041224163909
 GameObject:
   m_ObjectHideFlags: 0
@@ -3773,11 +3700,11 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7367631296797939070}
-  m_Father: {fileID: 3421338532909759125}
+  m_Father: {fileID: 8512609411838748280}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -225}
+  m_AnchoredPosition: {x: -755, y: -427}
   m_SizeDelta: {x: 300, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1115202116147343860
@@ -3888,12 +3815,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   FlagHighlightSpriteAnim: 1
   easeType: 6
-  Duration: 0.5
+  Duration: 0.2
   Offset: {x: 50, y: 0}
   Scale: {x: 1, y: 1}
   HighLightSprite: {fileID: 21300000, guid: c8eed0d567bdfc443852f17078a0914a, type: 3}
-  HighlightFadeDuration: 0.5
-  FadeOutDuration: 0.5
+  HighlightFadeDuration: 0.2
+  FadeOutDuration: 0.2
 --- !u!1 &3620336601564656193
 GameObject:
   m_ObjectHideFlags: 0
@@ -5282,6 +5209,7 @@ GameObject:
   - component: {fileID: 3812759737930660932}
   - component: {fileID: 389630593759394753}
   - component: {fileID: 656695031278458703}
+  - component: {fileID: 5875722298262042092}
   m_Layer: 5
   m_Name: MainGroup
   m_TagString: Untagged
@@ -5301,7 +5229,10 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 3421338532909759125}
+  - {fileID: 5411073718330248709}
+  - {fileID: 1924655110085077122}
+  - {fileID: 9083480176453900754}
+  - {fileID: 4787162299918415177}
   m_Father: {fileID: 5141675784065923614}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0.5}
@@ -5375,8 +5306,26 @@ MonoBehaviour:
   FlagEnableAnim: 1
   easeType: 6
   Delay: 0
-  Duration: 0.5
+  Duration: 0.2
   Offset: {x: 0, y: 0}
+--- !u!114 &5875722298262042092
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5714873083063939940}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46b3ede84cbfc204f881b65111ec4d8c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  FlagDestoryAnim: 0
+  FlagDisableAnim: 1
+  easeType: 6
+  Delay: 0
+  Duration: 0.2
+  Offset: {x: -200, y: 0}
 --- !u!1 &5735737284558491490
 GameObject:
   m_ObjectHideFlags: 0
@@ -6112,6 +6061,7 @@ GameObject:
   - component: {fileID: 6751595032110478215}
   - component: {fileID: 1909577114701519246}
   - component: {fileID: 7921784710317081109}
+  - component: {fileID: 1713710934819440102}
   m_Layer: 5
   m_Name: HelpGroup
   m_TagString: Untagged
@@ -6209,7 +6159,25 @@ MonoBehaviour:
   FlagEnableAnim: 1
   easeType: 6
   Delay: 0
-  Duration: 0.5
+  Duration: 0.2
+  Offset: {x: 0, y: -50}
+--- !u!114 &1713710934819440102
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6826114032829936392}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46b3ede84cbfc204f881b65111ec4d8c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  FlagDestoryAnim: 0
+  FlagDisableAnim: 1
+  easeType: 6
+  Delay: 0
+  Duration: 0.2
   Offset: {x: 0, y: -50}
 --- !u!1 &6832727861008557562
 GameObject:
@@ -6791,7 +6759,7 @@ GameObject:
   - component: {fileID: 7095731254765797384}
   - component: {fileID: 724007144831737746}
   - component: {fileID: 2348127999540743779}
-  - component: {fileID: 7017105810575473133}
+  - component: {fileID: 7449929622765701815}
   m_Layer: 5
   m_Name: BtnHelp
   m_TagString: Untagged
@@ -6812,11 +6780,11 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2432688763286471303}
-  m_Father: {fileID: 3421338532909759125}
+  m_Father: {fileID: 8512609411838748280}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 75}
+  m_AnchoredPosition: {x: -755, y: -127}
   m_SizeDelta: {x: 300, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7095731254765797384
@@ -6913,7 +6881,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &7017105810575473133
+--- !u!114 &7449929622765701815
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -6927,12 +6895,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   FlagHighlightSpriteAnim: 1
   easeType: 6
-  Duration: 0.5
+  Duration: 0.2
   Offset: {x: 50, y: 0}
   Scale: {x: 1, y: 1}
   HighLightSprite: {fileID: 21300000, guid: c8eed0d567bdfc443852f17078a0914a, type: 3}
-  HighlightFadeDuration: 0.5
-  FadeOutDuration: 0.5
+  HighlightFadeDuration: 0.2
+  FadeOutDuration: 0.2
 --- !u!1 &7746959698893693072
 GameObject:
   m_ObjectHideFlags: 0
@@ -8107,6 +8075,7 @@ GameObject:
   - component: {fileID: 5599201031454543471}
   - component: {fileID: 5663475858420793542}
   - component: {fileID: 6778228261024770086}
+  - component: {fileID: 96513861721720205}
   m_Layer: 5
   m_Name: SaveGroup
   m_TagString: Untagged
@@ -8204,7 +8173,25 @@ MonoBehaviour:
   FlagEnableAnim: 1
   easeType: 6
   Delay: 0
-  Duration: 0.5
+  Duration: 0.2
+  Offset: {x: 0, y: -50}
+--- !u!114 &96513861721720205
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8569915626270488669}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46b3ede84cbfc204f881b65111ec4d8c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  FlagDestoryAnim: 0
+  FlagDisableAnim: 1
+  easeType: 6
+  Delay: 0
+  Duration: 0.2
   Offset: {x: 0, y: -50}
 --- !u!1 &8597664826680601114
 GameObject:
