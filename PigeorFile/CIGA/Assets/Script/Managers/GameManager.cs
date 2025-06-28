@@ -45,9 +45,9 @@ public class GameManager : SingletonDontDestory<GameManager>
     private void GameStart()
     {
         MessageManager.GetInstance().Send(MessageTypes.GameModeChange,new GameModeChange(GameModeType.GAMEINIT)); //主控流程，游戏初始化
-        UIManager.GetInstance().MouseInit();//初始化鼠标
+/*        UIManager.GetInstance().MouseInit();//初始化鼠标
         MessageManager.GetInstance().Send(MessageTypes.SwitchMouseMode,new SwitchMouseMode(MouseMode.DEFAULT)); //修改鼠标样式
-        UIManager.GetInstance().AwakeVideoInit(); //播放起始动画
+        UIManager.GetInstance().AwakeVideoInit(); //播放起始动画*/
     }
 
     /// <summary>
@@ -64,6 +64,8 @@ public class GameManager : SingletonDontDestory<GameManager>
         AudioManager.GetInstance().MainVolume = GameSettingData.Volumes.x;
         AudioManager.GetInstance().MusicVolume = GameSettingData.Volumes.y;
         AudioManager.GetInstance().SoundVolume = GameSettingData.Volumes.z;
+        
+        MessageManager.GetInstance().Send(MessageTypes.ChapterStart,new ChapterStart(0));
     }
 
     /// <summary>
@@ -75,7 +77,13 @@ public class GameManager : SingletonDontDestory<GameManager>
         UIManager.GetInstance().GameUIDestroy();
         UIManager.GetInstance().MainMenuInit();
     }
-    
+
+    private void NewChapter()
+    {
+        UIManager.GetInstance().MainMenuDestroy();
+        UIManager.GetInstance().GameUIInit();
+    }
+/*    
     /// <summary>
     /// 读档，进入游戏内容初始化流
     /// </summary>
@@ -87,7 +95,7 @@ public class GameManager : SingletonDontDestory<GameManager>
         UIManager.GetInstance().MainMenuDestroy();
         UIManager.GetInstance().GameUIInit();
         
-        MessageManager.GetInstance().Send(MessageTypes.GameModeChange,new GameModeChange(GameModeType.DEFAULT));
+        MessageManager.GetInstance().Send(MessageTypes.GameModeChange,new GameModeChange(GameModeType.CHAPTER));
     }
     
     /// <summary>
@@ -96,9 +104,9 @@ public class GameManager : SingletonDontDestory<GameManager>
     private void SaveDataReLoad()
     {
         //todo 回档
-        MessageManager.GetInstance().Send(MessageTypes.GameModeChange,new GameModeChange(GameModeType.DEFAULT));
+        MessageManager.GetInstance().Send(MessageTypes.GameModeChange,new GameModeChange(GameModeType.CHAPTER));
     }
-    
+    */
     /// <summary>
     /// 退出游戏
     /// </summary>
@@ -146,13 +154,14 @@ public class GameManager : SingletonDontDestory<GameManager>
                     Time.timeScale = 1;
                     MainMenuInit();
                     break;
-                case GameModeType.LOAD:
+/*                case GameModeType.LOAD:
                     SaveDataLoad();
                     break;
                 case GameModeType.RELOAD:
                     SaveDataReLoad();
-                    break;
-                case GameModeType.DEFAULT://常规游戏态
+                    break;*/
+                case GameModeType.CHAPTER://常规游戏态
+                    NewChapter();
                     Time.timeScale = 1;
                     break;
                 case GameModeType.PAUSE:

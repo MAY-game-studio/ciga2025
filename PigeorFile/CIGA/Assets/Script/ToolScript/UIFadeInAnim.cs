@@ -40,8 +40,13 @@ public class UIFadeInAnim : MonoBehaviour
 
     void Awake()
     {
-        _canvasGroup = GetComponent<CanvasGroup>() ?? gameObject.AddComponent<CanvasGroup>();
-//        _animController = GetComponent<UIAnimController>() ?? gameObject.AddComponent<UIAnimController>();
+//        _canvasGroup = GetComponent<CanvasGroup>() ?? gameObject.AddComponent<CanvasGroup>();
+        _canvasGroup = GetComponent<CanvasGroup>();
+        if (_canvasGroup == null)
+        {
+            _canvasGroup = gameObject.AddComponent<CanvasGroup>();
+            Debug.LogWarning("自动添加 CanvasGroup 组件", this);
+        }
         _rectTransform = GetComponent<RectTransform>();
         _originalPosition = _rectTransform.anchoredPosition;
         _canvasGroup.alpha = 0f;

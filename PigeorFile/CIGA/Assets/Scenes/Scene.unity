@@ -541,17 +541,26 @@ MonoBehaviour:
   - {fileID: 7788324381620862065, guid: 5846a8bb22098de478052b09ba1eeb0d, type: 3}
   - {fileID: 7788324381620862065, guid: 5846a8bb22098de478052b09ba1eeb0d, type: 3}
   - {fileID: 7788324381620862065, guid: 5846a8bb22098de478052b09ba1eeb0d, type: 3}
-  LeftHand_Prefab: {fileID: 3588587851499771396, guid: f521b0b71181a86409c36f5df39b9f77, type: 3}
-  RightHand_Prefab: {fileID: 3639462122543565688, guid: 6fb6a5e8914043847a7f5e909302b9f3, type: 3}
-  Miss_Prefab: {fileID: 1485695772962130915, guid: 37a34318626dd444cae153c9e0cf00ac, type: 3}
-  Hit_Prefab: {fileID: 1485695772962130915, guid: 5ebfe0acd162d9d43b4bbb4a70e2cba9, type: 3}
+  Hand_Prefab:
+  - {fileID: 3588587851499771396, guid: f521b0b71181a86409c36f5df39b9f77, type: 3}
+  - {fileID: 3639462122543565688, guid: 6fb6a5e8914043847a7f5e909302b9f3, type: 3}
+  Hit_Prefab:
+  - {fileID: 1485695772962130915, guid: 37a34318626dd444cae153c9e0cf00ac, type: 3}
+  - {fileID: 1485695772962130915, guid: 0a624ae8bd01ffa408851040041fd102, type: 3}
+  - {fileID: 1485695772962130915, guid: 4e8ee42351b35eb4cbcfd4fd42e9ce58, type: 3}
+  ChapterFinish_Prefab: {fileID: 3542464183462890759, guid: 2a493b30059016346a8c0ed37a532fb2, type: 3}
   MouseSprite:
   - {fileID: 21300000, guid: 0654dab4ac982ad428d61dc9884d75b7, type: 3}
   - {fileID: 21300000, guid: 7335c4cbee0138b4e8870921984b7087, type: 3}
   - {fileID: 21300000, guid: 0654dab4ac982ad428d61dc9884d75b7, type: 3}
   - {fileID: 21300000, guid: 0654dab4ac982ad428d61dc9884d75b7, type: 3}
   - {fileID: 21300000, guid: 0654dab4ac982ad428d61dc9884d75b7, type: 3}
-  ChapterBGSprite: []
+  ChapterBGSprite:
+  - {fileID: 21300000, guid: c21f062a8f15f6244b09c2945bc94070, type: 3}
+  - {fileID: 21300000, guid: c21f062a8f15f6244b09c2945bc94070, type: 3}
+  CharacterSprite: []
+  CharacterMissSprite: []
+  CharacterHitSprite: []
   VideoDuration:
   - 3
   Mouse: {fileID: 0}
@@ -648,7 +657,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1704456152}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c20e44ba894089d43a47470810fb414e, type: 3}
   m_Name: 

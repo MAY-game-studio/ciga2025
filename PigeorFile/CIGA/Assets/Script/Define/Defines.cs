@@ -4,7 +4,7 @@ public enum GameModeType
     MAINMENU,
     LOAD,
     RELOAD,
-    DEFAULT,
+    CHAPTER,
     PAUSE,
     EXIT
 }

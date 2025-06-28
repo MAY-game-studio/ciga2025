@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening.Plugins;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,6 +9,14 @@ public class GameUI : MonoBehaviour
     #region SerializeField
 
     [Header("UI组件")]
+
+    #region Character
+
+    [SerializeField] private Image BG;
+    [SerializeField] private Image Character;
+
+    #endregion
+    
     
     #region PauseMenu
 
@@ -42,9 +51,8 @@ public class GameUI : MonoBehaviour
     #region Property
 
     [HideInInspector] public string Focus; //UI焦点
-    
+    private int chapterID;
     #endregion
-    
     
     #region PauseMenu
 
@@ -152,27 +160,48 @@ public class GameUI : MonoBehaviour
     }
     
     #endregion
+
     
-    public void UIModeChange(GameModeType Type)
+    public void ChapterInit(int id)
     {
-        switch (Type)
-        {
-            case GameModeType.DEFAULT:
-                BtnPause.gameObject.SetActive(true);
-                break;
-            case GameModeType.PAUSE:
-                BtnPause.gameObject.SetActive(false);
-                break;
-        }
+        BG.sprite = UIManager.GetInstance().ChapterBGSprite[id];
+        Character.sprite = UIManager.GetInstance().CharacterSprite[id];
+        chapterID = id;
+        SwitchAnimcounting = -1;
+    }
+
+    float SwitchAnimcounting;
+    /// <summary>
+    /// 0 default
+    /// 1 miss
+    /// 2 hit
+    /// </summary>
+    public void CharacterSwitch(int type)
+    {
+        SwitchAnimcounting = 0f;
+        if (type==0) Character.sprite = UIManager.GetInstance().CharacterSprite[chapterID];
+        if (type==1) Character.sprite = UIManager.GetInstance().CharacterMissSprite[chapterID];
+        if (type==2) Character.sprite = UIManager.GetInstance().CharacterHitSprite[chapterID];
     }
     
     void Start()
     {
         Focus = "GameCanvas";
     }
-    
+
     void Update()
     {
+        if (SwitchAnimcounting != -1)
+        {
+            SwitchAnimcounting += Time.deltaTime;
+            if (SwitchAnimcounting >= 0.5f)
+            {
+                SwitchAnimcounting = -1;
+                CharacterSwitch(0);
+            }
+                
+        }
+
         if (Input.GetKeyDown(GameManager.GetInstance().GameSettingData.Return))
         {
             switch (Focus)

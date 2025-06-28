@@ -41,11 +41,11 @@ public class UIManager : SingletonDontDestory<UIManager>
     
     [SerializeField] private GameObject[] Effect_Prefab;
     
-    [SerializeField] private GameObject LeftHand_Prefab;
-    [SerializeField] private GameObject RightHand_Prefab;
+    [SerializeField] private GameObject[] Hand_Prefab;
 
-    [SerializeField] private GameObject Miss_Prefab;
-    [SerializeField] private GameObject Hit_Prefab;
+    [SerializeField] private GameObject[] Hit_Prefab;
+
+    [SerializeField] private GameObject ChapterFinish_Prefab;
 
     #endregion
     
@@ -57,6 +57,10 @@ public class UIManager : SingletonDontDestory<UIManager>
     [SerializeField] public Sprite[] MouseSprite;
     [Tooltip("背景")]
     [SerializeField] public Sprite[] ChapterBGSprite;
+    [Tooltip("角色")]
+    [SerializeField] public Sprite[] CharacterSprite;
+    [SerializeField] public Sprite[] CharacterMissSprite;
+    [SerializeField] public Sprite[] CharacterHitSprite;
     
     #endregion
 
@@ -154,20 +158,22 @@ public class UIManager : SingletonDontDestory<UIManager>
     #endregion
 
     #region Effect
-
+    
     public void EffectInit(int id)
     {
+        Instantiate(Effect_Prefab[id],Canvas.transform);
         
     }
 
-    public void HitInit(int id)
+    public void HandInit(int id)
     {
-        
+        Instantiate(Hand_Prefab[id],Canvas.transform);
     }
 
     public void JudgeInit(int id)
     {
-        
+        Instantiate(Hit_Prefab[id],Canvas.transform);
+        GameUI.CharacterSwitch(id == 0 ? 1 : 2);
     }
 
     public void ChapterFinish(int scoreLimit,int score)

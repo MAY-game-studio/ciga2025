@@ -16,9 +16,9 @@ public class LifeTimeControl : MonoBehaviour
         yield return new WaitForSeconds(lifeTime);
         Transform stand = transform.Find("StandObject");
         if (stand != null)
-            stand.gameObject.SetActive(false);
+            Destroy(stand.gameObject);
         else
-            gameObject.SetActive(false);
+            Destroy(gameObject);
 
     }
     
