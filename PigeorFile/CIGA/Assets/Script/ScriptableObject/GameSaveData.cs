@@ -21,6 +21,7 @@ public class GameSaveData : ScriptableObject
     #region EventFlag
 
     public bool FlagGameStart;
+    public bool[] FlagChapterUnlock;
 
     #endregion
 }

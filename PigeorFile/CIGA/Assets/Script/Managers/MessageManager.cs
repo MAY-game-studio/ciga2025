@@ -98,7 +98,6 @@ public class SwitchMouseMode : Message
     public MouseMode MouseMode;
 }
 
-
 /// <summary>
 /// 鼠标旁显示细节信息，多个框体的细节由*分割
 /// </summary>
@@ -110,6 +109,20 @@ public class ShowDetail : Message
     }
     public string Detail;
 }
+
+/// <summary>
+/// 开始章节
+/// </summary>
+public class ChapterStart : Message
+{
+    public ChapterStart(int id) : base(MessageTypes.ChapterStart)
+    {
+        ID = id;
+    }
+    public int ID;
+}
+
+
 
 public class MessageListener //消息监听器
 {

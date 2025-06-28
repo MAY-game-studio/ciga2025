@@ -1,0 +1,6 @@
+2000ms Img1 Sound1
+3000ms Img1 Sound1
+4000ms Img0 Sound0
+
+1 代表老板及其音效
+0 为占位，代表玩家点击时间点

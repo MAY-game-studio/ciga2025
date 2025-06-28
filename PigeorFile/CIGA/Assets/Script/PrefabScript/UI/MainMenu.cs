@@ -23,22 +23,19 @@ public class MainMenu : MonoBehaviour
     [SerializeField] private Button MainMenu_BtnSetting;
     [SerializeField] private Button MainMenu_BtnExit;
 
-    #region SaveMenu
+    #region ChapterMenu
 
     [Header("存档菜单")]
     
-    [SerializeField] private GameObject SaveGroup;
-    [SerializeField] private Sprite SpriteSave,SpriteEmpty;
-    [SerializeField] private Image ImgSlot1;
-    [SerializeField] private Button BtnSlot1;
-    [SerializeField] private TextMeshProUGUI TxtSlot1;
-    [SerializeField] private Image ImgSlot2;
-    [SerializeField] private Button BtnSlot2;
-    [SerializeField] private TextMeshProUGUI TxtSlot2;
-    [SerializeField] private Image ImgSlot3;
-    [SerializeField] private Button BtnSlot3;
-    [SerializeField] private TextMeshProUGUI TxtSlot3;
-    [SerializeField] private Button BtnSaveReturn;
+    [SerializeField] private GameObject ChapterGroup;
+    [SerializeField] private Sprite SpriteChapter,SpriteLocked;
+    [SerializeField] private Button BtnChapter1;
+    [SerializeField] private TextMeshProUGUI TxtChapter1;
+    [SerializeField] private Button BtnChapter2;
+    [SerializeField] private TextMeshProUGUI TxtChapter2;
+    [SerializeField] private Button BtnChapter3;
+    [SerializeField] private TextMeshProUGUI TxtChapter3;
+    [SerializeField] private Button BtnChapterReturn;
 
     #endregion
     
@@ -101,7 +98,7 @@ public class MainMenu : MonoBehaviour
     {
         MessageManager.GetInstance().Send(MessageTypes.PlaySound,new PlaySound(SoundClip.BTN_CLICK));
         HideMainMenu();
-        ShowSaveMenu();
+        ShowChapterMenu();
     }
     public void OnBtnHelpClicked()
     {
@@ -123,98 +120,59 @@ public class MainMenu : MonoBehaviour
 
     #endregion
     
-    #region SaveMenu
+    #region ChapterMenu
 
-    private GameSaveData _gameSaveFileSlot1,_gameSaveFileSlot2,_gameSaveFileSlot3;
+    private GameSaveData _gameSaveFile;
 
-    private void ShowSaveMenu()
+    private void ShowChapterMenu()
     {
-        Focus = "SaveMenu";
-        DOTween.Complete(SaveGroup);
-        SaveGroup.gameObject.SetActive(true);
+        Focus = "ChapterMenu";
+        DOTween.Complete(ChapterGroup);
+        ChapterGroup.gameObject.SetActive(true);
         
-        _gameSaveFileSlot1 = SaveManager.GetInstance().GameSaveDataLoad(1);
-        _gameSaveFileSlot2 = SaveManager.GetInstance().GameSaveDataLoad(2);
-        _gameSaveFileSlot3 = SaveManager.GetInstance().GameSaveDataLoad(3);
-        if (_gameSaveFileSlot1 == null)
+        _gameSaveFile = SaveManager.GetInstance().GameSaveDataLoad();
+
+        if (_gameSaveFile == null)
         {
-            ImgSlot1.sprite = SpriteEmpty;
-            TxtSlot1.text = "新游戏";
+            
         }
-        else
-        {
-            ImgSlot1.sprite = SpriteSave;
-            TxtSlot1.text = "继续游戏" + _gameSaveFileSlot1.GameSaveTime;
-        }
-        if (_gameSaveFileSlot2 == null)
-        {
-            ImgSlot2.sprite = SpriteEmpty;
-            TxtSlot2.text = "新游戏";
-        }
-        else
-        {
-            ImgSlot2.sprite = SpriteSave;
-            TxtSlot2.text = "继续游戏" + _gameSaveFileSlot2.GameSaveTime;
-        }
-        if (_gameSaveFileSlot3 == null)
-        {
-            ImgSlot3.sprite = SpriteEmpty;
-            TxtSlot3.text = "新游戏";
-        }
-        else
-        {
-            ImgSlot3.sprite = SpriteSave;
-            TxtSlot3.text = "继续游戏" + _gameSaveFileSlot3.GameSaveTime;
-        }
+
     }
 
-    private void HideSaveMenu()
+    private void HideChapterMenu()
     {
         ShowMainMenu();
         Focus = "MainMenu";
-        DOTween.Complete(SaveGroup);
-        Transform stand = SaveGroup.transform.Find("StandObject");
+        DOTween.Complete(ChapterGroup);
+        Transform stand = ChapterGroup.transform.Find("StandObject");
         if (stand != null)
             stand.gameObject.SetActive(false);
         else
             MainMenuGroup.SetActive(false);
     }
 
-    public void OnBtnSlot1Clicked()
+    public void OnBtnChapter1Clicked()
     {
         MessageManager.GetInstance().Send(MessageTypes.PlaySound,new PlaySound(SoundClip.BTN_CLICK));
-        GameManager.GetInstance().SaveSlot = 1;
-        GameManager.GetInstance().GameSaveData = _gameSaveFileSlot1;
-        if (GameManager.GetInstance().GameSaveData == null)
-            GameManager.GetInstance().GameSaveData = SaveManager.GetInstance().CreateGameSaveData();
-        MessageManager.GetInstance().Send(MessageTypes.GameModeChange,new GameModeChange(GameModeType.LOAD));
+        MessageManager.GetInstance().Send(MessageTypes.ChapterStart,new ChapterStart(1));
     }
 
-    public void OnBtnSlot2Clicked()
+    public void OnBtnChapter2Clicked()
     {
         MessageManager.GetInstance().Send(MessageTypes.PlaySound,new PlaySound(SoundClip.BTN_CLICK));
-        GameManager.GetInstance().SaveSlot = 2;
-        GameManager.GetInstance().GameSaveData = _gameSaveFileSlot2;
-        if (GameManager.GetInstance().GameSaveData == null)
-            GameManager.GetInstance().GameSaveData = SaveManager.GetInstance().CreateGameSaveData();
-        MessageManager.GetInstance().Send(MessageTypes.GameModeChange,new GameModeChange(GameModeType.LOAD));
+        MessageManager.GetInstance().Send(MessageTypes.ChapterStart,new ChapterStart(2));
     }
 
-    public void OnBtnSlot3Clicked()
+    public void OnBtnChapter3Clicked()
     {
         MessageManager.GetInstance().Send(MessageTypes.PlaySound,new PlaySound(SoundClip.BTN_CLICK));
-        GameManager.GetInstance().SaveSlot = 3;
-        GameManager.GetInstance().GameSaveData = _gameSaveFileSlot3;
-        if (GameManager.GetInstance().GameSaveData == null)
-            GameManager.GetInstance().GameSaveData = SaveManager.GetInstance().CreateGameSaveData();
-        MessageManager.GetInstance().Send(MessageTypes.GameModeChange,new GameModeChange(GameModeType.LOAD));
+        MessageManager.GetInstance().Send(MessageTypes.ChapterStart,new ChapterStart(3));
     }
     
-    public void OnBtnSaveReturnClicked()
+    public void OnBtnChapterReturnClicked()
     {
-//        if (MainMenuGroup.activeSelf) return; // MainMenuGroup 动画进程冲突，不处理
         MessageManager.GetInstance().Send(MessageTypes.PlaySound,new PlaySound(SoundClip.BTN_CLICK));
-        HideSaveMenu();
+        HideChapterMenu();
     }
     
     #endregion
@@ -370,10 +328,10 @@ public class MainMenu : MonoBehaviour
             {
                 case "MainMenu":
                     break;
-                case "SaveMenu":
+                case "ChapterMenu":
                     DOTween.Complete(MainMenuGroup);
-                    DOTween.Complete(SaveGroup);
-                    HideSaveMenu();
+                    DOTween.Complete(ChapterGroup);
+                    HideChapterMenu();
                     break;
                 case "HelpMenu":
                     DOTween.Complete(MainMenuGroup);
@@ -387,5 +345,7 @@ public class MainMenu : MonoBehaviour
                     break;
             }
         }
+        if (Input.GetKeyDown(KeyCode.Keypad1)) ShowMainMenu();
+        
     }
 }

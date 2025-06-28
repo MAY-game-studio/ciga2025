@@ -34,8 +34,6 @@ public class GameManager : SingletonDontDestory<GameManager>
         get => _gameSaveData;
         set => _gameSaveData = value;
     }//游戏存档
-
-    [HideInInspector] public int SaveSlot; // 当前使用的游戏挡位槽
     
     #endregion
     
@@ -145,6 +143,7 @@ public class GameManager : SingletonDontDestory<GameManager>
                     GameInit();
                     break;
                 case GameModeType.MAINMENU:
+                    Time.timeScale = 1;
                     MainMenuInit();
                     break;
                 case GameModeType.LOAD:
@@ -154,8 +153,10 @@ public class GameManager : SingletonDontDestory<GameManager>
                     SaveDataReLoad();
                     break;
                 case GameModeType.DEFAULT://常规游戏态
+                    Time.timeScale = 1;
                     break;
                 case GameModeType.PAUSE:
+                    Time.timeScale = 0;
                     break;
                 case GameModeType.EXIT:
                     GameExit();

@@ -8,6 +8,7 @@ public enum MessageTypes
     AddNotification,
     SwitchMouseMode,
     ShowDetail,
+    ChapterStart,
 }
 
 public enum MessageTemporaryType

@@ -8,8 +8,8 @@ public class SaveManager : SingletonDontDestory<SaveManager>
 {
     #region Property
 
-    private string _gameSettingDataPath;//设置存档
-    private string[] _gameSaveDataPath = new string[4];//游戏存档
+    private string _gameSettingDataPath; //设置存档
+    private string _gameSaveDataPath; //游戏存档
 
     #endregion
 
@@ -57,11 +57,11 @@ public class SaveManager : SingletonDontDestory<SaveManager>
         return gameSettingData;
     }
 
-    public GameSaveData GameSaveDataLoad(int saveSlot)//读取游戏槽位存档信息
+    public GameSaveData GameSaveDataLoad()//读取游戏槽位存档信息
     {
         GameSaveData gameSaveFile=ScriptableObject.CreateInstance<GameSaveData>();
-        if (!File.Exists(_gameSaveDataPath[saveSlot])) return null;//该槽位没有存档
-        string jsonFile = File.ReadAllText(_gameSaveDataPath[saveSlot]);
+        if (!File.Exists(_gameSaveDataPath)) return null;//该槽位没有存档
+        string jsonFile = File.ReadAllText(_gameSaveDataPath);
         JsonUtility.FromJsonOverwrite(jsonFile, gameSaveFile);
         return gameSaveFile;
     }
@@ -69,9 +69,7 @@ public class SaveManager : SingletonDontDestory<SaveManager>
     public void SavePathInit()//初始化存档路径
     {
         _gameSettingDataPath = Path.Combine(Application.persistentDataPath, "SaveFiles", "SettingData.json");
-        _gameSaveDataPath[1] = Path.Combine(Application.persistentDataPath, "SaveFiles", "GameData1.json");
-        _gameSaveDataPath[2] = Path.Combine(Application.persistentDataPath, "SaveFiles", "GameData2.json");
-        _gameSaveDataPath[3] = Path.Combine(Application.persistentDataPath, "SaveFiles", "GameData3.json");
+        _gameSaveDataPath = Path.Combine(Application.persistentDataPath, "SaveFiles", "GameData.json");
     }
     
     void Start()
@@ -110,7 +108,7 @@ public class SaveManager : SingletonDontDestory<SaveManager>
             if (!Directory.Exists(Path.GetDirectoryName(_gameSettingDataPath)))
                 Directory.CreateDirectory(Path.GetDirectoryName(_gameSettingDataPath)!); // 确保目录存在
             string jsonFile = JsonUtility.ToJson(saveData);
-            File.WriteAllText(_gameSaveDataPath[GameManager.GetInstance().SaveSlot], jsonFile);
+            File.WriteAllText(_gameSaveDataPath, jsonFile);
         }
     }
     #endregion

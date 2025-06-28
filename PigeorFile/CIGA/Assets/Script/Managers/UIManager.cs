@@ -35,15 +35,29 @@ public class UIManager : SingletonDontDestory<UIManager>
 
     #endregion
 
+    [Header("Chapter预制体")]
+
+    #region Chapter
+    
+    [SerializeField] private GameObject[] Effect_Prefab;
+    
+    [SerializeField] private GameObject LeftHand_Prefab;
+    [SerializeField] private GameObject RightHand_Prefab;
+
+    [SerializeField] private GameObject Miss_Prefab;
+    [SerializeField] private GameObject Hit_Prefab;
+
+    #endregion
+    
     [Header("精灵素材")]
     
     #region Sprite
 
     [Tooltip("鼠标")]
     [SerializeField] public Sprite[] MouseSprite;
-    [Tooltip("精灵")]
-    [SerializeField] public Sprite[] Sprite;
-
+    [Tooltip("背景")]
+    [SerializeField] public Sprite[] ChapterBGSprite;
+    
     #endregion
 
     #region Videos
@@ -135,6 +149,30 @@ public class UIManager : SingletonDontDestory<UIManager>
     public void GameUIDestroy()
     {
         if (GameUI!=null) Destroy(GameUI.gameObject);
+    }
+    
+    #endregion
+
+    #region Effect
+
+    public void EffectInit(int id)
+    {
+        
+    }
+
+    public void HitInit(int id)
+    {
+        
+    }
+
+    public void JudgeInit(int id)
+    {
+        
+    }
+
+    public void ChapterFinish(int scoreLimit,int score)
+    {
+        
     }
     
     #endregion
