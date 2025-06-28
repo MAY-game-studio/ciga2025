@@ -16,7 +16,7 @@ public class UIFadeOutAnim : MonoBehaviour
 
     [Header("动画配置参数")]
     [Tooltip("动画缓动类型")]
-    [SerializeField] private Ease easeType = Ease.OutQuad;
+    [SerializeField] private Ease EaseType = Ease.OutQuad;
 
     [Tooltip("动画延迟")]
     [SerializeField] private float Delay;
@@ -34,7 +34,7 @@ public class UIFadeOutAnim : MonoBehaviour
     private CanvasGroup _canvasGroup;
     private RectTransform _rectTransform;
     private GameObject _stand;
-//    private UIAnimController _animController;
+    private UIAnimController _animController;
     
     #endregion
     
@@ -48,7 +48,7 @@ public class UIFadeOutAnim : MonoBehaviour
     void Awake()
     {
         _canvasGroup = GetComponent<CanvasGroup>() ?? gameObject.AddComponent<CanvasGroup>();
-//        _animController = GetComponent<UIAnimController>() ?? gameObject.AddComponent<UIAnimController>();
+        _animController = GetComponent<UIAnimController>() ?? gameObject.AddComponent<UIAnimController>();
         CreateStandObject();//创建替身子物体
         _rectTransform = GetComponent<RectTransform>();
     }
@@ -60,26 +60,25 @@ public class UIFadeOutAnim : MonoBehaviour
 /*            Sequence seq = DOTween.Sequence();
             seq.AppendInterval(Delay);
             seq.Append(_canvasGroup.DOFade(0f, Duration));
-            seq.Join(_rectTransform.DOAnchorPos(_rectTransform.anchoredPosition + Offset, Duration).SetEase(easeType));
-            seq.OnComplete(() => { _stand.SetActive(true); gameObject.SetActive(false); });//动画结束后复原替身，隐藏自己            
+            seq.Join(_rectTransform.DOAnchorPos(_rectTransform.anchoredPosition + Offset, Duration).SetEase(EaseType));
+            seq.OnComplete(() => { _stand.SetActive(true); gameObject.SetActive(false); });//动画结束后复原替身，隐藏自己*/            
             _animController.Play(
                 DOTween.Sequence()
                     .AppendInterval(Delay)
                     .Append(_canvasGroup.DOFade(0f, Duration))
-                    .Join(_rectTransform.DOAnchorPos(_rectTransform.anchoredPosition + Offset, Duration).SetEase(easeType))
+                    .Join(_rectTransform.DOAnchorPos(_rectTransform.anchoredPosition + Offset, Duration).SetEase(EaseType))
                     .OnComplete(() => { _stand.SetActive(true); gameObject.SetActive(false); })
-                    .SetTarget(this)
-            );*/
-            DOTween.Sequence()
+            );
+/*            DOTween.Sequence()
                 .AppendInterval(Delay)
                 .Append(_canvasGroup.DOFade(0f, Duration))
-                .Join(_rectTransform.DOAnchorPos(_rectTransform.anchoredPosition + Offset, Duration).SetEase(easeType))
+                .Join(_rectTransform.DOAnchorPos(_rectTransform.anchoredPosition + Offset, Duration).SetEase(EaseType))
                 .OnComplete(() =>
                 {
                     _stand.SetActive(true);
                     gameObject.SetActive(false);
                 })
-                .SetTarget(this).Play();
+                .SetTarget(this).Play();*/
         }
         else
             gameObject.SetActive(false);
@@ -89,12 +88,13 @@ public class UIFadeOutAnim : MonoBehaviour
     {
         if (FlagDestoryAnim)
         {
-            DOTween.Sequence()
-                .AppendInterval(Delay)
-                .Append(_canvasGroup.DOFade(0f, Duration))
-                .Join(_rectTransform.DOAnchorPos(_rectTransform.anchoredPosition + Offset, Duration).SetEase(easeType))
-                .OnComplete(() => { Destroy(gameObject); })
-                .SetTarget(this).Play();
+            _animController.Play(
+                DOTween.Sequence()
+                    .AppendInterval(Delay)
+                    .Append(_canvasGroup.DOFade(0f, Duration))
+                    .Join(_rectTransform.DOAnchorPos(_rectTransform.anchoredPosition + Offset, Duration).SetEase(EaseType))
+                    .OnComplete(() => { Destroy(gameObject); })
+            );
         }
         else
             Destroy(gameObject);

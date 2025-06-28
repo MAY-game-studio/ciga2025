@@ -14,7 +14,7 @@ public class UIHoverAnim : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     
     [Header("动画配置参数")]
     [Tooltip("动画缓动类型")]
-    [SerializeField] private Ease easeType = Ease.OutQuad;
+    [SerializeField] private Ease EaseType = Ease.OutQuad;
 
     [Tooltip("偏移动画时间")]
     [SerializeField] private float Duration = 0.5f;
@@ -96,8 +96,8 @@ public class UIHoverAnim : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         _sequence = DOTween.Sequence()
             .SetTarget(this)
             .SetUpdate(true)
-            .Append(_rectTransform.DOAnchorPos(_originalPos + Offset, Duration).SetEase(easeType))
-            .Join(_rectTransform.DOScale(new Vector3(Scale.x, Scale.y, 1f), Duration).SetEase(easeType));
+            .Append(_rectTransform.DOAnchorPos(_originalPos + Offset, Duration).SetEase(EaseType))
+            .Join(_rectTransform.DOScale(new Vector3(Scale.x, Scale.y, 1f), Duration).SetEase(EaseType));
         if (FlagHighlightSpriteAnim)
         {
             _sequence.Join(_image.DOFade(0f, HighlightFadeDuration).SetTarget(this));
@@ -118,8 +118,8 @@ public class UIHoverAnim : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         _sequence = DOTween.Sequence()
             .SetTarget(this)
             .SetUpdate(true)
-            .Append(_rectTransform.DOAnchorPos(_originalPos, Duration).SetEase(easeType))
-            .Join(_rectTransform.DOScale(new Vector3(_originalScale.x, _originalScale.y, 1f), Duration).SetEase(easeType));
+            .Append(_rectTransform.DOAnchorPos(_originalPos, Duration).SetEase(EaseType))
+            .Join(_rectTransform.DOScale(new Vector3(_originalScale.x, _originalScale.y, 1f), Duration).SetEase(EaseType));
         if (FlagHighlightSpriteAnim)
         {
             _sequence.Join(_image.DOFade(1f, HighlightFadeDuration).SetTarget(this));

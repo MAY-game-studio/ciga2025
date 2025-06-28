@@ -34,3 +34,11 @@ public enum SoundClip
 {
     BTN_CLICK,
 }
+/*
+public enum UIAnimType
+{
+    FADEIN,
+    FADEOUT,
+    HOVER,
+}
+*/

@@ -16,7 +16,7 @@ public class UIFadeInAnim : MonoBehaviour
 
     [Header("动画配置参数")]
     [Tooltip("动画缓动类型")]
-    [SerializeField] private Ease easeType = Ease.OutQuad;
+    [SerializeField] private Ease EaseType = Ease.OutQuad;
 
     [Tooltip("动画延迟")]
     [SerializeField] private float Delay;
@@ -34,14 +34,14 @@ public class UIFadeInAnim : MonoBehaviour
     private CanvasGroup _canvasGroup;
     private RectTransform _rectTransform;
     private Vector2 _originalPosition;
-//    private UIAnimController _animController;
+    private UIAnimController _animController;
     
     #endregion
 
     void Awake()
     {
         _canvasGroup = GetComponent<CanvasGroup>() ?? gameObject.AddComponent<CanvasGroup>();
-//        _animController = GetComponent<UIAnimController>() ?? gameObject.AddComponent<UIAnimController>();
+        _animController = GetComponent<UIAnimController>() ?? gameObject.AddComponent<UIAnimController>();
         _rectTransform = GetComponent<RectTransform>();
         _originalPosition = _rectTransform.anchoredPosition;
         _canvasGroup.alpha = 0f;
@@ -52,17 +52,17 @@ public class UIFadeInAnim : MonoBehaviour
     {
         if (FlagAwakeAnim)
         {
-            /*_animController.Play(
+            _animController.Play(
                 DOTween.Sequence()
                     .AppendInterval(Delay)
                     .Append(_canvasGroup.DOFade(1f, Duration))
-                    .Join(_rectTransform.DOAnchorPos(_originalPosition, Duration).SetEase(easeType))
-            );*/
-            DOTween.Sequence()
+                    .Join(_rectTransform.DOAnchorPos(_originalPosition, Duration).SetEase(EaseType))
+            );
+            /*DOTween.Sequence()
                 .AppendInterval(Delay)
                 .Append(_canvasGroup.DOFade(1f, Duration))
-                .Join(_rectTransform.DOAnchorPos(_originalPosition, Duration).SetEase(easeType))
-                .SetTarget(this).Play();
+                .Join(_rectTransform.DOAnchorPos(_originalPosition, Duration).SetEase(EaseType))
+                .SetTarget(this).Play();*/
         }
     }
 
@@ -70,19 +70,21 @@ public class UIFadeInAnim : MonoBehaviour
     {
         _canvasGroup.alpha = 0f;
         _rectTransform.anchoredPosition = _originalPosition + Offset;
+        Debug.Log(_rectTransform.anchoredPosition);
+        Debug.Log(_originalPosition);
         if (FlagEnableAnim)
         {
-            /*_animController.Play(
+            _animController.Play(
                 DOTween.Sequence()
                     .AppendInterval(Delay)
                     .Append(_canvasGroup.DOFade(1f, Duration))
-                    .Join(_rectTransform.DOAnchorPos(_originalPosition, Duration).SetEase(easeType))
-            );*/
-            DOTween.Sequence()
+                    .Join(_rectTransform.DOAnchorPos(_originalPosition, Duration).SetEase(EaseType))
+            );
+            /*DOTween.Sequence()
                 .AppendInterval(Delay)
                 .Append(_canvasGroup.DOFade(1f, Duration))
-                .Join(_rectTransform.DOAnchorPos(_originalPosition, Duration).SetEase(easeType))
-                .SetTarget(this).Play();
+                .Join(_rectTransform.DOAnchorPos(_originalPosition, Duration).SetEase(EaseType))
+                .SetTarget(this).Play();*/
         }
     }
 }
