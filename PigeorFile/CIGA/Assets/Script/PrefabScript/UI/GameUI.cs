@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using DG.Tweening.Plugins;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -161,6 +163,19 @@ public class GameUI : MonoBehaviour
     
     #endregion
 
+
+    public void CharacterEffect()
+    {
+        Character.transform.DOKill(); // 取消之前的动画
+        Character.transform.localScale = Vector3.one; // 重置缩放
+
+        // 先放大至1.1，再回到1.0
+        Character.transform.DOScale(1.1f, 0.1f)
+            .SetEase(Ease.OutQuad)
+            .OnComplete(() => {
+                Character.transform.DOScale(1f, 0.1f).SetEase(Ease.InQuad);
+            });
+    }
     
     public void ChapterInit(int id)
     {
@@ -178,10 +193,15 @@ public class GameUI : MonoBehaviour
     /// </summary>
     public void CharacterSwitch(int type)
     {
-        SwitchAnimcounting = 0f;
-        if (type==0) Character.sprite = UIManager.GetInstance().CharacterSprite[chapterID];
-        if (type==1) Character.sprite = UIManager.GetInstance().CharacterMissSprite[chapterID];
-        if (type==2) Character.sprite = UIManager.GetInstance().CharacterHitSprite[chapterID];
+        if (type == 0) Character.sprite = UIManager.GetInstance().CharacterSprite[chapterID];
+        else if (type == 1) MessageManager.GetInstance().Send(MessageTypes.PlaySound, new PlaySound(SoundClip.MISS));
+        else if (type == 2)
+        {
+            SwitchAnimcounting = 0f;
+            MessageManager.GetInstance().Send(MessageTypes.PlaySound, new PlaySound((SoundClip)ChapterManager.GetInstance().CurrentChapter+8));
+            Character.sprite = UIManager.GetInstance().CharacterHitSprite[chapterID];
+            ChapterManager.GetInstance().Score++;
+        }
     }
     
     void Start()
@@ -191,13 +211,15 @@ public class GameUI : MonoBehaviour
 
     void Update()
     {
-        if (SwitchAnimcounting != -1)
+        if (SwitchAnimcounting >= 0)
         {
             SwitchAnimcounting += Time.deltaTime;
+            Debug.Log(SwitchAnimcounting);
             if (SwitchAnimcounting >= 0.5f)
             {
                 SwitchAnimcounting = -1;
-                CharacterSwitch(0);
+                CharacterSwitch(0);//复原
+                //todo 红色受击
             }
                 
         }

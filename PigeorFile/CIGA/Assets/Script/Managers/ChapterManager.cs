@@ -34,7 +34,9 @@ public class ChapterManager : SingletonDontDestory<ChapterManager>
 
     private float[] _chapterEffectTime;
     private float[] _chapterEffectType;
-    private int _effectNum,_effectID,_score;
+    private int _effectNum, _effectID;
+    private bool FlagComplete;
+    public int Score;
     private float _timeOffset;
     public float TimeOffset
     {
@@ -46,9 +48,9 @@ public class ChapterManager : SingletonDontDestory<ChapterManager>
 
     private void ChapterInit(int id)
     {
+        FlagComplete = false;
         UIManager.GetInstance().GameUI.ChapterInit(id);
         // 从 Resources 加载章节文本
-        id = 0;
         TextAsset chapterFile = Resources.Load<TextAsset>($"Chapter/Chapter{id}");
         if (chapterFile == null)
         {
@@ -60,6 +62,7 @@ public class ChapterManager : SingletonDontDestory<ChapterManager>
         string[] lines = chapterData.Split(new[] { '\n', '\r' }, StringSplitOptions.RemoveEmptyEntries);
 
         _effectNum = lines.Length;
+        FlagComplete = false;
         _chapterEffectTime = new float[_effectNum];
         _chapterEffectType = new float[_effectNum];
 
@@ -83,14 +86,14 @@ public class ChapterManager : SingletonDontDestory<ChapterManager>
         MessageManager.GetInstance().Send(MessageTypes.PlayMusic,new PlayMusic((MusicClip)id));
     }
 
-    public int TimeJudge()
+    private int TimeJudge()
     {
         for (int i = 0; i < _effectNum; i++)
         {
             if (_chapterEffectType[i] == 0)
             {
                 float effectTime = _chapterEffectTime[i] + _timeOffset;
-                if (Mathf.Abs(_currentTime - effectTime) <= 0.2f)//严判
+                if (Mathf.Abs(_currentTime - effectTime) <= 250f)//严判
                     return 2;
             }
         }
@@ -99,7 +102,7 @@ public class ChapterManager : SingletonDontDestory<ChapterManager>
             if (_chapterEffectType[i] == 0)
             {
                 float effectTime = _chapterEffectTime[i] + _timeOffset;
-                if (Mathf.Abs(_currentTime - effectTime) <= 0.5f)//宽判
+                if (Mathf.Abs(_currentTime - effectTime) <= 500f)//宽判
                     return 1;
             }
         }
@@ -109,7 +112,7 @@ public class ChapterManager : SingletonDontDestory<ChapterManager>
     IEnumerator ChapterFinish()
     {
         yield return new WaitForSecondsRealtime(3f);
-        UIManager.GetInstance().ChapterFinish(PassScore[CurrentChapter],_score);
+        UIManager.GetInstance().ChapterFinish(PassScore[CurrentChapter],Score);
         MessageManager.GetInstance().Send(MessageTypes.PlayMusic, new PlayMusic(MusicClip.BGMMainMenu));
     }
     
@@ -127,36 +130,45 @@ public class ChapterManager : SingletonDontDestory<ChapterManager>
             {
                 float effectType = _chapterEffectType[_effectID];
                 if (effectType!=0)
-                    Debug.Log("effect"+effectType);
-//            HandleEffect(effectType); // 触发效果逻辑
-                UIManager.GetInstance().EffectInit((int)effectType);
+                    MessageManager.GetInstance().Send(MessageTypes.PlaySound, new PlaySound((SoundClip)_currentChapter+1));
+//                else
+//                    MessageManager.GetInstance().Send(MessageTypes.PlaySound, new PlaySound((SoundClip)_currentChapter+8));
+                UIManager.GetInstance().EffectInit();
                 _effectID++;
             }
-            if (_effectID >= _effectNum)
+
+            if (_effectID > 0 && _effectID >= _effectNum && !FlagComplete)
             {
+                FlagComplete = true;
                 StartCoroutine(ChapterFinish());
             }
         }
-
         if (Input.GetKeyDown(KeyCode.A))
         {
-            Debug.Log("A");
+//            Debug.Log("A");
             UIManager.GetInstance().HandInit(0);
             UIManager.GetInstance().JudgeInit(TimeJudge());
         }
         if (Input.GetKeyDown(KeyCode.L))
         {
-            Debug.Log("L");
+//            Debug.Log("L");
             UIManager.GetInstance().HandInit(1);
             UIManager.GetInstance().JudgeInit(TimeJudge());
         }
-
+/*
         if (Input.GetKeyDown(KeyCode.Alpha1))
             UIManager.GetInstance().JudgeInit(1);
         if (Input.GetKeyDown(KeyCode.Alpha2))
             UIManager.GetInstance().JudgeInit(2);
+            */
     }
-    
+
+    private IEnumerator ChapterStart(int id)
+    {
+        UIManager.GetInstance().ChapterStart();
+        yield return new WaitForSecondsRealtime(3f);
+        ChapterInit(id);
+    }
     
     #region Message
 
@@ -170,7 +182,8 @@ public class ChapterManager : SingletonDontDestory<ChapterManager>
         if (message is ChapterStart msg)
         {
             MessageManager.GetInstance().Send(MessageTypes.GameModeChange,new GameModeChange(GameModeType.CHAPTER));
-            ChapterInit(msg.ID);
+//            ChapterInit(msg.ID);
+            StartCoroutine(ChapterStart(msg.ID));
         }
     }
     #endregion

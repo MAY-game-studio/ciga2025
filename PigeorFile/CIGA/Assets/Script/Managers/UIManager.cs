@@ -39,8 +39,6 @@ public class UIManager : SingletonDontDestory<UIManager>
 
     #region Chapter
     
-    [SerializeField] private GameObject[] Effect_Prefab;
-    
     [SerializeField] private GameObject[] Hand_Prefab;
 
     [SerializeField] private GameObject[] Hit_Prefab;
@@ -59,7 +57,7 @@ public class UIManager : SingletonDontDestory<UIManager>
     [SerializeField] public Sprite[] ChapterBGSprite;
     [Tooltip("角色")]
     [SerializeField] public Sprite[] CharacterSprite;
-    [SerializeField] public Sprite[] CharacterMissSprite;
+//    [SerializeField] public Sprite[] CharacterMissSprite;
     [SerializeField] public Sprite[] CharacterHitSprite;
     
     #endregion
@@ -159,10 +157,9 @@ public class UIManager : SingletonDontDestory<UIManager>
 
     #region Effect
     
-    public void EffectInit(int id)
+    public void EffectInit()
     {
-        Instantiate(Effect_Prefab[id],Canvas.transform);
-        
+        GameUI.CharacterEffect();
     }
 
     public void HandInit(int id)
@@ -174,6 +171,11 @@ public class UIManager : SingletonDontDestory<UIManager>
     {
         Instantiate(Hit_Prefab[id],Canvas.transform);
         GameUI.CharacterSwitch(id == 0 ? 1 : 2);
+    }
+
+    public void ChapterStart()
+    {
+        
     }
 
     public void ChapterFinish(int scoreLimit,int score)
