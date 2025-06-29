@@ -16,6 +16,9 @@ public class GameUI : MonoBehaviour
 
     [SerializeField] private Image BG;
     [SerializeField] private Image Character;
+    [SerializeField] private Image ReadyGo;
+    [SerializeField] private Image Finish;
+    [SerializeField] private Image Frame;
 
     #endregion
     
@@ -53,7 +56,7 @@ public class GameUI : MonoBehaviour
     #region Property
 
     [HideInInspector] public string Focus; //UI焦点
-    private int chapterID;
+    [HideInInspector] public int chapterID;
     #endregion
     
     #region PauseMenu
@@ -163,7 +166,37 @@ public class GameUI : MonoBehaviour
     
     #endregion
 
+    /// <summary>
+    /// 0 null
+    /// 1 frame
+    /// 2 available
+    /// 3 hit
+    /// </summary>
+    public void SwitchFrame(int id)
+    {
+        Frame.sprite = UIManager.GetInstance().FrameSprite[id];
+        if (id != 0) StartCoroutine(ResetFrame());
+    }
 
+    private IEnumerator ResetFrame()
+    {
+        yield return new WaitForSeconds(1f);
+        SwitchFrame(0);
+    }
+    
+    public void ReadyGoInit(Sprite sprite)
+    {
+        ReadyGo.sprite = sprite;
+        ReadyGo.gameObject.SetActive(true);
+        SwitchAnimcounting = -1;
+    }
+
+    public void FinishInit(Sprite sprite)
+    {
+        Finish.sprite = sprite;
+        Finish.gameObject.SetActive(true);
+    }
+    
     public void CharacterEffect()
     {
         Character.transform.DOKill(); // 取消之前的动画
@@ -197,6 +230,7 @@ public class GameUI : MonoBehaviour
         else if (type == 1) MessageManager.GetInstance().Send(MessageTypes.PlaySound, new PlaySound(SoundClip.MISS));
         else if (type == 2)
         {
+            SwitchFrame(3);
             SwitchAnimcounting = 0f;
             MessageManager.GetInstance().Send(MessageTypes.PlaySound, new PlaySound((SoundClip)ChapterManager.GetInstance().CurrentChapter+8));
             Character.sprite = UIManager.GetInstance().CharacterHitSprite[chapterID];
@@ -207,6 +241,7 @@ public class GameUI : MonoBehaviour
     void Start()
     {
         Focus = "GameCanvas";
+        
     }
 
     void Update()
@@ -214,14 +249,13 @@ public class GameUI : MonoBehaviour
         if (SwitchAnimcounting >= 0)
         {
             SwitchAnimcounting += Time.deltaTime;
-            Debug.Log(SwitchAnimcounting);
             if (SwitchAnimcounting >= 0.5f)
             {
                 SwitchAnimcounting = -1;
                 CharacterSwitch(0);//复原
                 //todo 红色受击
             }
-                
+
         }
 
         if (Input.GetKeyDown(GameManager.GetInstance().GameSettingData.Return))

@@ -65,7 +65,7 @@ public class GameManager : SingletonDontDestory<GameManager>
         AudioManager.GetInstance().MusicVolume = GameSettingData.Volumes.y;
         AudioManager.GetInstance().SoundVolume = GameSettingData.Volumes.z;
         
-//        MessageManager.GetInstance().Send(MessageTypes.ChapterStart,new ChapterStart(2));
+//        MessageManager.GetInstance().Send(MessageTypes.ChapterStart,new ChapterStart(1));
     }
 
     /// <summary>
@@ -81,32 +81,21 @@ public class GameManager : SingletonDontDestory<GameManager>
     private void NewChapter()
     {
         UIManager.GetInstance().MainMenuDestroy();
+//        UIManager.GetInstance().GameUIDestroy();
+//        StartCoroutine(GameUIInit());
         UIManager.GetInstance().GameUIInit();
     }
-/*    
-    /// <summary>
-    /// 读档，进入游戏内容初始化流
-    /// </summary>
-        
-    private void SaveDataLoad()
-    {
-        MessageManager.GetInstance().Send(MessageTypes.SaveDataUpdate, new SaveDataUpdate());
 
-        UIManager.GetInstance().MainMenuDestroy();
+    private IEnumerator GameUIInit()
+    {
+        while (UIManager.GetInstance().GameUI != null)
+        {
+            yield return null; // 每帧检查一次
+        }
+//        yield return new 
         UIManager.GetInstance().GameUIInit();
-        
-        MessageManager.GetInstance().Send(MessageTypes.GameModeChange,new GameModeChange(GameModeType.CHAPTER));
     }
     
-    /// <summary>
-    /// 游戏中回档
-    /// </summary>
-    private void SaveDataReLoad()
-    {
-        //todo 回档
-        MessageManager.GetInstance().Send(MessageTypes.GameModeChange,new GameModeChange(GameModeType.CHAPTER));
-    }
-    */
     /// <summary>
     /// 退出游戏
     /// </summary>
@@ -129,7 +118,6 @@ public class GameManager : SingletonDontDestory<GameManager>
 
     void Update()
     {
-//        if (Input.GetKeyDown(KeyCode.Space))
 //            MessageManager.GetInstance().Send(MessageTypes.AddNotification,new AddNotification("Ciallo～"));
     }
     

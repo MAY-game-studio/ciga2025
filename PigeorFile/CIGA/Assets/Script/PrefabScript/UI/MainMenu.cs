@@ -168,7 +168,25 @@ public class MainMenu : MonoBehaviour
         MessageManager.GetInstance().Send(MessageTypes.PlaySound,new PlaySound(SoundClip.BTN_CLICK));
         MessageManager.GetInstance().Send(MessageTypes.ChapterStart,new ChapterStart(3));
     }
-    
+
+    public void OnBtnChapter4Clicked()
+    {
+        MessageManager.GetInstance().Send(MessageTypes.PlaySound,new PlaySound(SoundClip.BTN_CLICK));
+        MessageManager.GetInstance().Send(MessageTypes.ChapterStart,new ChapterStart(4));
+    }
+
+    public void OnBtnChapter5Clicked()
+    {
+        MessageManager.GetInstance().Send(MessageTypes.PlaySound,new PlaySound(SoundClip.BTN_CLICK));
+        MessageManager.GetInstance().Send(MessageTypes.ChapterStart,new ChapterStart(5));
+    }
+
+    public void OnBtnChapter6Clicked()
+    {
+        MessageManager.GetInstance().Send(MessageTypes.PlaySound,new PlaySound(SoundClip.BTN_CLICK));
+        MessageManager.GetInstance().Send(MessageTypes.ChapterStart,new ChapterStart(6));
+    }
+
     public void OnBtnChapterReturnClicked()
     {
         MessageManager.GetInstance().Send(MessageTypes.PlaySound,new PlaySound(SoundClip.BTN_CLICK));

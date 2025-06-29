@@ -57,8 +57,12 @@ public class UIManager : SingletonDontDestory<UIManager>
     [SerializeField] public Sprite[] ChapterBGSprite;
     [Tooltip("角色")]
     [SerializeField] public Sprite[] CharacterSprite;
-//    [SerializeField] public Sprite[] CharacterMissSprite;
     [SerializeField] public Sprite[] CharacterHitSprite;
+    
+    [SerializeField] public Sprite[] FrameSprite;
+    [SerializeField] public Sprite[] ChapterDeskSprite;
+    [SerializeField] public Sprite[] ChapterReadyGoSprite;
+    [SerializeField] public Sprite[] ChapterFinishSprite;
     
     #endregion
 
@@ -145,7 +149,8 @@ public class UIManager : SingletonDontDestory<UIManager>
     
     public void GameUIInit()
     {
-        if (GameUI==null) GameUI = Instantiate(GameUI_Prefab,Canvas.transform).GetComponent<GameUI>();
+        if (GameUI==null)
+            GameUI = Instantiate(GameUI_Prefab,Canvas.transform).GetComponent<GameUI>();
     }
 
     public void GameUIDestroy()
@@ -173,14 +178,17 @@ public class UIManager : SingletonDontDestory<UIManager>
         GameUI.CharacterSwitch(id == 0 ? 1 : 2);
     }
 
-    public void ChapterStart()
+    public void ChapterStart(int id)
     {
-        
+        GameUI.ReadyGoInit(ChapterReadyGoSprite[id]);
     }
 
     public void ChapterFinish(int scoreLimit,int score)
     {
-        
+        if (score >= scoreLimit)
+            GameUI.FinishInit(ChapterFinishSprite[ChapterManager.GetInstance().CurrentChapter*2-1]);
+        else
+            GameUI.FinishInit(ChapterFinishSprite[ChapterManager.GetInstance().CurrentChapter*2-2]);
     }
     
     #endregion

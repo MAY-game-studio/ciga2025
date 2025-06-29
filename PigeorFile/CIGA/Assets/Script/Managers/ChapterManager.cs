@@ -8,9 +8,6 @@ public class ChapterManager : SingletonDontDestory<ChapterManager>
 {
     #region SerializeField
     
-    [Header("章节谱")]
-    [SerializeField] private string[] Chapter;
-
     [Header("分数需求")]
     [SerializeField] private int[] PassScore; 
     
@@ -48,7 +45,6 @@ public class ChapterManager : SingletonDontDestory<ChapterManager>
 
     private void ChapterInit(int id)
     {
-        FlagComplete = false;
         UIManager.GetInstance().GameUI.ChapterInit(id);
         // 从 Resources 加载章节文本
         TextAsset chapterFile = Resources.Load<TextAsset>($"Chapter/Chapter{id}");
@@ -62,7 +58,6 @@ public class ChapterManager : SingletonDontDestory<ChapterManager>
         string[] lines = chapterData.Split(new[] { '\n', '\r' }, StringSplitOptions.RemoveEmptyEntries);
 
         _effectNum = lines.Length;
-        FlagComplete = false;
         _chapterEffectTime = new float[_effectNum];
         _chapterEffectType = new float[_effectNum];
 
@@ -84,6 +79,8 @@ public class ChapterManager : SingletonDontDestory<ChapterManager>
         _currentChapter = id;
         _effectID = 0;
         MessageManager.GetInstance().Send(MessageTypes.PlayMusic,new PlayMusic((MusicClip)id));
+        HitAvailable = true;
+        FlagComplete = false;
     }
 
     private int TimeJudge()
@@ -111,62 +108,128 @@ public class ChapterManager : SingletonDontDestory<ChapterManager>
 
     IEnumerator ChapterFinish()
     {
-        yield return new WaitForSecondsRealtime(3f);
+        HitAvailable = false;
+        _currentTime = 0f;
+        if (_currentChapter==1) MessageManager.GetInstance().Send(MessageTypes.AddNotification,new AddNotification("这将是一个可怕的夜晚……"));
+        if (_currentChapter==2) MessageManager.GetInstance().Send(MessageTypes.AddNotification,new AddNotification("周围回荡着尖叫声……"));
+        if (_currentChapter==3) MessageManager.GetInstance().Send(MessageTypes.AddNotification,new AddNotification("你对桌子使用了过肩摔，因为你觉得你做得到！"));
+        if (_currentChapter==4) MessageManager.GetInstance().Send(MessageTypes.AddNotification,new AddNotification("你这个橡皮鸭，满脑子都想着压榨员工呢"));
+        if (_currentChapter==5) MessageManager.GetInstance().Send(MessageTypes.AddNotification,new AddNotification("我从来没觉得上班有意思过"));
+        yield return new WaitForSecondsRealtime(1f);
         UIManager.GetInstance().ChapterFinish(PassScore[CurrentChapter],Score);
         MessageManager.GetInstance().Send(MessageTypes.PlayMusic, new PlayMusic(MusicClip.BGMMainMenu));
+        yield return new WaitForSecondsRealtime(1f);
+
+        while (!Input.anyKeyDown)
+        {
+            yield return null;
+        }
+        MessageManager.GetInstance().Send(MessageTypes.AddNotification,new AddNotification("按任意键继续"));
+        UIManager.GetInstance().GameUIDestroy();
+        yield return null;
+        if (_currentChapter==5)
+            MessageManager.GetInstance().Send(MessageTypes.GameModeChange,new GameModeChange(GameModeType.MAINMENU));
+        else
+        {
+            if (Score >= PassScore[CurrentChapter])
+                MessageManager.GetInstance().Send(MessageTypes.ChapterStart, new ChapterStart(_currentChapter + 1));
+            else
+                MessageManager.GetInstance().Send(MessageTypes.ChapterStart, new ChapterStart(_currentChapter));
+        }
     }
     
     void Start()
     {
         MessageRegister();   
     }
+
+    private bool HitAvailable;
     
     void Update()
     {
-        if (GameManager.GetInstance().GameModeType == GameModeType.CHAPTER)
+        if (GameManager.GetInstance().GameModeType == GameModeType.CHAPTER&&!FlagComplete)
         {
             _currentTime += Time.deltaTime*1000f;
             if (_effectID < _effectNum && _currentTime >= _chapterEffectTime[_effectID] + _timeOffset)
             {
                 float effectType = _chapterEffectType[_effectID];
-                if (effectType!=0)
-                    MessageManager.GetInstance().Send(MessageTypes.PlaySound, new PlaySound((SoundClip)_currentChapter+1));
-//                else
-//                    MessageManager.GetInstance().Send(MessageTypes.PlaySound, new PlaySound((SoundClip)_currentChapter+8));
+                if (effectType != 0)
+                {
+                    MessageManager.GetInstance()
+                        .Send(MessageTypes.PlaySound, new PlaySound((SoundClip)_currentChapter + 1));
+                    UIManager.GetInstance().GameUI.SwitchFrame(1);
+                }
+                else
+                {
+//                    MessageManager.GetInstance().Send(MessageTypes.PlaySound, new PlaySound((SoundClip)_currentChapter + 8));
+                    UIManager.GetInstance().GameUI.SwitchFrame(2);
+                }
                 UIManager.GetInstance().EffectInit();
                 _effectID++;
             }
 
+            if (_currentChapter == 4)
+            {
+                if (_currentTime is >= 19217 and <= 29132)
+                {
+                    UIManager.GetInstance().GameUI.chapterID = 6;
+                }
+                else
+                {
+                    UIManager.GetInstance().GameUI.chapterID = 4;
+                }
+            }
+            if (_currentChapter == 5)
+            {
+                if (_currentTime is >= 18289 and <= 34461)
+                {
+                    UIManager.GetInstance().GameUI.chapterID = 7;
+                }
+                else
+                {
+                    UIManager.GetInstance().GameUI.chapterID = 5;
+                }
+            }
             if (_effectID > 0 && _effectID >= _effectNum && !FlagComplete)
             {
                 FlagComplete = true;
                 StartCoroutine(ChapterFinish());
             }
         }
-        if (Input.GetKeyDown(KeyCode.A))
+        if (HitAvailable&&_currentChapter!=6&&Input.GetKeyDown(KeyCode.A))
         {
 //            Debug.Log("A");
             UIManager.GetInstance().HandInit(0);
             UIManager.GetInstance().JudgeInit(TimeJudge());
         }
-        if (Input.GetKeyDown(KeyCode.L))
+        if (HitAvailable&&Input.GetKeyDown(KeyCode.L))
         {
 //            Debug.Log("L");
             UIManager.GetInstance().HandInit(1);
             UIManager.GetInstance().JudgeInit(TimeJudge());
         }
-/*
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-            UIManager.GetInstance().JudgeInit(1);
-        if (Input.GetKeyDown(KeyCode.Alpha2))
-            UIManager.GetInstance().JudgeInit(2);
-            */
     }
 
     private IEnumerator ChapterStart(int id)
     {
-        UIManager.GetInstance().ChapterStart();
-        yield return new WaitForSecondsRealtime(3f);
+/*        if (UIManager.GetInstance().GameUI == null)
+        {
+            while (UIManager.GetInstance().GameUI == null)
+            {
+                yield return null; // 每帧检查一次
+            }
+
+        }
+*/
+        if (id==1) MessageManager.GetInstance().Send(MessageTypes.AddNotification,new AddNotification("一大个老板正在接近！"));
+        if (id==2) MessageManager.GetInstance().Send(MessageTypes.AddNotification,new AddNotification("变色龙同事出现了，愤怒爬上了你的脊背"));
+        if (id==3) MessageManager.GetInstance().Send(MessageTypes.AddNotification,new AddNotification("你感到有个邪恶的东西在看着你"));
+        if (id==4) MessageManager.GetInstance().Send(MessageTypes.AddNotification,new AddNotification("KPI从天而降！"));
+        if (id==5) MessageManager.GetInstance().Send(MessageTypes.AddNotification,new AddNotification("办公室正在变得焦躁不安……"));
+        
+        UIManager.GetInstance().ChapterStart(id);
+        MessageManager.GetInstance().Send(MessageTypes.PlaySound,new PlaySound(SoundClip.READYGO));
+        yield return new WaitForSecondsRealtime(5f);
         ChapterInit(id);
     }
     
