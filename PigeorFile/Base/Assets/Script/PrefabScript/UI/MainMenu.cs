@@ -207,7 +207,7 @@ public class MainMenu : MonoBehaviour
         GameManager.GetInstance().GameSaveData = _gameSaveFileSlot1;
         if (GameManager.GetInstance().GameSaveData == null)
             GameManager.GetInstance().GameSaveData = SaveManager.GetInstance().CreateGameSaveData();
-        MessageManager.GetInstance().Send(MessageTypes.GameModeChange,new GameModeChange(GameModeType.LOAD));
+        MessageManager.GetInstance().Send(MessageTypes.GameModeChange,new GameModeChange(GameModeType.LOADING));
     }
 
     public void OnBtnSlot2Clicked()
@@ -217,7 +217,7 @@ public class MainMenu : MonoBehaviour
         GameManager.GetInstance().GameSaveData = _gameSaveFileSlot2;
         if (GameManager.GetInstance().GameSaveData == null)
             GameManager.GetInstance().GameSaveData = SaveManager.GetInstance().CreateGameSaveData();
-        MessageManager.GetInstance().Send(MessageTypes.GameModeChange,new GameModeChange(GameModeType.LOAD));
+        MessageManager.GetInstance().Send(MessageTypes.GameModeChange,new GameModeChange(GameModeType.LOADING));
     }
 
     public void OnBtnSlot3Clicked()
@@ -227,7 +227,7 @@ public class MainMenu : MonoBehaviour
         GameManager.GetInstance().GameSaveData = _gameSaveFileSlot3;
         if (GameManager.GetInstance().GameSaveData == null)
             GameManager.GetInstance().GameSaveData = SaveManager.GetInstance().CreateGameSaveData();
-        MessageManager.GetInstance().Send(MessageTypes.GameModeChange,new GameModeChange(GameModeType.LOAD));
+        MessageManager.GetInstance().Send(MessageTypes.GameModeChange,new GameModeChange(GameModeType.LOADING));
     }
     
     public void OnBtnSaveReturnClicked()

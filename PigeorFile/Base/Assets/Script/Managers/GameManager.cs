@@ -14,12 +14,15 @@ public class GameManager : SingletonDontDestory<GameManager>
     
     #region Property
     
+    private IGameState _currentState;
+    
     private GameModeType _gameModeType;
     public GameModeType GameModeType //当前游戏主控流程
     {
         get => _gameModeType;
         private set => _gameModeType = value;
     }
+    
     
     private GameSettingData _gameSettingData;
     public GameSettingData GameSettingData
@@ -42,20 +45,29 @@ public class GameManager : SingletonDontDestory<GameManager>
     #region GameProcess
 
     /// <summary>
+    /// 状态切换的核心方法
+    /// </summary>
+    public void ChangeState(IGameState newState)
+    {
+        _currentState?.Exit();
+        _currentState = newState;
+        _currentState.Enter();
+    }
+    
+    /// <summary>
     /// 主控流程开始
     /// </summary>
     private void GameStart()
     {
         MessageManager.GetInstance().Send(MessageTypes.GameModeChange,new GameModeChange(GameModeType.GAMEINIT)); //主控流程，游戏初始化
         UIManager.GetInstance().MouseInit();//初始化鼠标
-        MessageManager.GetInstance().Send(MessageTypes.SwitchMouseMode,new SwitchMouseMode(MouseMode.DEFAULT)); //修改鼠标样式
         UIManager.GetInstance().AwakeVideoInit(); //播放起始动画
     }
-
+/*
     /// <summary>
     /// 初始化游戏设置
     /// </summary>
-    private void GameInit()
+    public void GameInit()
     {
         //重载设置
         GameSettingData = SaveManager.GetInstance().GameSettingDataLoad();
@@ -71,7 +83,7 @@ public class GameManager : SingletonDontDestory<GameManager>
     /// <summary>
     /// 游戏开始或返回时显示主菜单
     /// </summary>
-    private void MainMenuInit()
+    public void MainMenuInit()
     {
         //回到主菜单时的清理游戏组件
         UIManager.GetInstance().GameUIDestroy();
@@ -82,7 +94,7 @@ public class GameManager : SingletonDontDestory<GameManager>
     /// 读档，进入游戏内容初始化流
     /// </summary>
         
-    private void SaveDataLoad()
+    public void SaveDataLoad()
     {
         MessageManager.GetInstance().Send(MessageTypes.SaveDataUpdate, new SaveDataUpdate());
 
@@ -95,7 +107,7 @@ public class GameManager : SingletonDontDestory<GameManager>
     /// <summary>
     /// 游戏中回档
     /// </summary>
-    private void SaveDataReLoad()
+    public void SaveDataReLoad()
     {
         //todo 回档
         MessageManager.GetInstance().Send(MessageTypes.GameModeChange,new GameModeChange(GameModeType.DEFAULT));
@@ -104,14 +116,14 @@ public class GameManager : SingletonDontDestory<GameManager>
     /// <summary>
     /// 退出游戏
     /// </summary>
-    private void GameExit()
+    public void GameExit()
     {
 #if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false;
 #else
         Application.Quit();
 #endif
-    }
+    }*/
     #endregion
     
     void Start()
@@ -139,7 +151,31 @@ public class GameManager : SingletonDontDestory<GameManager>
         if (message is GameModeChange msg)
         {
             GameModeType = msg.GameModeType;
-            switch (GameModeType)
+            switch (msg.GameModeType)
+            {
+                case GameModeType.GAMEINIT:
+                    ChangeState(new GameStateInit());
+                    break;
+                case GameModeType.MAINMENU:
+                    ChangeState(new GameStateMainMenu());
+                    break;
+                case GameModeType.LOADING:
+                    ChangeState(new GameStateLoading());
+                    break;
+                case GameModeType.RELOADING:
+                    ChangeState(new GameStateReloading());
+                    break;
+                case GameModeType.DEFAULT:
+                    ChangeState(new GameStateDefault());
+                    break;
+                case GameModeType.PAUSE:
+                    ChangeState(new GameStatePause());
+                    break;
+                case GameModeType.EXIT:
+                    ChangeState(new GameStateExiting());
+                    break;
+            }
+/*            switch (GameModeType)
             {
                 case GameModeType.GAMEINIT:
                     GameInit();
@@ -161,6 +197,7 @@ public class GameManager : SingletonDontDestory<GameManager>
                     GameExit();
                     break;
             }
+            */
         }
     }
     #endregion

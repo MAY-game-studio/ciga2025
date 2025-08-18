@@ -77,7 +77,7 @@ public class GameUI : MonoBehaviour
     public void ONBtnReloadClicked()
     {
         MessageManager.GetInstance().Send(MessageTypes.PlaySound,new PlaySound(SoundClip.BTN_CLICK));
-        MessageManager.GetInstance().Send(MessageTypes.GameModeChange,new GameModeChange(GameModeType.RELOAD));
+        MessageManager.GetInstance().Send(MessageTypes.GameModeChange,new GameModeChange(GameModeType.RELOADING));
         MessageManager.GetInstance().Send(MessageTypes.AddNotification,new AddNotification("ReLoad"));
         HidePauseMenu();
     }

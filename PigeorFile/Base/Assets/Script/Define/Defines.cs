@@ -2,8 +2,8 @@ public enum GameModeType
 {
     GAMEINIT,
     MAINMENU,
-    LOAD,
-    RELOAD,
+    LOADING,
+    RELOADING,
     DEFAULT,
     PAUSE,
     EXIT
