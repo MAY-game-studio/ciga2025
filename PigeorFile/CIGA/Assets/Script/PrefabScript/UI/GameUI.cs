@@ -16,6 +16,7 @@ public class GameUI : MonoBehaviour
 
     [SerializeField] private Image BG;
     [SerializeField] private Image Character;
+    [SerializeField] private Image Table;
     [SerializeField] private Image ReadyGo;
     [SerializeField] private Image Finish;
     [SerializeField] private Image Frame;
@@ -214,6 +215,7 @@ public class GameUI : MonoBehaviour
     {
         BG.sprite = UIManager.GetInstance().ChapterBGSprite[id];
         Character.sprite = UIManager.GetInstance().CharacterSprite[id];
+        Table.sprite = UIManager.GetInstance().ChapterDeskSprite[id];
         chapterID = id;
         SwitchAnimcounting = -1;
     }

@@ -113,8 +113,8 @@ public class ChapterManager : SingletonDontDestory<ChapterManager>
         if (_currentChapter==1) MessageManager.GetInstance().Send(MessageTypes.AddNotification,new AddNotification("这将是一个可怕的夜晚……"));
         if (_currentChapter==2) MessageManager.GetInstance().Send(MessageTypes.AddNotification,new AddNotification("周围回荡着尖叫声……"));
         if (_currentChapter==3) MessageManager.GetInstance().Send(MessageTypes.AddNotification,new AddNotification("你对桌子使用了过肩摔，因为你觉得你做得到！"));
-        if (_currentChapter==4) MessageManager.GetInstance().Send(MessageTypes.AddNotification,new AddNotification("你这个橡皮鸭，满脑子都想着压榨员工呢"));
-        if (_currentChapter==5) MessageManager.GetInstance().Send(MessageTypes.AddNotification,new AddNotification("我从来没觉得上班有意思过"));
+        if (_currentChapter==5) MessageManager.GetInstance().Send(MessageTypes.AddNotification,new AddNotification("你这个橡皮鸭，满脑子都想着压榨员工呢"));
+        if (_currentChapter==4) MessageManager.GetInstance().Send(MessageTypes.AddNotification,new AddNotification("我从来没觉得上班有意思过"));
         yield return new WaitForSecondsRealtime(1f);
         UIManager.GetInstance().ChapterFinish(PassScore[CurrentChapter],Score);
         MessageManager.GetInstance().Send(MessageTypes.PlayMusic, new PlayMusic(MusicClip.BGMMainMenu));
@@ -172,22 +172,38 @@ public class ChapterManager : SingletonDontDestory<ChapterManager>
             {
                 if (_currentTime is >= 19217 and <= 29132)
                 {
-                    UIManager.GetInstance().GameUI.chapterID = 6;
+                    if (UIManager.GetInstance().GameUI.chapterID == 4)
+                    {
+                        UIManager.GetInstance().GameUI.chapterID = 6;
+                        MessageManager.GetInstance().Send(MessageTypes.AddNotification,new AddNotification("我说禁止外放你二龙吗？"));
+                    }
                 }
                 else
                 {
-                    UIManager.GetInstance().GameUI.chapterID = 4;
+                    if (UIManager.GetInstance().GameUI.chapterID == 6)
+                    {
+                        UIManager.GetInstance().GameUI.chapterID = 4;
+                        MessageManager.GetInstance().Send(MessageTypes.AddNotification,new AddNotification("成就：人类早期驯服野生音量键的珍贵影像"));
+                    }
                 }
             }
             if (_currentChapter == 5)
             {
                 if (_currentTime is >= 18289 and <= 34461)
                 {
-                    UIManager.GetInstance().GameUI.chapterID = 7;
+                    if (UIManager.GetInstance().GameUI.chapterID == 5)
+                    {
+                        UIManager.GetInstance().GameUI.chapterID = 7;
+                        MessageManager.GetInstance().Send(MessageTypes.AddNotification,new AddNotification("你惊扰了Windows！"));
+                    }
                 }
                 else
                 {
-                    UIManager.GetInstance().GameUI.chapterID = 5;
+                    if (UIManager.GetInstance().GameUI.chapterID == 7)
+                    {
+                        UIManager.GetInstance().GameUI.chapterID = 5;
+                        MessageManager.GetInstance().Send(MessageTypes.AddNotification,new AddNotification("再也不会忘记保存了"));
+                    }
                 }
             }
             if (_effectID > 0 && _effectID >= _effectNum && !FlagComplete)
@@ -212,20 +228,11 @@ public class ChapterManager : SingletonDontDestory<ChapterManager>
 
     private IEnumerator ChapterStart(int id)
     {
-/*        if (UIManager.GetInstance().GameUI == null)
-        {
-            while (UIManager.GetInstance().GameUI == null)
-            {
-                yield return null; // 每帧检查一次
-            }
-
-        }
-*/
         if (id==1) MessageManager.GetInstance().Send(MessageTypes.AddNotification,new AddNotification("一大个老板正在接近！"));
         if (id==2) MessageManager.GetInstance().Send(MessageTypes.AddNotification,new AddNotification("变色龙同事出现了，愤怒爬上了你的脊背"));
         if (id==3) MessageManager.GetInstance().Send(MessageTypes.AddNotification,new AddNotification("你感到有个邪恶的东西在看着你"));
-        if (id==4) MessageManager.GetInstance().Send(MessageTypes.AddNotification,new AddNotification("KPI从天而降！"));
-        if (id==5) MessageManager.GetInstance().Send(MessageTypes.AddNotification,new AddNotification("办公室正在变得焦躁不安……"));
+        if (id==5) MessageManager.GetInstance().Send(MessageTypes.AddNotification,new AddNotification("KPI从天而降！"));
+        if (id==4) MessageManager.GetInstance().Send(MessageTypes.AddNotification,new AddNotification("办公室正在变得焦躁不安……"));
         
         UIManager.GetInstance().ChapterStart(id);
         MessageManager.GetInstance().Send(MessageTypes.PlaySound,new PlaySound(SoundClip.READYGO));

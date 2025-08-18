@@ -45,9 +45,10 @@ public class GameManager : SingletonDontDestory<GameManager>
     private void GameStart()
     {
         MessageManager.GetInstance().Send(MessageTypes.GameModeChange,new GameModeChange(GameModeType.GAMEINIT)); //主控流程，游戏初始化
-        UIManager.GetInstance().MouseInit();//初始化鼠标
-        MessageManager.GetInstance().Send(MessageTypes.SwitchMouseMode,new SwitchMouseMode(MouseMode.DEFAULT)); //修改鼠标样式
+//        UIManager.GetInstance().MouseInit();//初始化鼠标
+//        MessageManager.GetInstance().Send(MessageTypes.SwitchMouseMode,new SwitchMouseMode(MouseMode.DEFAULT)); //修改鼠标样式
         UIManager.GetInstance().AwakeVideoInit(); //播放起始动画
+//        MessageManager.GetInstance().Send(MessageTypes.GameModeChange,new GameModeChange(GameModeType.MAINMENU));
     }
 
     /// <summary>

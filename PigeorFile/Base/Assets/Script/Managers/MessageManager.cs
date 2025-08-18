@@ -35,11 +35,13 @@ public class GameModeChange : Message
 
 public class PlayMusic : Message
 {
-    public PlayMusic(MusicClip musicClip) : base(MessageTypes.PlayMusic)
+    public PlayMusic(MusicClip musicClip, float duration = 1.0f) : base(MessageTypes.PlayMusic)
     {
         MusicClip = musicClip;
+        Duration = duration;
     }
     public MusicClip MusicClip;
+    public float Duration;
 }
 
 public class PlaySound : Message

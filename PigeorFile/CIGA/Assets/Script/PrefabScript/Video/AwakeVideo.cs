@@ -30,7 +30,7 @@ public class AwakeVideo : MonoBehaviour
 
     public void Init(float countdown,float volume)
     {
-        StartCoroutine(PlayAnim(countdown));
+        StartCoroutine(PlayAnim(8f));
         AudioSource.volume = volume;
     }
 
