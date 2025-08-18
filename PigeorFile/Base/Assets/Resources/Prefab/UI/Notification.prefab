@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 936252224631553935}
   - component: {fileID: 7741430911764210867}
   - component: {fileID: 3634481911448403808}
+  - component: {fileID: 2436280510623770658}
   m_Layer: 5
   m_Name: Notification
   m_TagString: Untagged
@@ -107,9 +108,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   FlagAwakeAnim: 1
   FlagEnableAnim: 0
+  EaseType: 6
   Delay: 0
   Duration: 0.5
   Offset: {x: 50, y: 0}
+--- !u!225 &2436280510623770658
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5928558710895739206}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &9055758564543844092
 GameObject:
   m_ObjectHideFlags: 0

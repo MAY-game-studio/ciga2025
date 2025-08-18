@@ -26,15 +26,14 @@ public class NotificationManager : SingletonDontDestory<NotificationManager>
 
     private List<Notification> notificationList = new List<Notification>(); //当前显示的消息
     private List<string> notificationTextList = new List<string>(); //寄存的消息内容
-    private float _counting = 0f; //实例化消息间隔计时器
+    private float _counting; //实例化消息间隔计时器
+    
     #endregion
 
-    public void DeleteNotification(GameObject notification)
+    public void DeleteNotification(Notification notification)
     {
-        int index = notificationList.FindIndex(n => n.gameObject == notification);
-        Notification tmp = notificationList[index];
-        notificationList.RemoveAt(index);
-        UIManager.GetInstance().NotificationDestroy(tmp);
+        if (notificationList.Remove(notification))
+            UIManager.GetInstance().NotificationDestroy(notification); // 移除成功后销毁对应的UI元素
     }
 
     public void NewNotification() //从消息缓存中实例化一条

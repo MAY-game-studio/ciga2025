@@ -40,6 +40,6 @@ public class Notification : MonoBehaviour
     void Update()
     {
         countdown -= Time.deltaTime;
-        if (countdown<0) NotificationManager.GetInstance().DeleteNotification(gameObject);
+        if (countdown<0) NotificationManager.GetInstance().DeleteNotification(this);
     }
 }

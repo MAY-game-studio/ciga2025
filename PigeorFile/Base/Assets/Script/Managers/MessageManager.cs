@@ -136,7 +136,7 @@ public class MessageManager : SingletonDontDestory<MessageManager>
     }
 
     /// <summary>
-    /// 注册消息
+    /// 注册消息,默认无优先级且临时类型为Default
     /// </summary>
     public void Register(MessageTypes messageType, UnityAction<Message> action, int priority = 0,
         MessageTemporaryType tempType = MessageTemporaryType.Default)
@@ -146,7 +146,6 @@ public class MessageManager : SingletonDontDestory<MessageManager>
         listeners[messageType].Add(new MessageListener(action, priority, tempType));
         listeners[messageType].Sort((a, b) => b.Priority.CompareTo(a.Priority)); // 按优先级降序排列
     }
-
 
     /// <summary>
     /// 移除消息
@@ -165,23 +164,32 @@ public class MessageManager : SingletonDontDestory<MessageManager>
 #if UNITY_EDITOR
         Debug.Log(messageType);
 #endif
-
         if (!listeners.TryGetValue(messageType, out var listenerList)) return;
         foreach (var listener in listenerList)
-            listener.Action?.Invoke(message);
+        {
+            try
+            {
+                listener.Action?.Invoke(message);// 尝试执行回调函数
+            }
+            catch (System.Exception e)// 如果发生任何异常，捕获它
+            {
+                // 在控制台打印详细的错误信息，包括哪个消息类型和哪个监听者出错了
+                Debug.LogError($"Error executing listener for message [{messageType}].\n" +
+                               $"Listener: {listener.Action.Method.Name} in {listener.Action.Target.GetType().Name}\n" +
+                               $"Exception: {e.Message}\n{e.StackTrace}");
+            }
+        }
     }
 
     public void Clear(MessageTemporaryType tempType = MessageTemporaryType.Default)
     {
-        if (tempType == MessageTemporaryType.Default)
+        if (tempType == MessageTemporaryType.Default) // 默认情况：清除所有监听器
         {
-            // 默认情况：清除所有监听器
             listeners.Clear();
             return;
         }
-        // 遍历所有消息类型
         var messageTypes = listeners.Keys.ToArray(); // 先复制key集合
-        foreach (var type in messageTypes)
+        foreach (var type in messageTypes) // 遍历所有消息类型
         {
             // 移除指定临时类型的监听器
             listeners[type].RemoveAll(l => l.TemporaryType == tempType);
