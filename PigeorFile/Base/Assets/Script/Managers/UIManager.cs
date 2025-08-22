@@ -46,16 +46,6 @@ public class UIManager : SingletonDontDestory<UIManager>
 
     #endregion
 
-    #region Videos
-    
-    
-    [Header("视频参数")]
-
-    [Tooltip("视频时长")]
-    [SerializeField] private float[] VideoDuration;
-
-    #endregion
-
     #endregion
 
     public void SetResolution()
@@ -93,7 +83,7 @@ public class UIManager : SingletonDontDestory<UIManager>
     {
         MessageManager.GetInstance().Send(MessageTypes.SwitchMouseMode,new SwitchMouseMode(MouseMode.HIDE));
         AwakeVideo = Instantiate(AwakeVideo_Prefab, Canvas.transform).GetComponent<AwakeVideo>();
-        AwakeVideo.Init(VideoDuration[0],AudioManager.GetInstance().MainVolume);
+        AwakeVideo.Init();
     }
 
     public void AwakeVideoDestroy()
