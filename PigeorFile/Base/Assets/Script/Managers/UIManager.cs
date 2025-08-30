@@ -53,7 +53,6 @@ public class UIManager : SingletonDontDestory<UIManager>
         Screen.SetResolution((int)GameManager.GetInstance().GameSettingData.ResolutionRatio.x,
             (int)GameManager.GetInstance().GameSettingData.ResolutionRatio.y,
             GameManager.GetInstance().GameSettingData.ScreenMode);
-        Canvas.scaleFactor = GameManager.GetInstance().GameSettingData.ResolutionRatio.x / 1920f;//ui缩放
     }
 
     #region Mouse
