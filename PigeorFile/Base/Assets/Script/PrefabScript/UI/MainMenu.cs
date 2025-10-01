@@ -83,38 +83,12 @@ public class MainMenu : MonoBehaviour
 
     private void ShowMainMenu()
     {
-//        MainMenuGroup.GetComponent<UIAnimController>()
-        //if (MainMenuGroup.gameObject.activeSelf && MainMenuGroup.GetComponent<UIAnimController>().CurrentTween != null)
-//            MainMenuGroup.GetComponent<UIAnimController>().CurrentTween.Complete();
-        if (MainMenuGroup.gameObject.activeSelf &&
-            MainMenuGroup.GetComponent<UIAnimController>().CurrentTween != null &&
-            !MainMenuGroup.GetComponent<UIAnimController>().CurrentTween.IsComplete())
-//            StartCoroutine(MainMenuSetActive());
-            MainMenuGroup.GetComponent<UIAnimController>().CurrentTween.Complete();
-        else
-            MainMenuGroup.gameObject.SetActive(true);
+        MainMenuGroup.gameObject.TrySetActive(true);
     }
     
-    IEnumerator MainMenuSetActive()
-    {
-        MainMenuGroup.GetComponent<UIAnimController>().CurrentTween.Complete();
-        Debug.Log("wait");
-        while (!MainMenuGroup.GetComponent<UIAnimController>().CurrentTween.IsComplete())
-        {
-            yield return null;
-        }
-        Debug.Log(MainMenuGroup.GetComponent<UIAnimController>().CurrentTween.IsComplete());
-        MainMenuGroup.gameObject.SetActive(true);
-    }
-
     private void HideMainMenu()
     {
-
-        Transform stand = MainMenuGroup.transform.Find("StandObject");
-        if (stand != null)
-            stand.gameObject.SetActive(false);
-        else
-            MainMenuGroup.SetActive(false);
+        MainMenuGroup.TrySetActive(false);
     }   
 
     public void OnBtnStartClicked()
@@ -151,7 +125,7 @@ public class MainMenu : MonoBehaviour
     {
         Focus = "SaveMenu";
         
-        SaveGroup.gameObject.SetActive(true);
+        SaveGroup.gameObject.TrySetActive(true);
         
         _gameSaveFileSlot1 = SaveManager.GetInstance().GameSaveDataLoad(1);
         _gameSaveFileSlot2 = SaveManager.GetInstance().GameSaveDataLoad(2);
@@ -192,12 +166,7 @@ public class MainMenu : MonoBehaviour
     {
         ShowMainMenu();
         Focus = "MainMenu";
-        
-        Transform stand = SaveGroup.transform.Find("StandObject");
-        if (stand != null)
-            stand.gameObject.SetActive(false);
-        else
-            MainMenuGroup.SetActive(false);
+        SaveGroup.TrySetActive(false);
     }
 
     public void OnBtnSlot1Clicked()
@@ -246,7 +215,7 @@ public class MainMenu : MonoBehaviour
     {
         Focus = "HelpMenu";
         
-        HelpGroup.gameObject.SetActive(true);
+        HelpGroup.gameObject.TrySetActive(true);
         _page = 0;
         Help_Image.sprite = Help_Sprite[_page];
     }
@@ -255,12 +224,7 @@ public class MainMenu : MonoBehaviour
     {
         ShowMainMenu();
         Focus = "MainMenu";
-        
-        Transform stand = HelpGroup.transform.Find("StandObject");
-        if (stand != null)
-            stand.gameObject.SetActive(false);
-        else
-            MainMenuGroup.SetActive(false);
+        HelpGroup.TrySetActive(false);
     }
     public void OnBtnLeftClicked()
     {
@@ -277,7 +241,6 @@ public class MainMenu : MonoBehaviour
     
     public void OnBtnHelpReturnClicked()
     {
-//        if (MainMenuGroup.activeSelf) return; // MainMenuGroup 动画进程冲突，不处理
         MessageManager.GetInstance().Send(MessageTypes.PlaySound,new PlaySound(SoundClip.BTN_CLICK));
         HideHelpMenu();
     }
@@ -292,7 +255,7 @@ public class MainMenu : MonoBehaviour
     {
         Focus = "SettingMenu";
         
-        SettingGroup.gameObject.SetActive(true);
+        SettingGroup.gameObject.TrySetActive(true);
         MainVolumeSlider.value = AudioManager.GetInstance().MainVolume;
         MusicVolumeSlider.value = AudioManager.GetInstance().MusicVolume;
         SoundVolumeSlider.value = AudioManager.GetInstance().SoundVolume;
@@ -306,12 +269,7 @@ public class MainMenu : MonoBehaviour
     {
         ShowMainMenu();
         Focus = "MainMenu";
-        
-        Transform stand = SettingGroup.transform.Find("StandObject");
-        if (stand != null)
-            stand.gameObject.SetActive(false);
-        else
-            MainMenuGroup.SetActive(false);
+        SettingGroup.TrySetActive(false);
     }
     
     public void OnDropdownScreenModeChange()
@@ -404,58 +362,5 @@ public class MainMenu : MonoBehaviour
                     break;
             }
         }
-/*        if (Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            Debug.Log(1);
-//            _mainMenuTween = MainMenuGroup.GetComponent<UIAnimController>().CurrentTween;
-            if (true||_mainMenuTween != null && _mainMenuTween.IsActive())
-            {
-                Debug.Log("kill");
-                _mainMenuTween.Kill();
-            }
-            
-            _mainMenuTween = MainMenuGroup.GetComponent<RectTransform>()
-                .DOAnchorPos(MainMenuGroup.GetComponent<RectTransform>().anchoredPosition + new Vector2(200f, 0), 1);
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            Debug.Log(2);
-//            _mainMenuTween = MainMenuGroup.GetComponent<UIAnimController>().CurrentTween;
-            if (true||_mainMenuTween != null && _mainMenuTween.IsActive())
-            {
-                Debug.Log("kill");
-                _mainMenuTween.Complete();
-            }
-
-            StartCoroutine(PlayNextFrame());
-            
-        }
-        
-        IEnumerator MainMenuSetActive()
-        {
-            yield return _mainMenuTween.WaitForCompletion(); // 等待一帧
-            _mainMenuTween = MainMenuGroup.GetComponent<RectTransform>()
-                .DOAnchorPos(MainMenuGroup.GetComponent<RectTransform>().anchoredPosition + new Vector2(-200f, 0f), 1f);
-        }
-        
-        if (Input.GetKeyDown(KeyCode.Alpha3))
-        {
-            if (_mainMenuTween != null && _mainMenuTween.IsActive())
-            {
-                _mainMenuTween.Complete();
-                Debug.Log("MainMenu Tween completed");
-            }
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha4))
-        {
-            if (_mainMenuTween != null && _mainMenuTween.IsActive())
-            {
-                _mainMenuTween.Complete();
-                Debug.Log("MainMenu Tween Killed");
-            }
-        }*/
-//        if (Input.GetKeyDown(KeyCode.Alpha1)) ShowMainMenu();
-//        if (Input.GetKeyDown(KeyCode.Alpha2)) HideMainMenu();
-//        if (Input.GetKeyDown(KeyCode.Alpha3)) Debug.Log("");
     }
 }

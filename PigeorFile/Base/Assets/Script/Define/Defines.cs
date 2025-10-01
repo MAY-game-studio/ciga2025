@@ -1,3 +1,5 @@
+using System;
+
 public enum GameModeType
 {
     GAMEINIT,
@@ -34,11 +36,26 @@ public enum SoundClip
 {
     BTN_CLICK,
 }
-/*
-public enum UIAnimType
+
+[Flags]
+public enum UIAnimProperty
 {
-    FADEIN,
-    FADEOUT,
-    HOVER,
+    NONE = 0,
+    POSITION = 1 << 0,
+    SCALE = 1 << 1,
+    ROTATION = 1 << 2,
+    COLOR = 1 << 3,
 }
-*/
+
+[Flags]
+public enum UIAnimState
+{
+    IDLE = 0,
+    HIDE = 1 << 0,
+    FADEIN  = 1 << 1,
+    FADEOUT = 1 << 2,
+    HOVERIN = 1 << 3,
+    HOVEROUT = 1 << 4,
+    CLICK = 1 << 5,
+    SHAKE = 1 << 6,
+}
