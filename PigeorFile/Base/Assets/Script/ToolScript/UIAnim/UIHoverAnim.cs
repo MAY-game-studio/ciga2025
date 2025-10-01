@@ -47,7 +47,7 @@ public class UIHoverAnim : UIAnim, IPointerEnterHandler, IPointerExitHandler
         UIAnimManager.GetInstance().AnimRegister(gameObject,this);
         _rectTransform = GetComponent<RectTransform>();
         _image = GetComponent<Image>();
-        PossivleState = UIAnimState.HOVERIN | UIAnimState.HOVEROUT;
+        PossibleState = UIAnimState.HOVERIN | UIAnimState.HOVEROUT;
     }
 
     public override void Init()

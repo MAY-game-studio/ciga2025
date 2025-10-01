@@ -63,7 +63,7 @@ public class UIAnimManager : SingletonDontDestory<UIAnimManager>
         if ((GetProperty(obj) & property) == 0) return true; //无property状态占用
         foreach (var anim in _registeredAnims[obj])
         {
-            if (GetState(obj, anim.PossivleState) && (anim.Property & property) != 0 && priority < anim.priority)
+            if (GetState(obj, anim.PossibleState) && (anim.Property & property) != 0 && priority < anim.priority)
                 return false; // 被更高优先级的活动动画阻止
         }
         return true;
@@ -73,7 +73,7 @@ public class UIAnimManager : SingletonDontDestory<UIAnimManager>
     {
         foreach (var anim in _registeredAnims[obj])
         {
-            if (GetState(obj, anim.PossivleState) && (anim.Property & property) != 0)
+            if (GetState(obj, anim.PossibleState) && (anim.Property & property) != 0)
                 anim.CancelAnim();
         }
     }

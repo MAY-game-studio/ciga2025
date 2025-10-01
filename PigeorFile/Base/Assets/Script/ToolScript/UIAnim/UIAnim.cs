@@ -28,7 +28,7 @@ public abstract class UIAnim : MonoBehaviour
     }
     
     private UIAnimState possibleState;
-    public UIAnimState PossivleState
+    public UIAnimState PossibleState
     {
         get => possibleState;
         protected set => possibleState = value;

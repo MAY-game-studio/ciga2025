@@ -55,7 +55,8 @@ public class UIFadeAnim : UIAnim
         _rectTransform = GetComponent<RectTransform>();
         if (!TryGetComponent<CanvasGroup>(out _canvasGroup))
             _canvasGroup = gameObject.AddComponent<CanvasGroup>();
-        PossivleState = UIAnimState.FADEIN | UIAnimState.FADEOUT;
+        // 定义此组件相关的状态
+        PossibleState = UIAnimState.FADEIN | UIAnimState.FADEOUT;
     }
     
     public override void Init()
@@ -83,6 +84,7 @@ public class UIFadeAnim : UIAnim
             UIAnimManager.GetInstance().PropertyUpdate(gameObject, Property, false); // 释放anim属性
         });
         Sequence.OnRewind(() => {
+            Debug.Log("UIFadeAnim OnRewind");
             UIAnimManager.GetInstance().StateUpdate(gameObject, UIAnimState.FADEOUT, false); //更新状态机
             UIAnimManager.GetInstance().PropertyUpdate(gameObject, Property, false); // 释放anim属性
             if (_flagDestroy)
@@ -106,6 +108,7 @@ public class UIFadeAnim : UIAnim
 
     private IEnumerator DelayAnim()
     {
+        Sequence.Goto(Mathf.Epsilon); //回到初始状态，延时后重新播放(避免触发OnRewind)
         if (Delay > 0) yield return new WaitForSeconds(Delay);
         Sequence.PlayForward(); //延时结束进行入场动画
         _enableCoroutine = null;
@@ -126,8 +129,8 @@ public class UIFadeAnim : UIAnim
             UIAnimManager.GetInstance().CancelConflictAnims(gameObject, Property);
             UIAnimManager.GetInstance().PropertyUpdate(gameObject, Property, true);
             UIAnimManager.GetInstance().StateUpdate(gameObject, UIAnimState.FADEIN, true);
-            if (_enableCoroutine != null) StopCoroutine(_enableCoroutine);//完整播放存在延时
-            _enableCoroutine = StartCoroutine(DelayAnim());
+            if (_enableCoroutine != null) StopCoroutine(_enableCoroutine);
+            _enableCoroutine = StartCoroutine(DelayAnim()); //完整播放存在延时
         }
     }
 

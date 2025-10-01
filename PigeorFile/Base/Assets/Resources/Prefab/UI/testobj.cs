@@ -11,11 +11,13 @@ public class testobj : MonoBehaviour
 
     private UIFadeAnim fadeAnim;
     private UIHoverAnim hoverAnim;
-
+    private UIShakeAnim shakeAnim;
+    
     void Start()
     {
         // 获取并检查必要的组件
         fadeAnim = GetComponent<UIFadeAnim>();
+        shakeAnim = GetComponent<UIShakeAnim>();
         if (childButton != null)
         {
             hoverAnim = childButton.GetComponent<UIHoverAnim>();
@@ -53,6 +55,20 @@ public class testobj : MonoBehaviour
             Debug.Log("Test: Commanding this object to TryEnable()...");
             // 使用扩展方法来启用自己
             gameObject.TryEnable();
+        }
+        // 按下键盘 3 键
+        if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            // 【修改】直接使用获取到的shakeAnim组件
+            if (shakeAnim != null)
+            {
+                Debug.Log($"Test: Commanding {shakeAnim.gameObject.name} to OnShake()...");
+                shakeAnim.OnShake();
+            }
+            else
+            {
+                Debug.LogWarning("测试警告：此物体上没有找到 UIShakeAnim 组件！");
+            }
         }
     }
 }

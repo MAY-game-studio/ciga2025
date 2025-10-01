@@ -51,11 +51,9 @@ public enum UIAnimProperty
 public enum UIAnimState
 {
     IDLE = 0,
-    HIDE = 1 << 0,
-    FADEIN  = 1 << 1,
-    FADEOUT = 1 << 2,
-    HOVERIN = 1 << 3,
-    HOVEROUT = 1 << 4,
-    CLICK = 1 << 5,
-    SHAKE = 1 << 6,
+    FADEIN  = 1 << 0,
+    FADEOUT = 1 << 1,
+    HOVERIN = 1 << 2,
+    HOVEROUT = 1 << 3,
+    SHAKE = 1 << 4,
 }

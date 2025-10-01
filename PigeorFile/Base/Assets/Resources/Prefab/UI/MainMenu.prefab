@@ -6586,6 +6586,7 @@ GameObject:
   - component: {fileID: 2766411212682089859}
   - component: {fileID: 5605925551433209400}
   - component: {fileID: 1690063489369350896}
+  - component: {fileID: 1457122466051327105}
   m_Layer: 5
   m_Name: testObj
   m_TagString: Untagged
@@ -6750,6 +6751,26 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &1457122466051327105
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7609659119700412691}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe627cd622c3e514fb7bcd96c475b381, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  priority: 3
+  FlagAnimShakePosition: 1
+  FlagAnimShakeRotation: 1
+  Duration: 0.5
+  Vibrato: 10
+  FadeOut: 1
+  PositionStrength: {x: 10, y: 0}
+  RotationStrength: 15
 --- !u!1 &7720257989404319932
 GameObject:
   m_ObjectHideFlags: 0
