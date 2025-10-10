@@ -151,7 +151,7 @@ public class GameManager : SingletonDontDestory<GameManager>
         if (message is GameModeChange msg)
         {
             GameModeType = msg.GameModeType;
-            switch (msg.GameModeType)
+            switch (msg.GameModeType) //切换游戏状态机
             {
                 case GameModeType.GAMEINIT:
                     ChangeState(new GameStateInit());
@@ -175,29 +175,6 @@ public class GameManager : SingletonDontDestory<GameManager>
                     ChangeState(new GameStateExiting());
                     break;
             }
-/*            switch (GameModeType)
-            {
-                case GameModeType.GAMEINIT:
-                    GameInit();
-                    break;
-                case GameModeType.MAINMENU:
-                    MainMenuInit();
-                    break;
-                case GameModeType.LOAD:
-                    SaveDataLoad();
-                    break;
-                case GameModeType.RELOAD:
-                    SaveDataReLoad();
-                    break;
-                case GameModeType.DEFAULT://常规游戏态
-                    break;
-                case GameModeType.PAUSE:
-                    break;
-                case GameModeType.EXIT:
-                    GameExit();
-                    break;
-            }
-            */
         }
     }
     #endregion

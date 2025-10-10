@@ -16,12 +16,12 @@ public class MainMenu : MonoBehaviour
     [Header("主菜单")]
     
     [SerializeField] private GameObject MainMenuGroup;
-    [SerializeField] private Image MainMenu_BG;
-    [SerializeField] private Image MainMenu_Title;
-    [SerializeField] private Button MainMenu_BtnStart;
-    [SerializeField] private Button MainMenu_BtnHelp;
-    [SerializeField] private Button MainMenu_BtnSetting;
-    [SerializeField] private Button MainMenu_BtnExit;
+    [SerializeField] private Image MainMenuBG;
+    [SerializeField] private Image MainMenuTitle;
+    [SerializeField] private Button MainMenuBtnStart;
+    [SerializeField] private Button MainMenuBtnHelp;
+    [SerializeField] private Button MainMenuBtnSetting;
+    [SerializeField] private Button MainMenuBtnExit;
 
     #region SaveMenu
 
@@ -83,12 +83,18 @@ public class MainMenu : MonoBehaviour
 
     private void ShowMainMenu()
     {
-        MainMenuGroup.gameObject.TrySetActive(true);
+        MainMenuBtnStart.gameObject.TrySetActive(true);
+        MainMenuBtnHelp.gameObject.TrySetActive(true);
+        MainMenuBtnSetting.gameObject.TrySetActive(true);
+        MainMenuBtnExit.gameObject.TrySetActive(true);
     }
     
     private void HideMainMenu()
     {
-        MainMenuGroup.TrySetActive(false);
+        MainMenuBtnStart.gameObject.TrySetActive(false);
+        MainMenuBtnHelp.gameObject.TrySetActive(false);
+        MainMenuBtnSetting.gameObject.TrySetActive(false);
+        MainMenuBtnExit.gameObject.TrySetActive(false);
     }   
 
     public void OnBtnStartClicked()
