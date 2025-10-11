@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class GameUI : MonoBehaviour
+public class GameUI : UIPrefabBase
 {
     #region SerializeField
 
@@ -44,7 +44,6 @@ public class GameUI : MonoBehaviour
     [HideInInspector] public string Focus; //UI焦点
     
     #endregion
-    
     
     #region PauseMenu
 

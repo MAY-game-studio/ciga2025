@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class Video : MonoBehaviour
+public abstract class VideoPrefabBase : MonoBehaviour
 {
     #region SerializeField
 
@@ -40,5 +40,5 @@ public abstract class Video : MonoBehaviour
         AudioSource.volume = AudioManager.GetInstance().MainVolume;
     }
     
-    protected abstract void Finish();
+    protected abstract void Finish(); //子类需要实现视频结束后的逻辑
 }

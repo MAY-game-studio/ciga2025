@@ -5,7 +5,7 @@ public class GameStateMainMenu : IGameState
     /// </summary>
     public override void Enter()
     {
-        UIManager.GetInstance().MainMenuInit(); 
+        UIManager.GetInstance().PrefabInit<MainMenu>();
     }
 
     /// <summary>
@@ -13,6 +13,6 @@ public class GameStateMainMenu : IGameState
     /// </summary>
     public override void Exit()
     {
-        UIManager.GetInstance().MainMenuDestroy();
+        UIManager.GetInstance().PrefabDestroy<MainMenu>();
     }
 }

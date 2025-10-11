@@ -6,7 +6,7 @@ using UnityEngine.UI;
 using TMPro;
 using DG.Tweening;
 
-public class MainMenu : MonoBehaviour
+public class MainMenu : UIPrefabBase
 {
     
     #region SerializeField
@@ -18,10 +18,10 @@ public class MainMenu : MonoBehaviour
     [SerializeField] private GameObject MainMenuGroup;
     [SerializeField] private Image MainMenuBG;
     [SerializeField] private Image MainMenuTitle;
-    [SerializeField] private Button MainMenuBtnStart;
-    [SerializeField] private Button MainMenuBtnHelp;
-    [SerializeField] private Button MainMenuBtnSetting;
-    [SerializeField] private Button MainMenuBtnExit;
+    [SerializeField] private Button BtnStart;
+    [SerializeField] private Button BtnHelp;
+    [SerializeField] private Button BtnSetting;
+    [SerializeField] private Button BtnExit;
 
     #region SaveMenu
 
@@ -75,7 +75,15 @@ public class MainMenu : MonoBehaviour
 
     #region Property
 
-    [HideInInspector] public string Focus;
+    private enum MenuState
+    {
+        MainMenu,
+        SaveMenu,
+        HelpMenu,
+        SettingMenu
+    }
+    
+    private MenuState _state = MenuState.MainMenu;
 
     #endregion
     
@@ -83,18 +91,18 @@ public class MainMenu : MonoBehaviour
 
     private void ShowMainMenu()
     {
-        MainMenuBtnStart.gameObject.TrySetActive(true);
-        MainMenuBtnHelp.gameObject.TrySetActive(true);
-        MainMenuBtnSetting.gameObject.TrySetActive(true);
-        MainMenuBtnExit.gameObject.TrySetActive(true);
+        BtnStart.gameObject.TrySetActive(true);
+        BtnHelp.gameObject.TrySetActive(true);
+        BtnSetting.gameObject.TrySetActive(true);
+        BtnExit.gameObject.TrySetActive(true);
     }
     
     private void HideMainMenu()
     {
-        MainMenuBtnStart.gameObject.TrySetActive(false);
-        MainMenuBtnHelp.gameObject.TrySetActive(false);
-        MainMenuBtnSetting.gameObject.TrySetActive(false);
-        MainMenuBtnExit.gameObject.TrySetActive(false);
+        BtnStart.gameObject.TrySetActive(false);
+        BtnHelp.gameObject.TrySetActive(false);
+        BtnSetting.gameObject.TrySetActive(false);
+        BtnExit.gameObject.TrySetActive(false);
     }   
 
     public void OnBtnStartClicked()
@@ -129,7 +137,7 @@ public class MainMenu : MonoBehaviour
 
     private void ShowSaveMenu()
     {
-        Focus = "SaveMenu";
+        _state = MenuState.SaveMenu;
         
         SaveGroup.gameObject.TrySetActive(true);
         
@@ -171,7 +179,7 @@ public class MainMenu : MonoBehaviour
     private void HideSaveMenu()
     {
         ShowMainMenu();
-        Focus = "MainMenu";
+        _state = MenuState.MainMenu;
         SaveGroup.TrySetActive(false);
     }
 
@@ -219,7 +227,7 @@ public class MainMenu : MonoBehaviour
 
     private void ShowHelpMenu()
     {
-        Focus = "HelpMenu";
+        _state = MenuState.HelpMenu;
         
         HelpGroup.gameObject.TrySetActive(true);
         _page = 0;
@@ -229,7 +237,7 @@ public class MainMenu : MonoBehaviour
     private void HideHelpMenu()
     {
         ShowMainMenu();
-        Focus = "MainMenu";
+        _state = MenuState.MainMenu;
         HelpGroup.TrySetActive(false);
     }
     public void OnBtnLeftClicked()
@@ -259,7 +267,7 @@ public class MainMenu : MonoBehaviour
     
     private void ShowSettingMenu()
     {
-        Focus = "SettingMenu";
+        _state = MenuState.SettingMenu;
         
         SettingGroup.gameObject.TrySetActive(true);
         MainVolumeSlider.value = AudioManager.GetInstance().MainVolume;
@@ -274,7 +282,7 @@ public class MainMenu : MonoBehaviour
     private void HideSettingMenu()
     {
         ShowMainMenu();
-        Focus = "MainMenu";
+        _state = MenuState.MainMenu;
         SettingGroup.TrySetActive(false);
     }
     
@@ -338,31 +346,24 @@ public class MainMenu : MonoBehaviour
     }
 
     #endregion
-
-    void Start()
-    {
-        Focus = "MainMenu";
-    }
-    
-    private Tween _mainMenuTween;
     
     void Update()
     {
         if (Input.GetKeyDown(GameManager.GetInstance().GameSettingData.Return))
         {
-            switch (Focus)
+            switch (_state)
             {
-                case "MainMenu":
+                case MenuState.MainMenu:
                     break;
-                case "SaveMenu":
+                case MenuState.SaveMenu:
                     OnBtnSaveReturnClicked();
                     HideSaveMenu();
                     break;
-                case "HelpMenu":
+                case MenuState.HelpMenu:
                     OnBtnHelpReturnClicked();
                     HideHelpMenu();
                     break;
-                case "SettingMenu":
+                case MenuState.SettingMenu:
                     OnBtnSettingReturnClicked();
                     HideSettingMenu();
                     break;

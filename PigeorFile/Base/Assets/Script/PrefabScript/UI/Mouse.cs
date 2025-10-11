@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Mouse : MonoBehaviour
+public class Mouse : UIPrefabBase
 {
     #region SerializeField
     

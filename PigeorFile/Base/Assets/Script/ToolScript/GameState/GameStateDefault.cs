@@ -1,12 +1,11 @@
 public class GameStateDefault : IGameState
 {
-    public GameStateDefault() : base() { }
     /// <summary>
     /// 初始化游戏UI
     /// </summary>
     public override void Enter()
     {
-        UIManager.GetInstance().GameUIInit();
+        UIManager.GetInstance().PrefabInit<GameUI>();
     }
 
     /// <summary>
@@ -14,6 +13,6 @@ public class GameStateDefault : IGameState
     /// </summary>
     public override void Exit()
     {
-        UIManager.GetInstance().GameUIDestroy();
+        UIManager.GetInstance().PrefabDestroy<GameUI>();
     }
 }

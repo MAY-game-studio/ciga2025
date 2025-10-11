@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Properties;
@@ -20,15 +21,11 @@ public class UIManager : SingletonDontDestory<UIManager>
 
     #region Prefab
 
-    [Tooltip("主菜单预制体")]
-    [SerializeField] private GameObject MainMenu_Prefab;
-    [Tooltip("游戏UI预制体")]
-    [SerializeField] private GameObject GameUI_Prefab;
+    [Tooltip("UI面板预制体列表")]
+    [SerializeField] private List<UIPrefabBase> PanelPrefabs;
+    
     [Tooltip("消息预制体")]
     [SerializeField] private GameObject Notification_Prefab;
-    [Tooltip("消息预制体")]
-    [SerializeField] private GameObject Mouse_Prefab;
-
 
     [Tooltip("启动视频预制体")]
     [SerializeField] private GameObject AwakeVideo_Prefab;
@@ -46,30 +43,55 @@ public class UIManager : SingletonDontDestory<UIManager>
 
     #endregion
 
-    #endregion
-
     public void SetResolution()
     {
         Screen.SetResolution((int)GameManager.GetInstance().GameSettingData.ResolutionRatio.x,
             (int)GameManager.GetInstance().GameSettingData.ResolutionRatio.y,
             GameManager.GetInstance().GameSettingData.ScreenMode);
     }
+    #endregion
+    
+    #region UIPrefab
 
-    #region Mouse
+    private Dictionary<Type, UIPrefabBase> _prefabInstances = new Dictionary<Type, UIPrefabBase>();
 
-    [HideInInspector] public Mouse Mouse;
-
-    public void MouseInit()
+    private T FindPrefab<T>() where T : UIPrefabBase //在 PanelPrefabs 列表中查找匹配的预制体。
     {
-        if (Mouse==null) Mouse = Instantiate(Mouse_Prefab, Canvas.transform).GetComponent<Mouse>();
-        Mouse.transform.SetAsLastSibling();
+        foreach (UIPrefabBase prefab in PanelPrefabs) //遍历在Inspector中配置的所有UI面板预制体
+        {
+            if (prefab is T)
+                return prefab as T;
+        }
+        return null;
     }
-
-    public void MouseDestroy()
+    
+    public void PrefabInit<T>(Action<T> onInitCallback = null) where T : UIPrefabBase
     {
-        if (Mouse!=null) Destroy(Mouse.gameObject);
+        Type prefabType = typeof(T);
+        if (_prefabInstances.TryGetValue(prefabType, out UIPrefabBase existingInstance)) return;
+        T prefab = FindPrefab<T>(); // 查找预制体
+        if (prefab == null) return;
+        T panelInstance = Instantiate(prefab, Canvas.transform); 
+        _prefabInstances.Add(prefabType, panelInstance); // 实例化并存入字典
+        onInitCallback?.Invoke(panelInstance); // 对新创建的实例执行回调
     }
-
+    
+    public void PrefabDestroy<T>(Action<T> onDestroyCallback = null) where T : UIPrefabBase
+    {
+        Type prefabType = typeof(T);
+        if (!_prefabInstances.TryGetValue(prefabType, out UIPrefabBase instanceToDestroy)) return;
+        onDestroyCallback?.Invoke(instanceToDestroy as T); //先实现回调
+        Destroy(instanceToDestroy.gameObject);
+        _prefabInstances.Remove(prefabType); // 从字典中移除记录
+    }
+    
+    public T GetPrefab<T>() where T : UIPrefabBase // 获取一个的UI预制体实例。
+    {
+        Type prefabType = typeof(T);
+        if (_prefabInstances.TryGetValue(prefabType, out UIPrefabBase instance)) return instance as T;// 尝试从字典中获取实例
+        return null;
+    }
+    
     #endregion
     
     #region Videos
@@ -93,38 +115,6 @@ public class UIManager : SingletonDontDestory<UIManager>
     }
     
     #endregion
-    
-    #endregion
-    
-    #region MainMenu
-
-    [HideInInspector] public MainMenu MainMenu;
-    
-    public void MainMenuInit()
-    {
-        MainMenu = Instantiate(MainMenu_Prefab,Canvas.transform).GetComponent<MainMenu>();
-    }
-
-    public void MainMenuDestroy()
-    {
-        if (MainMenu!=null) Destroy(MainMenu.gameObject);
-    }
-
-    #endregion
-    
-    #region GameUI
-
-    [HideInInspector] public GameUI GameUI;
-    
-    public void GameUIInit()
-    {
-        if (GameUI==null) GameUI = Instantiate(GameUI_Prefab,Canvas.transform).GetComponent<GameUI>();
-    }
-
-    public void GameUIDestroy()
-    {
-        if (GameUI!=null) Destroy(GameUI.gameObject);
-    }
     
     #endregion
     

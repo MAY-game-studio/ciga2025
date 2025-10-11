@@ -5902,10 +5902,10 @@ MonoBehaviour:
   MainMenuGroup: {fileID: 5714873083063939940}
   MainMenuBG: {fileID: 1552912710612298232}
   MainMenuTitle: {fileID: 3548765403461959839}
-  MainMenuBtnStart: {fileID: 4849185956842521973}
-  MainMenuBtnHelp: {fileID: 2348127999540743779}
-  MainMenuBtnSetting: {fileID: 6557366243441524987}
-  MainMenuBtnExit: {fileID: 6032052895083283957}
+  BtnStart: {fileID: 4849185956842521973}
+  BtnHelp: {fileID: 2348127999540743779}
+  BtnSetting: {fileID: 6557366243441524987}
+  BtnExit: {fileID: 6032052895083283957}
   SaveGroup: {fileID: 8569915626270488669}
   SpriteSave: {fileID: 21300000, guid: f6decf05536fc2949b8730ecf024c905, type: 3}
   SpriteEmpty: {fileID: 21300000, guid: 8d4841e56f8258a459c102ee2e1aa256, type: 3}
@@ -5940,7 +5940,6 @@ MonoBehaviour:
   MusicVolumeSlider: {fileID: 8836960977547033990}
   SoundVolumeSlider: {fileID: 6580381163185065510}
   BtnSettingReturn: {fileID: 5302049540079734801}
-  Focus: 
 --- !u!1 &6513629048385332755
 GameObject:
   m_ObjectHideFlags: 0
