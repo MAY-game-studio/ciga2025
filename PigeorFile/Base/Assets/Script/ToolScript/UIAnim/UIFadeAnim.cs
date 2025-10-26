@@ -109,7 +109,7 @@ public class UIFadeAnim : UIAnim
     private IEnumerator DelayAnim()
     {
         Sequence.Goto(Mathf.Epsilon); //回到初始状态，延时后重新播放(避免触发OnRewind)
-        if (Delay > 0) yield return new WaitForSeconds(Delay);
+        if (Delay > 0) yield return new WaitForSecondsRealtime(Delay);
         Sequence.PlayForward(); //延时结束进行入场动画
         _enableCoroutine = null;
     }

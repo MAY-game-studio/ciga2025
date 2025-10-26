@@ -6,6 +6,7 @@ public enum GameModeType
     MAINMENU,
     LOADING,
     RELOADING,
+    LOADITOMAINMENU,
     DEFAULT,
     PAUSE,
     EXIT

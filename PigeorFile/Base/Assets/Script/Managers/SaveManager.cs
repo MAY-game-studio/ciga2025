@@ -13,7 +13,7 @@ public class SaveManager : SingletonDontDestory<SaveManager>
 
     #endregion
 
-    public GameSettingData CreateGameSettingData()//生成初始游戏设置
+    private GameSettingData CreateGameSettingData() //生成初始游戏设置
     {
         GameSettingData gameSettingData = ScriptableObject.CreateInstance<GameSettingData>();
         gameSettingData.ScreenMode = FullScreenMode.Windowed;
@@ -30,7 +30,7 @@ public class SaveManager : SingletonDontDestory<SaveManager>
         return gameSettingData;
     }
 
-    public GameSaveData CreateGameSaveData()//生成初始游戏存档
+    public GameSaveData CreateGameSaveData() //生成初始游戏存档
     {
         GameSaveData gameSaveData = ScriptableObject.CreateInstance<GameSaveData>();
         gameSaveData.GameSaveTime = gameSaveData.CurrentGameStartTime = DateTime.Now;
@@ -38,7 +38,7 @@ public class SaveManager : SingletonDontDestory<SaveManager>
         return gameSaveData;
     }
     
-    public GameSettingData GameSettingDataLoad()//读取游戏设置信息
+    public GameSettingData GameSettingDataLoad() //读取游戏设置信息
     {
         GameSettingData gameSettingData = ScriptableObject.CreateInstance<GameSettingData>();
         string jsonFile;
@@ -57,7 +57,7 @@ public class SaveManager : SingletonDontDestory<SaveManager>
         return gameSettingData;
     }
 
-    public GameSaveData GameSaveDataLoad(int saveSlot)//读取游戏槽位存档信息
+    public GameSaveData GameSaveDataLoad(int saveSlot) //读取游戏槽位存档信息
     {
         GameSaveData gameSaveFile=ScriptableObject.CreateInstance<GameSaveData>();
         if (!File.Exists(_gameSaveDataPath[saveSlot])) return null;//该槽位没有存档
@@ -66,7 +66,7 @@ public class SaveManager : SingletonDontDestory<SaveManager>
         return gameSaveFile;
     }
     
-    public void SavePathInit()//初始化存档路径
+    private void SavePathInit() //初始化存档路径
     {
         _gameSettingDataPath = Path.Combine(Application.persistentDataPath, "SaveFiles", "SettingData.json");
         _gameSaveDataPath[1] = Path.Combine(Application.persistentDataPath, "SaveFiles", "GameData1.json");
@@ -86,7 +86,7 @@ public class SaveManager : SingletonDontDestory<SaveManager>
         MessageManager.GetInstance().Register(MessageTypes.SaveDataUpdate, OnSaveDataUpdate);
     }
 
-    public void OnSettingDataUpdate(Message message)//更新设置菜单预设
+    private void OnSettingDataUpdate(Message message)//更新设置菜单预设
     {
         if (message is SettingDataUpdate msg)
         {
@@ -96,8 +96,8 @@ public class SaveManager : SingletonDontDestory<SaveManager>
             File.WriteAllText(_gameSettingDataPath, jsonFile); //保存设置
         }
     }
-    
-    public void OnSaveDataUpdate(Message message)
+
+    private async void OnSaveDataUpdate(Message message)
     {
         if (message is SaveDataUpdate msg)
         {
@@ -110,7 +110,8 @@ public class SaveManager : SingletonDontDestory<SaveManager>
             if (!Directory.Exists(Path.GetDirectoryName(_gameSettingDataPath)))
                 Directory.CreateDirectory(Path.GetDirectoryName(_gameSettingDataPath)!); // 确保目录存在
             string jsonFile = JsonUtility.ToJson(saveData);
-            File.WriteAllText(_gameSaveDataPath[GameManager.GetInstance().SaveSlot], jsonFile);
+            await File.WriteAllTextAsync(_gameSaveDataPath[GameManager.GetInstance().SaveSlot], jsonFile);
+            MessageManager.GetInstance().Send(MessageTypes.SaveDataComplete, new SaveDataComplete());
         }
     }
     #endregion

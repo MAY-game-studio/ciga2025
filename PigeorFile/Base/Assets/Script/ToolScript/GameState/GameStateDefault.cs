@@ -1,18 +1,14 @@
 public class GameStateDefault : IGameState
 {
     /// <summary>
-    /// 初始化游戏UI
+    /// 初始化游戏
     /// </summary>
     public override void Enter()
     {
         UIManager.GetInstance().PrefabInit<GameUI>();
+        //todo：初始化游戏
+        MessageManager.GetInstance().Send(MessageTypes.LoadFinish,new LoadFinish());
     }
 
-    /// <summary>
-    /// 销毁游戏UI
-    /// </summary>
-    public override void Exit()
-    {
-        UIManager.GetInstance().PrefabDestroy<GameUI>();
-    }
+    public override void Exit() { }
 }

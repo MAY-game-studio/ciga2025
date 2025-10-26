@@ -257,7 +257,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 7040874059728025885}
         m_TargetAssemblyTypeName: GameUI, Assembly-CSharp
-        m_MethodName: ONBtnMainMenuClicked
+        m_MethodName: OnBtnMainMenuClicked
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -738,7 +738,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 7040874059728025885}
         m_TargetAssemblyTypeName: GameUI, Assembly-CSharp
-        m_MethodName: ONBtnReloadClicked
+        m_MethodName: OnBtnReloadClicked
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -871,7 +871,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 7040874059728025885}
         m_TargetAssemblyTypeName: GameUI, Assembly-CSharp
-        m_MethodName: ONBtnExitClicked
+        m_MethodName: OnBtnExitClicked
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -967,6 +967,7 @@ GameObject:
   - component: {fileID: 3270453780723080588}
   - component: {fileID: 4509812410932983260}
   - component: {fileID: 6878567814750948324}
+  - component: {fileID: 2618954386365027877}
   m_Layer: 5
   m_Name: PauseGroup
   m_TagString: Untagged
@@ -1038,6 +1039,28 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &2618954386365027877
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 783430197501225859}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0280f8bb5c9f2748af0e14808c93953, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  priority: 0
+  FlagAnimFade: 1
+  FlagAnimScale: 0
+  FlagAnimOffset: 1
+  Delay: 0
+  Duration: 0.5
+  EaseType: 6
+  StartAlpha: 0
+  StartScale: 0.5
+  StartPositionOffset: {x: 0, y: -100}
 --- !u!1 &1377123333372024711
 GameObject:
   m_ObjectHideFlags: 0
@@ -1904,7 +1927,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 7040874059728025885}
         m_TargetAssemblyTypeName: GameUI, Assembly-CSharp
-        m_MethodName: ONBtnSettingClicked
+        m_MethodName: OnBtnSettingClicked
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2170,7 +2193,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 7040874059728025885}
         m_TargetAssemblyTypeName: GameUI, Assembly-CSharp
-        m_MethodName: ONBtnSettingReturnClicked
+        m_MethodName: OnBtnSettingReturnClicked
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2283,7 +2306,6 @@ MonoBehaviour:
   BtnMainMenu: {fileID: 2201244662620347025}
   BtnExit: {fileID: 354114327869674177}
   BtnPauseReturn: {fileID: 5726388046682722265}
-  Focus: 
 --- !u!1 &5572874093619871908
 GameObject:
   m_ObjectHideFlags: 0
@@ -2790,7 +2812,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 7040874059728025885}
         m_TargetAssemblyTypeName: GameUI, Assembly-CSharp
-        m_MethodName: ONBtnPauseReturnClicked
+        m_MethodName: OnBtnPauseReturnClicked
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3247,7 +3269,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 7040874059728025885}
         m_TargetAssemblyTypeName: GameUI, Assembly-CSharp
-        m_MethodName: ONBtnSaveClicked
+        m_MethodName: OnBtnSaveClicked
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3588,7 +3610,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 7040874059728025885}
         m_TargetAssemblyTypeName: GameUI, Assembly-CSharp
-        m_MethodName: ONBtnPauseClicked
+        m_MethodName: OnBtnPauseClicked
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

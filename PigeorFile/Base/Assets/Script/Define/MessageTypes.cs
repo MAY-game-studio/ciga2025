@@ -5,6 +5,8 @@ public enum MessageTypes
     PlaySound,
     SettingDataUpdate,
     SaveDataUpdate,
+    SaveDataComplete,
+    LoadFinish,
     AddNotification,
     SwitchMouseMode,
     ShowDetail,

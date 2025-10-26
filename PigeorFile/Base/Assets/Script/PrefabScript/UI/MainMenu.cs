@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using DG.Tweening;
+using UnityEngine.Serialization;
 
 public class MainMenu : UIPrefabBase
 {
@@ -16,8 +17,8 @@ public class MainMenu : UIPrefabBase
     [Header("主菜单")]
     
     [SerializeField] private GameObject MainMenuGroup;
-    [SerializeField] private Image MainMenuBG;
-    [SerializeField] private Image MainMenuTitle;
+    [SerializeField] private Image ImgBG;
+    [SerializeField] private Image ImgTitle;
     [SerializeField] private Button BtnStart;
     [SerializeField] private Button BtnHelp;
     [SerializeField] private Button BtnSetting;
@@ -47,8 +48,8 @@ public class MainMenu : UIPrefabBase
     [Header("帮助菜单")]
     
     [SerializeField] private GameObject HelpGroup;
-    [SerializeField] private Sprite[] Help_Sprite;
-    [SerializeField] private Image Help_Image;
+    [SerializeField] private Sprite[] HelpSprite;
+    [SerializeField] private Image ImgHelp;
     [SerializeField] private Button BtnLeft;
     [SerializeField] private Button BtnRight;
     [SerializeField] private Button BtnHelpReturn;
@@ -75,7 +76,7 @@ public class MainMenu : UIPrefabBase
 
     #region Property
 
-    private enum MenuState
+    private enum MainMenuState
     {
         MainMenu,
         SaveMenu,
@@ -83,7 +84,7 @@ public class MainMenu : UIPrefabBase
         SettingMenu
     }
     
-    private MenuState _state = MenuState.MainMenu;
+    private MainMenuState _mainMenuState = MainMenuState.MainMenu;
 
     #endregion
     
@@ -137,7 +138,7 @@ public class MainMenu : UIPrefabBase
 
     private void ShowSaveMenu()
     {
-        _state = MenuState.SaveMenu;
+        _mainMenuState = MainMenuState.SaveMenu;
         
         SaveGroup.gameObject.TrySetActive(true);
         
@@ -179,7 +180,7 @@ public class MainMenu : UIPrefabBase
     private void HideSaveMenu()
     {
         ShowMainMenu();
-        _state = MenuState.MainMenu;
+        _mainMenuState = MainMenuState.MainMenu;
         SaveGroup.TrySetActive(false);
     }
 
@@ -227,30 +228,30 @@ public class MainMenu : UIPrefabBase
 
     private void ShowHelpMenu()
     {
-        _state = MenuState.HelpMenu;
+        _mainMenuState = MainMenuState.HelpMenu;
         
         HelpGroup.gameObject.TrySetActive(true);
         _page = 0;
-        Help_Image.sprite = Help_Sprite[_page];
+        ImgHelp.sprite = HelpSprite[_page];
     }
 
     private void HideHelpMenu()
     {
         ShowMainMenu();
-        _state = MenuState.MainMenu;
+        _mainMenuState = MainMenuState.MainMenu;
         HelpGroup.TrySetActive(false);
     }
     public void OnBtnLeftClicked()
     {
         MessageManager.GetInstance().Send(MessageTypes.PlaySound,new PlaySound(SoundClip.BTN_CLICK));
-        _page = _page - 1 < 0 ? Help_Sprite.Length - 1 : _page - 1;
-        Help_Image.sprite = Help_Sprite[_page];
+        _page = _page - 1 < 0 ? HelpSprite.Length - 1 : _page - 1;
+        ImgHelp.sprite = HelpSprite[_page];
     }
     public void OnBtnRightClicked()
     {
         MessageManager.GetInstance().Send(MessageTypes.PlaySound,new PlaySound(SoundClip.BTN_CLICK));
-        _page = _page + 1 > Help_Sprite.Length - 1 ? 0 : _page + 1;
-        Help_Image.sprite = Help_Sprite[_page];
+        _page = _page + 1 > HelpSprite.Length - 1 ? 0 : _page + 1;
+        ImgHelp.sprite = HelpSprite[_page];
     }
     
     public void OnBtnHelpReturnClicked()
@@ -267,7 +268,7 @@ public class MainMenu : UIPrefabBase
     
     private void ShowSettingMenu()
     {
-        _state = MenuState.SettingMenu;
+        _mainMenuState = MainMenuState.SettingMenu;
         
         SettingGroup.gameObject.TrySetActive(true);
         MainVolumeSlider.value = AudioManager.GetInstance().MainVolume;
@@ -282,7 +283,7 @@ public class MainMenu : UIPrefabBase
     private void HideSettingMenu()
     {
         ShowMainMenu();
-        _state = MenuState.MainMenu;
+        _mainMenuState = MainMenuState.MainMenu;
         SettingGroup.TrySetActive(false);
     }
     
@@ -351,19 +352,19 @@ public class MainMenu : UIPrefabBase
     {
         if (Input.GetKeyDown(GameManager.GetInstance().GameSettingData.Return))
         {
-            switch (_state)
+            switch (_mainMenuState)
             {
-                case MenuState.MainMenu:
+                case MainMenuState.MainMenu:
                     break;
-                case MenuState.SaveMenu:
+                case MainMenuState.SaveMenu:
                     OnBtnSaveReturnClicked();
                     HideSaveMenu();
                     break;
-                case MenuState.HelpMenu:
+                case MainMenuState.HelpMenu:
                     OnBtnHelpReturnClicked();
                     HideHelpMenu();
                     break;
-                case MenuState.SettingMenu:
+                case MainMenuState.SettingMenu:
                     OnBtnSettingReturnClicked();
                     HideSettingMenu();
                     break;

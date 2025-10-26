@@ -21,7 +21,6 @@ public class Mouse : UIPrefabBase
 
     #endregion
     
-    
     public void UpdateIcon(Sprite icon)
     {
         ImgMouse.sprite = icon;

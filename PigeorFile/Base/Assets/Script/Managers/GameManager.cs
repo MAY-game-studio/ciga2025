@@ -100,10 +100,13 @@ public class GameManager : SingletonDontDestory<GameManager>
                     ChangeState(new GameStateMainMenu());
                     break;
                 case GameModeType.LOADING:
-                    ChangeState(new GameStateLoading());
+                    ChangeState(new GameStateLoadingToDefault());
                     break;
                 case GameModeType.RELOADING:
-                    ChangeState(new GameStateReloading());
+                    ChangeState(new GameStateReloadingToDefault());
+                    break;
+                case GameModeType.LOADITOMAINMENU:
+                    ChangeState(new GameStateLoadingToMainMenu());
                     break;
                 case GameModeType.DEFAULT:
                     ChangeState(new GameStateDefault());

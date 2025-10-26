@@ -71,17 +71,17 @@ public class UIManager : SingletonDontDestory<UIManager>
         if (_prefabInstances.TryGetValue(prefabType, out UIPrefabBase existingInstance)) return;
         T prefab = FindPrefab<T>(); // 查找预制体
         if (prefab == null) return;
-        T panelInstance = Instantiate(prefab, Canvas.transform); 
-        _prefabInstances.Add(prefabType, panelInstance); // 实例化并存入字典
-        onInitCallback?.Invoke(panelInstance); // 对新创建的实例执行回调
+        T instance = Instantiate(prefab, Canvas.transform); 
+        _prefabInstances.Add(prefabType, instance); // 实例化并存入字典
+        onInitCallback?.Invoke(instance); // 对新创建的实例执行回调
     }
     
     public void PrefabDestroy<T>(Action<T> onDestroyCallback = null) where T : UIPrefabBase
     {
         Type prefabType = typeof(T);
-        if (!_prefabInstances.TryGetValue(prefabType, out UIPrefabBase instanceToDestroy)) return;
-        onDestroyCallback?.Invoke(instanceToDestroy as T); //先实现回调
-        Destroy(instanceToDestroy.gameObject);
+        if (!_prefabInstances.TryGetValue(prefabType, out UIPrefabBase instance)) return;
+        onDestroyCallback?.Invoke(instance as T); //先实现回调
+        instance.gameObject.TryDestroy();
         _prefabInstances.Remove(prefabType); // 从字典中移除记录
     }
     

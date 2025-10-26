@@ -41,7 +41,14 @@ public class GameUI : UIPrefabBase
     
     #region Property
 
-    [HideInInspector] public string Focus; //UI焦点
+    private enum GameUIState
+    {
+        GameCanvas,
+        PauseMenu,
+        SettingMenu
+    }
+    
+    private GameUIState _gameUIState = GameUIState.GameCanvas;
     
     #endregion
     
@@ -49,31 +56,33 @@ public class GameUI : UIPrefabBase
 
     private void ShowPauseMenu()
     {
-        Focus="PauseMenu";
-        PauseGroup.gameObject.SetActive(true);
+        _gameUIState = GameUIState.PauseMenu;
+        PauseGroup.gameObject.TrySetActive(true);
+        MessageManager.GetInstance().Send(MessageTypes.GameModeChange,new GameModeChange(GameModeType.PAUSE));
     }
 
     private void HidePauseMenu()
     {
-        Focus = "GameCanvas";
-        PauseGroup.gameObject.SetActive(false);
+        _gameUIState = GameUIState.GameCanvas;
+        PauseGroup.gameObject.TrySetActive(false);
+        MessageManager.GetInstance().Send(MessageTypes.GameModeChange,new GameModeChange(GameModeType.DEFAULT));
     }
     
-    public void ONBtnPauseClicked()
+    public void OnBtnPauseClicked()
     {
-        if (Focus != "GameCanvas") return;
+        if (_gameUIState != GameUIState.GameCanvas) return;
         MessageManager.GetInstance().Send(MessageTypes.PlaySound,new PlaySound(SoundClip.BTN_CLICK));
         ShowPauseMenu();
     }
     
-    public void ONBtnSaveClicked()
+    public void OnBtnSaveClicked()
     {
         MessageManager.GetInstance().Send(MessageTypes.PlaySound,new PlaySound(SoundClip.BTN_CLICK));
         MessageManager.GetInstance().Send(MessageTypes.SaveDataUpdate, new SaveDataUpdate());
         MessageManager.GetInstance().Send(MessageTypes.AddNotification,new AddNotification("Saved"));
     }
     
-    public void ONBtnReloadClicked()
+    public void OnBtnReloadClicked()
     {
         MessageManager.GetInstance().Send(MessageTypes.PlaySound,new PlaySound(SoundClip.BTN_CLICK));
         MessageManager.GetInstance().Send(MessageTypes.GameModeChange,new GameModeChange(GameModeType.RELOADING));
@@ -81,7 +90,7 @@ public class GameUI : UIPrefabBase
         HidePauseMenu();
     }
 
-    public void ONBtnSettingClicked()
+    public void OnBtnSettingClicked()
     {
         MessageManager.GetInstance().Send(MessageTypes.PlaySound, new PlaySound(SoundClip.BTN_CLICK));
         ShowSettingMenu();
@@ -91,7 +100,7 @@ public class GameUI : UIPrefabBase
 
     private void ShowSettingMenu()
     {
-        Focus = "SettingMenu";
+        _gameUIState = GameUIState.SettingMenu;
         SettingGroup.gameObject.SetActive(true);
         MainVolumeSlider.value = AudioManager.GetInstance().MainVolume;
         MusicVolumeSlider.value = AudioManager.GetInstance().MusicVolume;
@@ -100,7 +109,7 @@ public class GameUI : UIPrefabBase
 
     private void HideSettingMenu()
     {
-        Focus = "GameCanvas";
+        _gameUIState = GameUIState.GameCanvas;
         SettingGroup.gameObject.SetActive(false);
     }
     
@@ -123,7 +132,7 @@ public class GameUI : UIPrefabBase
         MessageManager.GetInstance().Send(MessageTypes.SettingDataUpdate, new SettingDataUpdate());
     }
 
-    public void ONBtnSettingReturnClicked()
+    public void OnBtnSettingReturnClicked()
     {
         MessageManager.GetInstance().Send(MessageTypes.PlaySound,new PlaySound(SoundClip.BTN_CLICK));
         HideSettingMenu();
@@ -132,19 +141,18 @@ public class GameUI : UIPrefabBase
 
     #endregion
 
-    public void ONBtnMainMenuClicked()
+    public void OnBtnMainMenuClicked()
     {
         MessageManager.GetInstance().Send(MessageTypes.PlaySound,new PlaySound(SoundClip.BTN_CLICK));
-        MessageManager.GetInstance().Send(MessageTypes.SaveDataUpdate, new SaveDataUpdate());
-        MessageManager.GetInstance().Send(MessageTypes.GameModeChange,new GameModeChange(GameModeType.MAINMENU));
+        MessageManager.GetInstance().Send(MessageTypes.GameModeChange,new GameModeChange(GameModeType.LOADITOMAINMENU));//触发加载界面的回到主菜单
     }
-    public void ONBtnExitClicked()
+    public void OnBtnExitClicked()
     {
         MessageManager.GetInstance().Send(MessageTypes.PlaySound,new PlaySound(SoundClip.BTN_CLICK));
         MessageManager.GetInstance().Send(MessageTypes.SaveDataUpdate, new SaveDataUpdate());
         MessageManager.GetInstance().Send(MessageTypes.GameModeChange,new GameModeChange(GameModeType.EXIT));
     }
-    public void ONBtnPauseReturnClicked()
+    public void OnBtnPauseReturnClicked()
     {
         MessageManager.GetInstance().Send(MessageTypes.PlaySound,new PlaySound(SoundClip.BTN_CLICK));
         HidePauseMenu();
@@ -152,37 +160,24 @@ public class GameUI : UIPrefabBase
     
     #endregion
     
-    public void UIModeChange(GameModeType Type)
-    {
-        switch (Type)
-        {
-            case GameModeType.DEFAULT:
-                BtnPause.gameObject.SetActive(true);
-                break;
-            case GameModeType.PAUSE:
-                BtnPause.gameObject.SetActive(false);
-                break;
-        }
-    }
-    
     void Start()
     {
-        Focus = "GameCanvas";
+        _gameUIState = GameUIState.GameCanvas;
     }
     
     void Update()
     {
         if (Input.GetKeyDown(GameManager.GetInstance().GameSettingData.Return))
         {
-            switch (Focus)
+            switch (_gameUIState)
             {
-                case "GameCanvas":
+                case GameUIState.GameCanvas:
                     ShowPauseMenu();
                     break;
-                case "PauseMenu":
+                case GameUIState.PauseMenu:
                     HidePauseMenu();
                     break;
-                case "SettingMenu":
+                case GameUIState.SettingMenu:
                     HideSettingMenu();
                     break;
             }

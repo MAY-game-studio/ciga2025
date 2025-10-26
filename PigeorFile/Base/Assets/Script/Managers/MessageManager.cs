@@ -76,6 +76,30 @@ public class SaveDataUpdate : Message
 }
 
 /// <summary>
+/// 存档完成
+/// </summary>
+ 
+public class SaveDataComplete : Message
+{
+    public SaveDataComplete() : base(MessageTypes.SaveDataComplete)
+    {
+    }
+}
+
+
+
+/// <summary>
+/// 存档更新
+/// </summary>
+ 
+public class LoadFinish : Message
+{
+    public LoadFinish() : base(MessageTypes.LoadFinish)
+    {
+    }
+}
+
+/// <summary>
 /// 新建通知
 /// </summary>
 public class AddNotification : Message
@@ -100,9 +124,9 @@ public class SwitchMouseMode : Message
     public MouseMode MouseMode;
 }
 
-
 /// <summary>
 /// 鼠标旁显示细节信息，多个框体的细节由*分割
+/// todo
 /// </summary>
 public class ShowDetail : Message
 {
@@ -128,11 +152,11 @@ public class MessageListener //消息监听器
 
 public class MessageManager : SingletonDontDestory<MessageManager>
 {
-    private Dictionary<MessageTypes, List<MessageListener>> listeners;
+    private Dictionary<MessageTypes, List<MessageListener>> _listeners;
 
     private void OnEnable()
     {
-        listeners = new Dictionary<MessageTypes, List<MessageListener>>();
+        _listeners = new Dictionary<MessageTypes, List<MessageListener>>();
     }
 
     /// <summary>
@@ -141,10 +165,10 @@ public class MessageManager : SingletonDontDestory<MessageManager>
     public void Register(MessageTypes messageType, UnityAction<Message> action, int priority = 0,
         MessageTemporaryType tempType = MessageTemporaryType.Default)
     {
-        if (!listeners.ContainsKey(messageType))
-            listeners[messageType] = new List<MessageListener>();
-        listeners[messageType].Add(new MessageListener(action, priority, tempType));
-        listeners[messageType].Sort((a, b) => b.Priority.CompareTo(a.Priority)); // 按优先级降序排列
+        if (!_listeners.ContainsKey(messageType))
+            _listeners[messageType] = new List<MessageListener>();
+        _listeners[messageType].Add(new MessageListener(action, priority, tempType));
+        _listeners[messageType].Sort((a, b) => b.Priority.CompareTo(a.Priority)); // 按优先级降序排列
     }
 
     /// <summary>
@@ -152,8 +176,8 @@ public class MessageManager : SingletonDontDestory<MessageManager>
     /// </summary>
     public void Remove(MessageTypes messageType, UnityAction<Message> action)
     {
-        if (!listeners.ContainsKey(messageType)) return;
-        listeners[messageType].RemoveAll(listener => listener.Action == action);
+        if (!_listeners.ContainsKey(messageType)) return;
+        _listeners[messageType].RemoveAll(listener => listener.Action == action);
     }
 
     /// <summary>
@@ -164,8 +188,9 @@ public class MessageManager : SingletonDontDestory<MessageManager>
 #if UNITY_EDITOR
         Debug.Log(messageType);
 #endif
-        if (!listeners.TryGetValue(messageType, out var listenerList)) return;
-        foreach (var listener in listenerList)
+        if (!_listeners.TryGetValue(messageType, out var listenerList)) return;
+        List<MessageListener> listenersToInvoke = listenerList.ToList();
+        foreach (var listener in listenersToInvoke)
         {
             try
             {
@@ -185,16 +210,16 @@ public class MessageManager : SingletonDontDestory<MessageManager>
     {
         if (tempType == MessageTemporaryType.Default) // 默认情况：清除所有监听器
         {
-            listeners.Clear();
+            _listeners.Clear();
             return;
         }
-        var messageTypes = listeners.Keys.ToArray(); // 先复制key集合
+        var messageTypes = _listeners.Keys.ToArray(); // 先复制key集合
         foreach (var type in messageTypes) // 遍历所有消息类型
         {
             // 移除指定临时类型的监听器
-            listeners[type].RemoveAll(l => l.TemporaryType == tempType);
+            _listeners[type].RemoveAll(l => l.TemporaryType == tempType);
             // 如果该类型下已无监听器，移除整个条目
-            if (listeners[type].Count == 0) listeners.Remove(type);
+            if (_listeners[type].Count == 0) _listeners.Remove(type);
         }
     }
 }

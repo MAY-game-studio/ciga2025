@@ -1,12 +1,14 @@
+using UnityEngine;
+
 public class GameStatePause : IGameState
 {
     public override void Enter()
     {
-        //todo 暂停动画
+        Time.timeScale = 0.5f; //冻结游戏时间
     }
 
     public override void Exit()
     {
-        //todo 恢复
+        Time.timeScale = 1f; //恢复游戏时间
     }
 }

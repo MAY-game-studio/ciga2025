@@ -20,8 +20,7 @@ public class MouseManager : SingletonDontDestory<MouseManager>
     {
         MessageRegister();
     }
-
-
+    
     #region Message
 
     protected void MessageRegister()
@@ -36,7 +35,6 @@ public class MouseManager : SingletonDontDestory<MouseManager>
         {
             if (msg.MouseMode == MouseMode.ORIGIN && MouseMode != MouseMode.ORIGIN) Cursor.visible = true;
             else if (msg.MouseMode != MouseMode.ORIGIN && MouseMode == MouseMode.ORIGIN) Cursor.visible = false;
-//            UIManager.GetInstance().Mouse.UpdateIcon(UIManager.GetInstance().MouseSprite[(int)msg.MouseMode]);
             UIManager.GetInstance().GetPrefab<Mouse>().UpdateIcon(UIManager.GetInstance().MouseSprite[(int)msg.MouseMode]);
             MouseMode = msg.MouseMode;
         }
