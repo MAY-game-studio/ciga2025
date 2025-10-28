@@ -1,10 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using System.IO;
 using System;
+using System.IO;
+using UnityEngine;
 
-public class SaveManager : SingletonDontDestory<SaveManager>
+public class SaveManager : SingletonDontDestroy<SaveManager>
 {
     #region Property
 
@@ -18,7 +16,7 @@ public class SaveManager : SingletonDontDestory<SaveManager>
         GameSettingData gameSettingData = ScriptableObject.CreateInstance<GameSettingData>();
         gameSettingData.ScreenMode = FullScreenMode.Windowed;
         gameSettingData.ResolutionRatio = new Vector2(1920, 1080);
-        gameSettingData.ResolutionType = ResolutionType.Res1920x1080;
+        gameSettingData.ResolutionType = ResolutionType.RES1920_1080;
         gameSettingData.Volumes = new Vector3(0.8f, 0.8f, 0.8f);
         // 初始化默认键位配置
         gameSettingData.MoveUp = KeyCode.W;
@@ -73,8 +71,8 @@ public class SaveManager : SingletonDontDestory<SaveManager>
         _gameSaveDataPath[2] = Path.Combine(Application.persistentDataPath, "SaveFiles", "GameData2.json");
         _gameSaveDataPath[3] = Path.Combine(Application.persistentDataPath, "SaveFiles", "GameData3.json");
     }
-    
-    void Start()
+
+    private void Start()
     {
         MessageInit();
         SavePathInit();

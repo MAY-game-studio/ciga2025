@@ -1,10 +1,9 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using Unity.Properties;
+using System.Linq;
 using UnityEngine;
 
-public class UIManager : SingletonDontDestory<UIManager>
+public class UIManager : SingletonDontDestroy<UIManager>
 {
     #region SerializeField
     
@@ -25,10 +24,12 @@ public class UIManager : SingletonDontDestory<UIManager>
     [SerializeField] private List<UIPrefabBase> PanelPrefabs;
     
     [Tooltip("消息预制体")]
-    [SerializeField] private GameObject Notification_Prefab;
+    [SerializeField] private GameObject NotificationPrefab;
 
-    [Tooltip("启动视频预制体")]
-    [SerializeField] private GameObject AwakeVideo_Prefab;
+    [Header("视频预制体")]
+
+    [Tooltip("启动视频")]
+    [SerializeField] private GameObject AwakeVideoPrefab;
 
     #endregion
 
@@ -53,24 +54,19 @@ public class UIManager : SingletonDontDestory<UIManager>
     
     #region UIPrefab
 
-    private Dictionary<Type, UIPrefabBase> _prefabInstances = new Dictionary<Type, UIPrefabBase>();
+    private readonly Dictionary<Type, UIPrefabBase> _prefabInstances = new();
 
     private T FindPrefab<T>() where T : UIPrefabBase //在 PanelPrefabs 列表中查找匹配的预制体。
     {
-        foreach (UIPrefabBase prefab in PanelPrefabs) //遍历在Inspector中配置的所有UI面板预制体
-        {
-            if (prefab is T)
-                return prefab as T;
-        }
-        return null;
+        return PanelPrefabs.OfType<T>().FirstOrDefault();
     }
     
-    public void PrefabInit<T>(Action<T> onInitCallback = null) where T : UIPrefabBase
+    public void PrefabInit<T>(Action<T> onInitCallback = null) where T : UIPrefabBase //初始化一个UI预制体实例。
     {
         Type prefabType = typeof(T);
         if (_prefabInstances.TryGetValue(prefabType, out UIPrefabBase existingInstance)) return;
         T prefab = FindPrefab<T>(); // 查找预制体
-        if (prefab == null) return;
+        if (!prefab) return;
         T instance = Instantiate(prefab, Canvas.transform); 
         _prefabInstances.Add(prefabType, instance); // 实例化并存入字典
         onInitCallback?.Invoke(instance); // 对新创建的实例执行回调
@@ -103,13 +99,13 @@ public class UIManager : SingletonDontDestory<UIManager>
     public void AwakeVideoInit()
     {
         MessageManager.GetInstance().Send(MessageTypes.SwitchMouseMode,new SwitchMouseMode(MouseMode.HIDE));
-        AwakeVideo = Instantiate(AwakeVideo_Prefab, Canvas.transform).GetComponent<AwakeVideo>();
+        AwakeVideo = Instantiate(AwakeVideoPrefab, Canvas.transform).GetComponent<AwakeVideo>();
         AwakeVideo.Init();
     }
 
     public void AwakeVideoDestroy()
     {
-        if (AwakeVideo != null) Destroy(AwakeVideo.gameObject);
+        if (AwakeVideo) Destroy(AwakeVideo.gameObject);
         MessageManager.GetInstance().Send(MessageTypes.SwitchMouseMode,new SwitchMouseMode(MouseMode.DEFAULT));
         MessageManager.GetInstance().Send(MessageTypes.GameModeChange,new GameModeChange(GameModeType.MAINMENU));
     }
@@ -122,7 +118,7 @@ public class UIManager : SingletonDontDestory<UIManager>
     
     public Notification NotificationInit(string text,float duration)
     {
-        Notification notification = Instantiate(Notification_Prefab,Canvas.transform).GetComponent<Notification>();
+        Notification notification = Instantiate(NotificationPrefab,Canvas.transform).GetComponent<Notification>();
         notification.Init(text, duration);
         return notification;
     }

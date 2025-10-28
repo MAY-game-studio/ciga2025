@@ -144,7 +144,7 @@ public class GameUI : UIPrefabBase
     public void OnBtnMainMenuClicked()
     {
         MessageManager.GetInstance().Send(MessageTypes.PlaySound,new PlaySound(SoundClip.BTN_CLICK));
-        MessageManager.GetInstance().Send(MessageTypes.GameModeChange,new GameModeChange(GameModeType.LOADITOMAINMENU));//触发加载界面的回到主菜单
+        MessageManager.GetInstance().Send(MessageTypes.GameModeChange,new GameModeChange(GameModeType.MAINMENU_LOADING));//触发加载界面的回到主菜单
     }
     public void OnBtnExitClicked()
     {

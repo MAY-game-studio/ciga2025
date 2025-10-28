@@ -1,8 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class GameManager : SingletonDontDestory<GameManager>
+public class GameManager : SingletonDontDestroy<GameManager>
 {
     #region SerializeField
     
@@ -15,28 +13,12 @@ public class GameManager : SingletonDontDestory<GameManager>
     #region Property
     
     private IGameState _currentState;
-    
-    private GameModeType _gameModeType;
-    public GameModeType GameModeType //当前游戏主控流程
-    {
-        get => _gameModeType;
-        private set => _gameModeType = value;
-    }
-    
-    
-    private GameSettingData _gameSettingData;
-    public GameSettingData GameSettingData
-    {
-        get => _gameSettingData;
-        set => _gameSettingData = value;
-    }//设置存档
 
-    private GameSaveData _gameSaveData;
-    public GameSaveData GameSaveData
-    {
-        get => _gameSaveData;
-        set => _gameSaveData = value;
-    }//游戏存档
+    public GameModeType GameModeType { get; private set; } //当前游戏主控流程
+
+    public GameSettingData GameSettingData { get; set; } //设置存档
+
+    public GameSaveData GameSaveData { get; set; } //游戏存档
 
     [HideInInspector] public int SaveSlot; // 当前使用的游戏挡位槽
     
@@ -47,7 +29,7 @@ public class GameManager : SingletonDontDestory<GameManager>
     /// <summary>
     /// 状态切换的核心方法,大多数逻辑均在GameState实现
     /// </summary>
-    public void ChangeState(IGameState newState)
+    private void ChangeState(IGameState newState)
     {
         _currentState?.Exit();
         _currentState = newState;
@@ -59,21 +41,21 @@ public class GameManager : SingletonDontDestory<GameManager>
     /// </summary>
     private void GameStart()
     {
-        MessageManager.GetInstance().Send(MessageTypes.GameModeChange,new GameModeChange(GameModeType.GAMEINIT)); //主控流程，游戏初始化
+        MessageManager.GetInstance().Send(MessageTypes.GameModeChange,new GameModeChange(GameModeType.GAME_INIT)); //主控流程，游戏初始化
         UIManager.GetInstance().PrefabInit<Mouse>(); //初始化鼠标
         UIManager.GetInstance().AwakeVideoInit(); //播放起始动画
     }
 
     #endregion
-    
-    void Start()
+
+    private void Start()
     {
         //Screen.SetResolution(1920, 1080, FullScreenMode.Windowed);
         MessageRegister();
         Invoke(nameof(GameStart),0);
     }
 
-    void Update()
+    private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space))
             MessageManager.GetInstance().Send(MessageTypes.AddNotification,new AddNotification("Ciallo～"));
@@ -93,7 +75,7 @@ public class GameManager : SingletonDontDestory<GameManager>
             GameModeType = msg.GameModeType;
             switch (msg.GameModeType) //切换游戏状态机
             {
-                case GameModeType.GAMEINIT:
+                case GameModeType.GAME_INIT:
                     ChangeState(new GameStateInit());
                     break;
                 case GameModeType.MAINMENU:
@@ -105,7 +87,7 @@ public class GameManager : SingletonDontDestory<GameManager>
                 case GameModeType.RELOADING:
                     ChangeState(new GameStateReloadingToDefault());
                     break;
-                case GameModeType.LOADITOMAINMENU:
+                case GameModeType.MAINMENU_LOADING:
                     ChangeState(new GameStateLoadingToMainMenu());
                     break;
                 case GameModeType.DEFAULT:

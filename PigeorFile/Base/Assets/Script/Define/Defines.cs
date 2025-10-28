@@ -2,11 +2,11 @@ using System;
 
 public enum GameModeType
 {
-    GAMEINIT,
+    GAME_INIT,
     MAINMENU,
     LOADING,
     RELOADING,
-    LOADITOMAINMENU,
+    MAINMENU_LOADING,
     DEFAULT,
     PAUSE,
     EXIT
@@ -14,11 +14,11 @@ public enum GameModeType
 
 public enum ResolutionType
 {
-    Res1280x720,
-    Res1600x900,
-    Res1920x1080,
-    Res2560x1440,
-    Res3840x2160,
+    RES1280_720,
+    RES1600_900,
+    RES1920_1080,
+    RES2560_1440,
+    RES3840_2160,
 }
 
 public enum MouseMode

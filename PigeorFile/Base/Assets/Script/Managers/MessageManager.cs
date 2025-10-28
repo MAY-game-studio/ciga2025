@@ -1,5 +1,3 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -11,9 +9,9 @@ public class Message
     {
     }
 
-    public Message(MessageTypes Type)
+    protected Message(MessageTypes messageType)
     {
-        type = Type;
+        type = messageType;
     }
 
     public MessageTypes type { get; private set; }
@@ -30,7 +28,7 @@ public class GameModeChange : Message
     {
         GameModeType = gameModeType;
     }
-    public GameModeType GameModeType;
+    public readonly GameModeType GameModeType;
 }
 
 public class PlayMusic : Message
@@ -40,8 +38,8 @@ public class PlayMusic : Message
         MusicClip = musicClip;
         Duration = duration;
     }
-    public MusicClip MusicClip;
-    public float Duration;
+    public readonly MusicClip MusicClip;
+    public readonly float Duration;
 }
 
 public class PlaySound : Message
@@ -50,7 +48,7 @@ public class PlaySound : Message
     {
         SoundClip = soundClip;
     }
-    public SoundClip SoundClip;
+    public readonly SoundClip SoundClip;
 }
 
 /// <summary>
@@ -59,9 +57,7 @@ public class PlaySound : Message
  
 public class SettingDataUpdate : Message
 {
-    public SettingDataUpdate() : base(MessageTypes.SettingDataUpdate)
-    {
-    }
+    public SettingDataUpdate() : base(MessageTypes.SettingDataUpdate) { }
 }
 
 /// <summary>
@@ -70,9 +66,7 @@ public class SettingDataUpdate : Message
  
 public class SaveDataUpdate : Message
 {
-    public SaveDataUpdate() : base(MessageTypes.SaveDataUpdate)
-    {
-    }
+    public SaveDataUpdate() : base(MessageTypes.SaveDataUpdate) { }
 }
 
 /// <summary>
@@ -81,9 +75,7 @@ public class SaveDataUpdate : Message
  
 public class SaveDataComplete : Message
 {
-    public SaveDataComplete() : base(MessageTypes.SaveDataComplete)
-    {
-    }
+    public SaveDataComplete() : base(MessageTypes.SaveDataComplete) { }
 }
 
 /// <summary>
@@ -92,9 +84,7 @@ public class SaveDataComplete : Message
  
 public class LoadFinish : Message
 {
-    public LoadFinish() : base(MessageTypes.LoadFinish)
-    {
-    }
+    public LoadFinish() : base(MessageTypes.LoadFinish) { }
 }
 
 /// <summary>
@@ -107,8 +97,8 @@ public class AddNotification : Message
         Text = text;
         if (duration > 0) Duration = duration;
     }
-    public string Text;
-    public float Duration;
+    public readonly string Text;
+    public readonly float Duration;
 }
 
 /// <summary>
@@ -120,7 +110,7 @@ public class SwitchMouseMode : Message
     {
         MouseMode = mouseMode;
     }
-    public MouseMode MouseMode;
+    public readonly MouseMode MouseMode;
 }
 
 /// <summary>
@@ -132,23 +122,22 @@ public class ShowDetail : Message
     {
         Detail = detail;
     }
-    
     public ShowDetail(string detail, RectTransform anchor, float width) : base(MessageTypes.ShowDetail)
     {
         Detail = detail;
-        ComponetTransform = anchor;
+        ComponentTransform = anchor;
         Width = width;
     }
-    public RectTransform ComponetTransform; 
-    public string Detail;
-    public float Width;
+    public readonly RectTransform ComponentTransform; 
+    public readonly string Detail;
+    public readonly float Width;
 }
 
 public class MessageListener //消息监听器
 {
-    public UnityAction<Message> Action;
-    public int Priority;
-    public MessageTemporaryType TemporaryType;
+    public readonly UnityAction<Message> Action;
+    public readonly int Priority;
+    public readonly MessageTemporaryType TemporaryType;
     public MessageListener(UnityAction<Message> action, int priority, MessageTemporaryType tempType)
     {
         Action = action;
@@ -157,7 +146,7 @@ public class MessageListener //消息监听器
     }
 }
 
-public class MessageManager : SingletonDontDestory<MessageManager>
+public class MessageManager : SingletonDontDestroy<MessageManager>
 {
     private Dictionary<MessageTypes, List<MessageListener>> _listeners;
 
@@ -207,7 +196,8 @@ public class MessageManager : SingletonDontDestory<MessageManager>
             {
                 // 在控制台打印详细的错误信息，包括哪个消息类型和哪个监听者出错了
                 Debug.LogError($"Error executing listener for message [{messageType}].\n" +
-                               $"Listener: {listener.Action.Method.Name} in {listener.Action.Target.GetType().Name}\n" +
+                               $"Listener: {listener.Action?.Method.Name}" +
+                               $" in {listener.Action?.Target.GetType().Name}\n" +
                                $"Exception: {e.Message}\n{e.StackTrace}");
             }
         }

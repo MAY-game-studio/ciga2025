@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class SingletonMono <T> : MonoBehaviour where T: MonoBehaviour
+public class SingletonDontDestroy <T>: MonoBehaviour where T: MonoBehaviour
 {
     private static T _instance;
     public static T GetInstance()
@@ -10,10 +10,14 @@ public class SingletonMono <T> : MonoBehaviour where T: MonoBehaviour
 
     protected void Awake()
     {
-        if (_instance==null)
+        if (_instance == null)
         {
             _instance = this as T;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
         }
     }
-
 }

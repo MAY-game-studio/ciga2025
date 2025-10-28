@@ -1,16 +1,14 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NotificationManager : SingletonDontDestory<NotificationManager>
+public class NotificationManager : SingletonDontDestroy<NotificationManager>
 {
     #region SerializeField
     
     [Header("消息参数设置")]
     
     [Tooltip("消息显示时间")]
-    [SerializeField] private float DefultDuration;
+    [SerializeField] private float DefaultDuration;
     
     [Tooltip("最大显示的消息数")]
     [Range(2,8)]
@@ -24,38 +22,38 @@ public class NotificationManager : SingletonDontDestory<NotificationManager>
     
     #region Property
 
-    private List<Notification> notificationList = new List<Notification>(); //当前显示的消息
-    private List<string> notificationTextList = new List<string>(); //寄存的消息内容
+    private readonly List<Notification> _notificationList = new List<Notification>(); //当前显示的消息
+    private readonly List<string> _notificationTextList = new List<string>(); //寄存的消息内容
     private float _counting; //实例化消息间隔计时器
     
     #endregion
 
-    public void DeleteNotification(Notification notification)
+    public void DeleteNotification(Notification notification) //删除指定的消息
     {
-        if (notificationList.Remove(notification))
+        if (_notificationList.Remove(notification))
             UIManager.GetInstance().NotificationDestroy(notification); // 移除成功后销毁对应的UI元素
     }
 
-    public void NewNotification() //从消息缓存中实例化一条
+    private void NewNotification() //从消息缓存中实例化一条
     {
-        foreach (var tmp in notificationList)
+        foreach (var tmp in _notificationList)
             tmp.RePosition(-1);
-        Notification notification = UIManager.GetInstance().NotificationInit(notificationTextList[0],DefultDuration);
-        notificationTextList.RemoveAt(0);
-        notificationList.Add(notification);
+        Notification notification = UIManager.GetInstance().NotificationInit(_notificationTextList[0],DefaultDuration);
+        _notificationTextList.RemoveAt(0);
+        _notificationList.Add(notification);
         _counting = 0f;
     }
-    
-    void Start()
+
+    private void Start()
     {
         MessageInit();
     }
 
-    void Update()
+    private void Update()
     {
         _counting += Time.deltaTime;
         if (_counting < NotificationInterval) return;
-        if (notificationTextList.Count > 0 && notificationList.Count < MaxNotifications)
+        if (_notificationTextList.Count > 0 && _notificationList.Count < MaxNotifications)
             NewNotification();
     }
 
@@ -69,7 +67,7 @@ public class NotificationManager : SingletonDontDestory<NotificationManager>
     {
         if (message is AddNotification msg)
         {
-            notificationTextList.Add(msg.Text);
+            _notificationTextList.Add(msg.Text);
         }
     }
     #endregion

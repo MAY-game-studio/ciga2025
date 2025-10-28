@@ -1,8 +1,7 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class AudioManager : SingletonDontDestory<AudioManager>
+public class AudioManager : SingletonDontDestroy<AudioManager>
 {
     #region SerializeField
     
@@ -59,8 +58,8 @@ public class AudioManager : SingletonDontDestory<AudioManager>
     
     private Coroutine _musicCoroutine; // 用于追踪当前正在运行的协程
     #endregion
-    
-    void Start()
+
+    private void Start()
     {
         MessageInit();
     }
@@ -71,8 +70,8 @@ public class AudioManager : SingletonDontDestory<AudioManager>
         MessageManager.GetInstance().Register(MessageTypes.PlayMusic,OnPlayMusic);
         MessageManager.GetInstance().Register(MessageTypes.PlaySound,OnPlaySound);
     }
-    
-    IEnumerator SwitchMusic(MusicClip musicClip,float duration) //背景音乐渐变切换
+
+    private IEnumerator SwitchMusic(MusicClip musicClip,float duration) //背景音乐渐变切换
     {
         float timer = 0f, startVolume = BGMSource.volume, targetVolume = MainVolume * MusicVolume;
         
@@ -97,8 +96,8 @@ public class AudioManager : SingletonDontDestory<AudioManager>
         BGMSource.volume = targetVolume; //确保音量在最后被精确设置
         _musicCoroutine = null; // 任务完成，清空追踪
     }
-    
-    public void OnPlayMusic(Message message)
+
+    private void OnPlayMusic(Message message)
     {
         if (message is PlayMusic msg)
         {
@@ -107,11 +106,11 @@ public class AudioManager : SingletonDontDestory<AudioManager>
         }
     }
 
-    public void OnPlaySound(Message message)
+    private void OnPlaySound(Message message)
     {
         if (message is PlaySound msg)
         {
-            SFXSource.PlayOneShot(SoundClip[(int)msg.SoundClip], MainVolume * SoundVolume);
+            SFXSource.PlayOneShot(SoundClip[(int)msg.SoundClip], MainVolume * SoundVolume); //播放音效
         }
     }
 

@@ -1,4 +1,3 @@
-using System.Text;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.Serialization;
@@ -46,13 +45,24 @@ public class Detail : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         if (DetailText.Length > 0) DetailText+="/";
         DetailText+=key+"*"+detail;
     }
-    
-    public void OnPointerEnter(PointerEventData eventData) //发送 ShowDetail 消息。
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.K))
+            AddDetail("Test");
+    }
+
+    public void OnPointerEnter(PointerEventData eventData) //发送 ShowDetail消息
     {
         MessageManager.GetInstance().Send(MessageTypes.ShowDetail, new ShowDetail(DetailText,GetComponent<RectTransform>(),PanelWidth));
     }
     
-    public void OnPointerExit(PointerEventData eventData) // 当鼠标指针离开此对象的范围时，清空显示的文本。
+    public void OnPointerExit(PointerEventData eventData) // 当鼠标指针离开此对象的范围时，清空显示的文本
+    {
+        MessageManager.GetInstance().Send(MessageTypes.ShowDetail, new ShowDetail(""));
+    }
+    
+    private void OnDestroy() // 销毁时确保清空显示的文本
     {
         MessageManager.GetInstance().Send(MessageTypes.ShowDetail, new ShowDetail(""));
     }

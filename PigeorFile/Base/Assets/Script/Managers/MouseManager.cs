@@ -1,35 +1,27 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class MouseManager : SingletonDontDestory<MouseManager>
+public class MouseManager : SingletonDontDestroy<MouseManager>
 {
     #region Property
 
-    private MouseMode _mouseMode = MouseMode.ORIGIN;
-
-    public MouseMode MouseMode
-    {
-        get => _mouseMode;
-        private set => _mouseMode = value;
-    }
+    public MouseMode MouseMode { get; private set; } = MouseMode.ORIGIN;
 
     #endregion
 
-    void Start()
+    private void Start()
     {
         MessageRegister();
     }
     
     #region Message
 
-    protected void MessageRegister()
+    private void MessageRegister()
     {
         MessageManager.GetInstance().Register(MessageTypes.SwitchMouseMode, OnSwitchMouseMode);
         MessageManager.GetInstance().Register(MessageTypes.ShowDetail, OnShowDetail);
     }
 
-    public void OnSwitchMouseMode(Message message) //修改鼠标样式
+    private void OnSwitchMouseMode(Message message) //修改鼠标样式
     {
         if (message is SwitchMouseMode msg)
         {
@@ -40,16 +32,20 @@ public class MouseManager : SingletonDontDestory<MouseManager>
         }
     }
 
-    public void OnShowDetail(Message message)
+    private void OnShowDetail(Message message)
     {
         if (message is ShowDetail msg)
         {
-            string[] parts = msg.Detail.Split('*');
-            foreach (string part in parts)
+            if (string.IsNullOrEmpty(msg.Detail))
             {
-                Debug.Log(part);
-                //todo UI适配展示
-                //等ui
+                UIManager.GetInstance().PrefabDestroy<DetailsPanelUI>();
+            }
+            else
+            {
+                UIManager.GetInstance().PrefabInit<DetailsPanelUI>(panel =>
+                {
+                    panel.Init(msg.Detail, msg.ComponentTransform, msg.Width);
+                });
             }
         }
     }
