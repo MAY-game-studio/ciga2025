@@ -29,7 +29,7 @@ public class UIFadeAnim : UIAnim
     
     [Header("Fade Settings")]
     [Tooltip("起始透明度")]
-    [MinMaxSlider(0f, 1f)]
+    [Range(0f, 1f)]
     [SerializeField] private float StartAlpha = 0f;
     [ShowIf("FlagAnimScale")]
     [Tooltip("起始缩放大小")]

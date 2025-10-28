@@ -81,12 +81,12 @@ public class GameManager : SingletonDontDestory<GameManager>
     
     #region Message
 
-    protected void MessageRegister()
+    private void MessageRegister()
     {
         MessageManager.GetInstance().Register(MessageTypes.GameModeChange, OnGameModeChange);
     }
-    
-    public void OnGameModeChange(Message message)
+
+    private void OnGameModeChange(Message message)
     {
         if (message is GameModeChange msg)
         {

@@ -86,8 +86,6 @@ public class SaveDataComplete : Message
     }
 }
 
-
-
 /// <summary>
 /// 存档更新
 /// </summary>
@@ -104,9 +102,10 @@ public class LoadFinish : Message
 /// </summary>
 public class AddNotification : Message
 {
-    public AddNotification(string text,float duration=-1f) : base(MessageTypes.AddNotification)
+    public AddNotification(string text, float duration = -1f) : base(MessageTypes.AddNotification)
     {
         Text = text;
+        if (duration > 0) Duration = duration;
     }
     public string Text;
     public float Duration;
@@ -125,8 +124,7 @@ public class SwitchMouseMode : Message
 }
 
 /// <summary>
-/// 鼠标旁显示细节信息，多个框体的细节由*分割
-/// todo
+/// 在鼠标悬浮的组件旁显示细节信息
 /// </summary>
 public class ShowDetail : Message
 {
@@ -134,7 +132,16 @@ public class ShowDetail : Message
     {
         Detail = detail;
     }
+    
+    public ShowDetail(string detail, RectTransform anchor, float width) : base(MessageTypes.ShowDetail)
+    {
+        Detail = detail;
+        ComponetTransform = anchor;
+        Width = width;
+    }
+    public RectTransform ComponetTransform; 
     public string Detail;
+    public float Width;
 }
 
 public class MessageListener //消息监听器

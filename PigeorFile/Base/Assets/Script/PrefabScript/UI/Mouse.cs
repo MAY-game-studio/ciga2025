@@ -18,7 +18,7 @@ public class Mouse : UIPrefabBase
     #region property
 
     private Vector3 _lastPosition;
-
+    
     #endregion
     
     public void UpdateIcon(Sprite icon)
@@ -26,6 +26,11 @@ public class Mouse : UIPrefabBase
         ImgMouse.sprite = icon;
     }
     
+    void Start()
+    {
+        MessageRegister();
+    }
+
     void Update()
     {
         Vector3 mousePosition = Input.mousePosition;// 获取鼠标在屏幕上的位置（单位：像素）
@@ -38,4 +43,32 @@ public class Mouse : UIPrefabBase
         tmp.enabled = speed > 0f;
         _lastPosition = worldPosition;
     }
+    
+    
+    #region Message
+
+    private void MessageRegister()
+    {
+        MessageManager.GetInstance().Register(MessageTypes.ShowDetail, OnShowDetail);
+    }
+
+    private void OnShowDetail(Message message)
+    {
+        if (message is ShowDetail msg)
+        {
+            if (string.IsNullOrEmpty(msg.Detail))
+            {
+                UIManager.GetInstance().PrefabDestroy<DetailsPanelUI>();
+            }
+            else
+            {
+                UIManager.GetInstance().PrefabInit<DetailsPanelUI>(panel =>
+                {
+                    panel.Init(msg.Detail, msg.ComponetTransform, msg.Width);
+                });
+            }
+        }
+    }
+
+    #endregion
 }
