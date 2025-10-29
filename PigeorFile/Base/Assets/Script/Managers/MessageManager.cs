@@ -122,15 +122,17 @@ public class ShowDetail : Message
     {
         Detail = detail;
     }
-    public ShowDetail(string detail, RectTransform anchor, float width) : base(MessageTypes.ShowDetail)
+    public ShowDetail(string detail, RectTransform anchor, float width, Vector2 pivotThresholds) : base(MessageTypes.ShowDetail)
     {
         Detail = detail;
         ComponentTransform = anchor;
         Width = width;
+        PivotThresholds = pivotThresholds;
     }
     public readonly RectTransform ComponentTransform; 
     public readonly string Detail;
     public readonly float Width;
+    public readonly Vector2 PivotThresholds;
 }
 
 public class MessageListener //消息监听器

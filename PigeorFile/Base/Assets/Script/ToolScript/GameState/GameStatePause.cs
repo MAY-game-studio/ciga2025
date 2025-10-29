@@ -4,7 +4,7 @@ public class GameStatePause : IGameState
 {
     public override void Enter()
     {
-        Time.timeScale = 0.5f; //冻结游戏时间
+        Time.timeScale = 0f; //冻结游戏时间
     }
 
     public override void Exit()

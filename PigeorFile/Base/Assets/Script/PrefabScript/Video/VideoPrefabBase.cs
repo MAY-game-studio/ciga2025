@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public abstract class VideoPrefabBase : MonoBehaviour
@@ -19,7 +18,7 @@ public abstract class VideoPrefabBase : MonoBehaviour
     [SerializeField] public bool FlagSkip;
 
     [Tooltip("视频时长")]
-    [SerializeField] protected float Duration = 0f;
+    [SerializeField] protected float Duration;
 
     #endregion
     
@@ -34,7 +33,7 @@ public abstract class VideoPrefabBase : MonoBehaviour
         Finish();
     }
 
-    public virtual void Init()
+    public virtual void Init() // 初始化播放视频并设置音量
     {
         StartCoroutine(Play());
         AudioSource.volume = AudioManager.GetInstance().MainVolume;

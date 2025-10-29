@@ -3318,7 +3318,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 535, y: -176}
+  m_AnchoredPosition: {x: -162, y: 43}
   m_SizeDelta: {x: 453.3782, y: 588.0694}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6866428407177335264
@@ -3373,6 +3373,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DetailText: "CIA*CIALLO\uFF5E(\u2220\u30FB\u03C9< )\u2312\u2605/LLO*CIALLO"
   PanelWidth: 300
+  PivotThresholds: {x: 0.7, y: 0.3}
 --- !u!1 &7827543413119523197
 GameObject:
   m_ObjectHideFlags: 0

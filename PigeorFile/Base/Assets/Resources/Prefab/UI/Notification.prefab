@@ -93,7 +93,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   NotificationSpace: 75
   AnimDuration: 0.5
-  text: {fileID: 8933132331005983747}
+  Text: {fileID: 8933132331005983747}
 --- !u!225 &2436280510623770658
 CanvasGroup:
   m_ObjectHideFlags: 0

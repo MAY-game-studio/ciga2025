@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -26,8 +24,8 @@ public class Mouse : UIPrefabBase
         ImgMouse.sprite = icon;
         _mainCamera = Camera.main;
     }
-    
-    void Update()
+
+    private void Update()
     {
         Vector3 mousePosition = Input.mousePosition;// 获取鼠标在屏幕上的位置（单位：像素）
         Vector3 worldPosition = _mainCamera!.ScreenToWorldPoint(mousePosition);// 将屏幕坐标转为世界坐标

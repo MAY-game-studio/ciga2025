@@ -800,8 +800,8 @@ MonoBehaviour:
   - {fileID: 5937105365113165692, guid: cca93a204705be54aa761df9106da9ad, type: 3}
   - {fileID: 7040874059728025885, guid: 652b7727245ed994aa127db2fc705f19, type: 3}
   - {fileID: 3208498675550354462, guid: a73f6fad9072dd54c80dcdc1109e6e55, type: 3}
-  Notification_Prefab: {fileID: 5928558710895739206, guid: 674a07196baa20648abd6a6505f3ea8c, type: 3}
-  AwakeVideo_Prefab: {fileID: 5690284448087429624, guid: 2868789b3fcc77b458f28555cab1ee98, type: 3}
+  NotificationPrefab: {fileID: 5928558710895739206, guid: 674a07196baa20648abd6a6505f3ea8c, type: 3}
+  AwakeVideoPrefab: {fileID: 5690284448087429624, guid: 2868789b3fcc77b458f28555cab1ee98, type: 3}
   MouseSprite:
   - {fileID: 21300000, guid: 0654dab4ac982ad428d61dc9884d75b7, type: 3}
   - {fileID: 21300000, guid: 7335c4cbee0138b4e8870921984b7087, type: 3}
@@ -822,7 +822,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 26f8df65a4cce0f45ba44d23a531a8a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DefultDuration: 2
+  DefaultDuration: 0
   MaxNotifications: 5
   NotificationInterval: 0.5
 --- !u!114 &1704456156

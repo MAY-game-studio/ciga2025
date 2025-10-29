@@ -44,7 +44,7 @@ public class MouseManager : SingletonDontDestroy<MouseManager>
             {
                 UIManager.GetInstance().PrefabInit<DetailsPanelUI>(panel =>
                 {
-                    panel.Init(msg.Detail, msg.ComponentTransform, msg.Width);
+                    panel.Init(msg.Detail, msg.ComponentTransform, msg.Width, msg.PivotThresholds);
                 });
             }
         }

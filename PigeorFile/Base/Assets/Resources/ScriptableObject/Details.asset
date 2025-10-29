@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96a91b0f826718544b7793cb474cfd84, type: 3}
   m_Name: Details
   m_EditorClassIdentifier: 
-  details:
-  - key: ciallo
-    detail: "Ciallo\uFF5E(\u2220\u30FB\u03C9<)\u2312\u2605"
+  DetailPairs:
+  - Key: cia
+    Detail: "Ciallo\uFF5E(\u2220\xB7\u03C9< )\u2312"

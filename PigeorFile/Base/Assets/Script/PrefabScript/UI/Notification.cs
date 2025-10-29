@@ -1,8 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
+using DG.Tweening;
 using TMPro;
 using UnityEngine;
-using DG.Tweening;
 
 public class Notification : MonoBehaviour
 {
@@ -13,22 +11,22 @@ public class Notification : MonoBehaviour
     [SerializeField] private float NotificationSpace;
     [Tooltip("动画时长")]
     [SerializeField] private float AnimDuration;
-
+    
     [Header("UI组件")]
-    [SerializeField] private TextMeshProUGUI text;
+    [SerializeField] private TextMeshProUGUI Text;
         
     #endregion
 
-    #region ProPerty
-
-    private float countdown,time;
+    #region property
+    
+    private float _countdown,_time;
     
     #endregion
     
     public void Init(string notification, float duration)
     {
-        text.text = notification;
-        countdown = duration;
+        Text.text = notification;
+        _countdown = duration;
     }
 
     public void RePosition(int num)
@@ -37,9 +35,9 @@ public class Notification : MonoBehaviour
         transform.DOLocalMove(targetPos, AnimDuration).SetEase(Ease.OutQuad);
     }
     
-    void Update()
+    private void Update()
     {
-        countdown -= Time.deltaTime;
-        if (countdown<0) NotificationManager.GetInstance().DeleteNotification(this);
+        _countdown -= Time.deltaTime;
+        if (_countdown<0) NotificationManager.GetInstance().DeleteNotification(this);
     }
 }

@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -159,13 +157,13 @@ public class GameUI : UIPrefabBase
     }
     
     #endregion
-    
-    void Start()
+
+    private void Start()
     {
         _gameUIState = GameUIState.GameCanvas;
     }
-    
-    void Update()
+
+    private void Update()
     {
         if (Input.GetKeyDown(GameManager.GetInstance().GameSettingData.Return))
         {

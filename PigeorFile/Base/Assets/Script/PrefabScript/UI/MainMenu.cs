@@ -1,11 +1,6 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
-using DG.Tweening;
-using UnityEngine.Serialization;
 
 public class MainMenu : UIPrefabBase
 {
@@ -189,7 +184,7 @@ public class MainMenu : UIPrefabBase
         MessageManager.GetInstance().Send(MessageTypes.PlaySound,new PlaySound(SoundClip.BTN_CLICK));
         GameManager.GetInstance().SaveSlot = 1;
         GameManager.GetInstance().GameSaveData = _gameSaveFileSlot1;
-        if (GameManager.GetInstance().GameSaveData == null)
+        if (!GameManager.GetInstance().GameSaveData)
             GameManager.GetInstance().GameSaveData = SaveManager.GetInstance().CreateGameSaveData();
         MessageManager.GetInstance().Send(MessageTypes.GameModeChange,new GameModeChange(GameModeType.LOADING));
     }
@@ -199,7 +194,7 @@ public class MainMenu : UIPrefabBase
         MessageManager.GetInstance().Send(MessageTypes.PlaySound,new PlaySound(SoundClip.BTN_CLICK));
         GameManager.GetInstance().SaveSlot = 2;
         GameManager.GetInstance().GameSaveData = _gameSaveFileSlot2;
-        if (GameManager.GetInstance().GameSaveData == null)
+        if (!GameManager.GetInstance().GameSaveData)
             GameManager.GetInstance().GameSaveData = SaveManager.GetInstance().CreateGameSaveData();
         MessageManager.GetInstance().Send(MessageTypes.GameModeChange,new GameModeChange(GameModeType.LOADING));
     }
@@ -209,7 +204,7 @@ public class MainMenu : UIPrefabBase
         MessageManager.GetInstance().Send(MessageTypes.PlaySound,new PlaySound(SoundClip.BTN_CLICK));
         GameManager.GetInstance().SaveSlot = 3;
         GameManager.GetInstance().GameSaveData = _gameSaveFileSlot3;
-        if (GameManager.GetInstance().GameSaveData == null)
+        if (!GameManager.GetInstance().GameSaveData)
             GameManager.GetInstance().GameSaveData = SaveManager.GetInstance().CreateGameSaveData();
         MessageManager.GetInstance().Send(MessageTypes.GameModeChange,new GameModeChange(GameModeType.LOADING));
     }
@@ -347,8 +342,8 @@ public class MainMenu : UIPrefabBase
     }
 
     #endregion
-    
-    void Update()
+
+    private void Update()
     {
         if (Input.GetKeyDown(GameManager.GetInstance().GameSettingData.Return))
         {

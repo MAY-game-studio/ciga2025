@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.Serialization;
 
 public class DetailsPanelUI : UIPrefabBase
 {
@@ -11,45 +10,45 @@ public class DetailsPanelUI : UIPrefabBase
     private GameObject DetailUIPrefab;
 
     [Header("参数")]
-    [Tooltip("切换显示位置的阈值")]
-    [SerializeField]
-    private Vector2 PivotThresholds = new Vector2(0.7f, 0.7f);
     
-    [FormerlySerializedAs("Padding")]
     [Tooltip("和原组件的偏移距离")]
     [SerializeField]
     private float Offset = 10f;
     
     #endregion
 
+    #region property
+    
+    private Vector2 _pivotThresholds; //判断显示位置的阈值
     private RectTransform _rectTransform;
     
+    #endregion
     private void RePosition(RectTransform componentTransform) // 根据相对位置设置轴心
     {
         Vector3[] anchorCorners = new Vector3[4];
         componentTransform.GetLocalCorners(anchorCorners); //获取组件的本地四角
         RectTransform canvasRect = GetComponentInParent<Canvas>().GetComponent<RectTransform>();
         Vector3 topLeft = canvasRect.InverseTransformPoint(componentTransform.TransformPoint(anchorCorners[1])); // 左上角的当前canvas位置
-        Vector3 topRight = canvasRect.InverseTransformPoint(componentTransform.TransformPoint(anchorCorners[2])); // 右上角的当前canvas位置
-
-        Vector3 targetLocalPosition;
-        Vector2 targetPivot;
-        if ((RectTransformUtility.WorldToScreenPoint(Camera.main, componentTransform.position).x / Screen.width) < PivotThresholds.x) //根据阈值判定显示在那侧
+        Vector3 bottomRight = canvasRect.InverseTransformPoint(componentTransform.TransformPoint(anchorCorners[3])); // 右下角的当前canvas位置
+        Vector2 screenPoint = RectTransformUtility.WorldToScreenPoint(Camera.main, componentTransform.position); // 获取组件的屏幕位置
+        Vector3 targetLocalPosition = new Vector3(bottomRight.x + Offset,topLeft.y - Offset,0f); //默认从右上角向下显示
+        Vector2 targetPivot = new Vector2(0f,1f);
+        if (screenPoint.x > _pivotThresholds.x * Screen.width) //显示在目标左侧
         {
-            targetPivot = new Vector2(0f, 1f);
-            targetLocalPosition = topRight + new Vector3(Offset, 0f, 0f); //向右增加偏移
+            targetPivot.x = 1f;
+            targetLocalPosition.x = topLeft.x - Offset;
         }
-        else
+        if (screenPoint.y < _pivotThresholds.y * Screen.height) //从目标顶部向上显示
         {
-            targetPivot = new Vector2(1f, 1f);
-            targetLocalPosition = topLeft - new Vector3(Offset, 0f, 0f); //向左增加偏移
+            targetPivot.y = 0f;
         }
         _rectTransform.pivot = targetPivot;
         _rectTransform.localPosition = targetLocalPosition;
     }
     
-    public void Init(string details, RectTransform componentTransform, float width) //初始化Details面板
+    public void Init(string details, RectTransform componentTransform, float width, Vector2 pivotThresholds) //初始化Details面板
     {
+        _pivotThresholds = pivotThresholds;
         _rectTransform = GetComponent<RectTransform>();
         _rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, width);
         string[] blocks = details.Split('/'); // 拆分不同的DetailUI

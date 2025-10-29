@@ -1,4 +1,4 @@
-using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,17 +7,17 @@ public class Details : ScriptableObject ,ISerializationCallbackReceiver
 {
     #region SerializeField
 
-    [System.Serializable]
+    [Serializable]
     public class DetailPair
     {
-        public string key; //关键字
+        public string Key; //关键字
         [TextArea(3, 10)]
-        public string detail; //对应的详细描述
+        public string Detail; //对应的详细描述
     }
     
     [Header("所有Detail词条")]
     [SerializeField]
-    private List<DetailPair> details = new List<DetailPair>();
+    private List<DetailPair> DetailPairs = new List<DetailPair>();
 
     #endregion
 
@@ -29,8 +29,7 @@ public class Details : ScriptableObject ,ISerializationCallbackReceiver
 
     public string GetDetail(string keyword) //由details获取详细文本的方法
     {
-        if (string.IsNullOrEmpty(keyword)) { return null; }
-        return _details.GetValueOrDefault(keyword);
+        return string.IsNullOrEmpty(keyword) ? null : _details.GetValueOrDefault(keyword);
     }
 
     public void OnBeforeSerialize() {} // 在 Unity 准备序列化（保存）此对象之前调用。
@@ -39,12 +38,12 @@ public class Details : ScriptableObject ,ISerializationCallbackReceiver
     {
         _details ??= new Dictionary<string, string>();
         _details.Clear();
-        foreach (var tmp in details) // 遍历所有在 Inspector 中设置的词条
+        foreach (var tmp in DetailPairs) // 遍历所有在 Inspector 中设置的词条
         {
-            if (!string.IsNullOrEmpty(tmp.key) && !_details.ContainsKey(tmp.key)) // 确保关键字不为空，并且防止重复关键字导致字典抛出异常
-            {
-                _details.Add(tmp.key, tmp.detail);
-            }
+            if (string.IsNullOrEmpty(tmp.Key)||_details.ContainsKey(tmp.Key))
+                Debug.LogWarning($"DetailPairs Key '{tmp.Key}' 为空、null或重复。该条目已被跳过。", this);
+            else
+                _details.Add(tmp.Key, tmp.Detail);
         }
     }
 }

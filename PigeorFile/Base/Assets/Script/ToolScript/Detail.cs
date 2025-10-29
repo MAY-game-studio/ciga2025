@@ -18,7 +18,11 @@ public class Detail : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
     [Header("参数")]
     [Tooltip("面板宽度")]
-    [SerializeField] private float PanelWidth = 250f;
+    [SerializeField] private float PanelWidth = 300f;
+    
+    [Tooltip("判断显示位置阈值")]
+    [SerializeField] private Vector2 PivotThresholds = new Vector2(0.7f, 0.3f);
+    
     #endregion
     
     #region property
@@ -46,15 +50,9 @@ public class Detail : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         DetailText+=key+"*"+detail;
     }
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.K))
-            AddDetail("Test");
-    }
-
     public void OnPointerEnter(PointerEventData eventData) //发送 ShowDetail消息
     {
-        MessageManager.GetInstance().Send(MessageTypes.ShowDetail, new ShowDetail(DetailText,GetComponent<RectTransform>(),PanelWidth));
+        MessageManager.GetInstance().Send(MessageTypes.ShowDetail, new ShowDetail(DetailText,GetComponent<RectTransform>(),PanelWidth,PivotThresholds));
     }
     
     public void OnPointerExit(PointerEventData eventData) // 当鼠标指针离开此对象的范围时，清空显示的文本
